@@ -1,8 +1,5 @@
 import org.junit.Before;
 import org.junit.Test;
-import sun.jvm.hotspot.code.Location;
-
-import java.util.WeakHashMap;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +13,7 @@ public class TestAlphaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl();
+        _game = new GameImpl(new SimpleBoardSetupStrategy());
     }
 
     @Test

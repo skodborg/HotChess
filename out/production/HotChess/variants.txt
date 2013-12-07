@@ -12,3 +12,11 @@ Board is layed out with only 3 pieces:
     White pawn at C2,
     White pawn at D2,
     White queen at D1
+
+BetaChess:
+Same as alpha, but the board layout is the same as that of a real chess game
+
+DeltaChess:
+Same as alpha except for:
+    Attacking is allowed
+    Whoever attacks, wins

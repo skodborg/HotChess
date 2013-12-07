@@ -18,3 +18,11 @@ Black pawn at B7        D
 Black pawn at C7        D
 Black pawn at D7        D
 White Queen at D1       D
+
+Piece movement:
+White is allowed to move white pawn at A2 to A3                                         D
+White is not allowed to move Black pawn from A7 to A6                                   D
+Black is allowed to move black pawn from A7 to A6                                       D
+Black is not allowed to move white pawn at A2 to A3                                     D
+White is not allowed to move white pawn at A2 to B2 because of a white piece            D
+White is not allowed to move white pawn at A2 to A7 because of a black piece            D

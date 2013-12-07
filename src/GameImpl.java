@@ -52,12 +52,41 @@ public class GameImpl implements Game {
 
     @Override
     public boolean movePiece(Position from, Position to) {
+        if (isMoveValid(from, to)) {
+            performPieceMove(from, to);
+            swapPlayerTurn();
+            _turnsPlayed++;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean isMoveValid(Position from, Position to) {
+        return isPlayerMovingOwnPiece(from)
+                && isTargetFieldFree(to);
+    }
+
+    private boolean isTargetFieldFree(Position to) {
+        return _pieceMap.get(to) == null;
+    }
+
+    private boolean isPlayerMovingOwnPiece(Position from) {
+        return _playerInTurn == _pieceMap.get(from).getColor();
+    }
+
+    private void performPieceMove(Position from, Position to) {
+        Piece pieceToMove = _pieceMap.get(from);
+        _pieceMap.put(to, pieceToMove);
+        _pieceMap.remove(from);
+    }
+
+    private void swapPlayerTurn() {
         if (_playerInTurn == Color.BLACK) {
             _playerInTurn = Color.WHITE;
         } else {
             _playerInTurn = Color.BLACK;
         }
-        _turnsPlayed++;
-        return false;
     }
 }

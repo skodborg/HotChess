@@ -113,4 +113,68 @@ public class TestAlphaChess {
         assertEquals("should be a white piece at A2",
                 Color.WHITE, _game.getPieceAtPosition(Position.A2).getColor());
     }
+
+    @Test
+    public void shouldHaveBlackPawnAtPosA7() {
+        assertEquals("should have piece of type PAWN at A7",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.A7).getType());
+        assertEquals("should be a black piece at A7",
+                Color.BLACK, _game.getPieceAtPosition(Position.A7).getColor());
+    }
+
+    @Test
+    public void shouldHaveWhitePawnAtPosB2() {
+        assertEquals("should have piece of type PAWN at B2",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.B2).getType());
+        assertEquals("should be a white piece at B2",
+                Color.WHITE, _game.getPieceAtPosition(Position.B2).getColor());
+    }
+
+    @Test
+    public void shouldHaveWhitePawnAtPosC2() {
+        assertEquals("should have piece of type PAWN at C2",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.C2).getType());
+        assertEquals("should be a white piece at C2",
+                Color.WHITE, _game.getPieceAtPosition(Position.C2).getColor());
+    }
+
+    @Test
+    public void shouldHaveWhitePawnAtPosD2() {
+        assertEquals("should have piece of type PAWN at D2",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.D2).getType());
+        assertEquals("should be a white piece at D2",
+                Color.WHITE, _game.getPieceAtPosition(Position.D2).getColor());
+    }
+
+    @Test
+    public void shouldHaveBlackPawnAtPosB7() {
+        assertEquals("should have piece of type PAWN at B7",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.B7).getType());
+        assertEquals("should be a black piece at B7",
+                Color.BLACK, _game.getPieceAtPosition(Position.B7).getColor());
+    }
+
+    @Test
+    public void shouldHaveBlackPawnAtPosC7() {
+        assertEquals("should have piece of type PAWN at C7",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.C7).getType());
+        assertEquals("should be a black piece at C7",
+                Color.BLACK, _game.getPieceAtPosition(Position.C7).getColor());
+    }
+
+    @Test
+    public void shouldHaveBlackPawnAtPosD7() {
+        assertEquals("should have piece of type PAWN at D7",
+                GameConstants.PAWN, _game.getPieceAtPosition(Position.D7).getType());
+        assertEquals("should be a black piece at D7",
+                Color.BLACK, _game.getPieceAtPosition(Position.D7).getColor());
+    }
+
+    @Test
+    public void shouldHaveWhiteQueenAtD1() {
+        assertEquals("should have piece of type QUEEN at D1",
+                GameConstants.QUEEN, _game.getPieceAtPosition(Position.D1).getType());
+        assertEquals("should be a white piece at D1",
+                Color.WHITE, _game.getPieceAtPosition(Position.D1).getColor());
+    }
 }

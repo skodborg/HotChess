@@ -1,3 +1,5 @@
+package HotChess;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,9 +16,9 @@ public class GameImpl implements Game {
     private BoardSetupStrategy _boardSetupStrategy;
     private MovingStrategy _movingStrategy;
 
-    public GameImpl(BoardSetupStrategy boardSetupStrategy, MovingStrategy movingStrategy) {
-        _boardSetupStrategy = boardSetupStrategy;
-        _movingStrategy = movingStrategy;
+    public GameImpl(BoardSetupStrategy boardSetupStrategy, MovingStrategy movingStrategy, ChessGameFactory factory) {
+        _boardSetupStrategy = factory.createBoardSetupStrategy();
+        _movingStrategy = factory.createMovingStrategy();
         _playerInTurn = Color.WHITE;
         _turnsPlayed = 0;
         setupPieces();

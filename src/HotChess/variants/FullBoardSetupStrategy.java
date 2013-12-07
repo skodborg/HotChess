@@ -1,3 +1,7 @@
+package HotChess.variants;
+
+import HotChess.*;
+
 import java.util.Map;
 
 /**

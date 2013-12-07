@@ -1,3 +1,5 @@
+import HotChess.*;
+import HotChess.variants.factories.DeltaChessGameFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +14,7 @@ public class TestDeltaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new SimpleBoardSetupStrategy(), new AttacksAllowedMovingStrategy());
+        _game = new GameImpl(null, null, new DeltaChessGameFactory());
     }
 
     @Test

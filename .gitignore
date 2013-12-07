@@ -41,3 +41,10 @@ publish
 # build script local files
 build/buildinfo.properties
 build/config/buildinfo.properties
+src/responsibilities.txt
+
+out/production/HotChess/responsibilities.txt
+
+*.class
+
+HotChess.iml

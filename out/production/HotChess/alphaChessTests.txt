@@ -1,0 +1,4 @@
+Turns:
+White player is in turn first           D
+Black player follows white              D
+White player follows Black              D

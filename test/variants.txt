@@ -1,0 +1,5 @@
+AlphaChess:
+White player wins in 5 rounds
+A piece can move everywhere on the board, as long as the position is free
+No attacking allowed
+Board is layed out with only 3 pieces: black pawn at A7, White pawn at A2, White queen at D1

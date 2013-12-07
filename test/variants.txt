@@ -2,7 +2,7 @@ AlphaChess:
 White player wins in 5 rounds
 A piece can move everywhere on the board, as long as the position is free
 No attacking allowed
-Board is layed out with only 3 pieces:
+Board is laid out with only the following pieces:
     Black pawn at A7,
     Black pawn at B7,
     Black pawn at C7,

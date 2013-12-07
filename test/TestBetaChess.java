@@ -12,7 +12,7 @@ public class TestBetaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new FullBoardSetupStrategy());
+        _game = new GameImpl(new FullBoardSetupStrategy(), null);
     }
 
     @Test

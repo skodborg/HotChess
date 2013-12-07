@@ -13,7 +13,7 @@ public class TestAlphaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new SimpleBoardSetupStrategy());
+        _game = new GameImpl(new SimpleBoardSetupStrategy(), new NoAttackingMovingStrategy());
     }
 
     @Test

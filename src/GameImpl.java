@@ -12,9 +12,11 @@ public class GameImpl implements Game {
     private int _turnsPlayed;
     private Map<Position, Piece> _pieceMap;
     private BoardSetupStrategy _boardSetupStrategy;
+    private MovingStrategy _movingStrategy;
 
-    public GameImpl(BoardSetupStrategy boardSetupStrategy) {
+    public GameImpl(BoardSetupStrategy boardSetupStrategy, MovingStrategy movingStrategy) {
         _boardSetupStrategy = boardSetupStrategy;
+        _movingStrategy = movingStrategy;
         _playerInTurn = Color.WHITE;
         _turnsPlayed = 0;
         setupPieces();
@@ -58,16 +60,7 @@ public class GameImpl implements Game {
     }
 
     private boolean isMoveValid(Position from, Position to) {
-        return isPlayerMovingOwnPiece(from)
-                && isTargetFieldFree(to);
-    }
-
-    private boolean isTargetFieldFree(Position to) {
-        return _pieceMap.get(to) == null;
-    }
-
-    private boolean isPlayerMovingOwnPiece(Position from) {
-        return _playerInTurn == _pieceMap.get(from).getColor();
+        return _movingStrategy.isMoveValid(this, from, to);
     }
 
     private void performPieceMove(Position from, Position to) {

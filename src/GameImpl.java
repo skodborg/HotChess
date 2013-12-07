@@ -2,14 +2,22 @@
  * Created by marc on 07/12/13.
  */
 public class GameImpl implements Game {
+
+    private static final int TURNS_PLAYED_IN_ROUND_5 = 10;
+
     private Color _playerInTurn;
+    private int _turnsPlayed;
 
     public GameImpl() {
         _playerInTurn = Color.WHITE;
+        _turnsPlayed = 0;
     }
 
     @Override
     public Color getWinner() {
+        if (_turnsPlayed >= TURNS_PLAYED_IN_ROUND_5) {
+            return Color.WHITE;
+        }
         return Color.NONE;
     }
 
@@ -20,7 +28,7 @@ public class GameImpl implements Game {
 
     @Override
     public Piece getPieceAtPosition(Position p) {
-        return null;
+        return new PieceImpl(GameConstants.PAWN, Color.WHITE);
     }
 
     @Override
@@ -30,6 +38,7 @@ public class GameImpl implements Game {
         } else {
             _playerInTurn = Color.BLACK;
         }
+        _turnsPlayed++;
         return false;
     }
 }

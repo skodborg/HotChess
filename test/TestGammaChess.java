@@ -74,6 +74,24 @@ public class TestGammaChess {
                 _game.movePiece(Position.A2, Position.B3));
     }
 
+    @Test
+    public void shouldNotLetWhitePawnAttackBlackPawn() {
+        // white moves
+        _game.movePiece(Position.A2, Position.A3);
+
+        // black moves
+        _game.movePiece(Position.A7, Position.A6);
+
+        // white moves
+        _game.movePiece(Position.A3, Position.A4);
+
+        // black moves
+        _game.movePiece(Position.A6, Position.A5);
+
+        assertFalse("should not let white pawn attack black pawn",
+                _game.movePiece(Position.A4, Position.A5));
+    }
+
 
 
 }

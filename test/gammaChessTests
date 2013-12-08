@@ -5,3 +5,7 @@ Pawns should not be allowed to move sideways                D
 Pawns should not be allowed to move backwards               D
 Pawns should not be allowed to move diagonally              D
 Pawns should not be allowed to move to occupied fields      D
+
+Rooks should be allowed to move up, down, left and right for multiple fields at one move
+Rooks should not move diagonally
+Rooks should not be allowed to jump over any pieces

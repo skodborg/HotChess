@@ -13,6 +13,7 @@ public class PieceSpecificMovingStrategy implements MovingStrategy {
             return false;
         }
 
+        // PAWN
         // if the target position is equal to neighbours[0] for white and
         // neighbours[4] for black, corresponding to the field just in
         // front of the piece, then the move is legal

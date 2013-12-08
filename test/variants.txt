@@ -23,7 +23,7 @@ Same as alpha except for:
 
 GammaChess:
 No attacking
-Pieces are not allowed to cross each other
+Pieces are not allowed to cross each other - except for the knight
 Pieces are only allowed to move as in the real game
     Pawns can move 1 field forward
     rooks can move in straight lines horizontally and vertically

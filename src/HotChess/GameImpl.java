@@ -16,7 +16,7 @@ public class GameImpl implements Game {
     private BoardSetupStrategy _boardSetupStrategy;
     private MovingStrategy _movingStrategy;
 
-    public GameImpl(BoardSetupStrategy boardSetupStrategy, MovingStrategy movingStrategy, ChessGameFactory factory) {
+    public GameImpl(ChessGameFactory factory) {
         _boardSetupStrategy = factory.createBoardSetupStrategy();
         _movingStrategy = factory.createMovingStrategy();
         _playerInTurn = Color.WHITE;

@@ -14,7 +14,7 @@ public class TestBetaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(null, null, new BetaChessGameFactory());
+        _game = new GameImpl(new BetaChessGameFactory());
     }
 
     @Test

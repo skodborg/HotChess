@@ -1,5 +1,8 @@
 package HotChess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by marc on 07/12/13.
  */
@@ -67,16 +70,37 @@ public enum Position {
                 neighbours[i] = null;
             }
         }
-        /*
-        neighbours[0] = indexToEnum[p.index + INDEX_OF_NORTH_FIELD];
-        neighbours[1] = indexToEnum[p.index + INDEX_OF_NORTHEAST_FIELD];
-        neighbours[2] = indexToEnum[p.index + INDEX_OF_EAST_FIELD];
-        neighbours[3] = indexToEnum[p.index + INDEX_OF_SOUTHEAST_FIELD];
-        neighbours[4] = indexToEnum[p.index + INDEX_OF_SOUTH_FIELD];
-        neighbours[5] = indexToEnum[p.index + INDEX_OF_SOUTHWEST_FIELD];
-        neighbours[6] = indexToEnum[p.index + INDEX_OF_WEST_FIELD];
-        neighbours[7] = indexToEnum[p.index + INDEX_OF_NORTHWEST_FIELD];
-        */
         return neighbours;
+    }
+
+    /*
+    returns a list containing the positions on the horizontal line
+    across the board containing the position p
+     */
+
+    public static List<Position> getHorizontalPositions(Position p) {
+        ArrayList<Position> horizontalPositions = new ArrayList<Position>();
+        int i = p.index;
+        while (i > 7) {
+            i -= 8;
+        }
+        for (int j = 0; j < 8; j++) {
+            horizontalPositions.add(indexToEnum[i]);
+            i += 8;
+        }
+        return horizontalPositions;
+    }
+
+    public static List<Position> getVerticalPositions(Position p) {
+        ArrayList<Position> verticalPositions = new ArrayList<Position>();
+        int i = p.index;
+        while (!(i % 8 == 0)) {
+            i--;
+        }
+        for (int j = 0; j < 8; j++) {
+            verticalPositions.add(indexToEnum[i]);
+            i++;
+        }
+        return verticalPositions;
     }
 }

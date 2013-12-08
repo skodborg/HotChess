@@ -92,6 +92,47 @@ public class TestGammaChess {
                 _game.movePiece(Position.A4, Position.A5));
     }
 
+    @Test
+    public void shouldLetRooksMoveTwoFieldsForwardInOneMove() {
+        // white pawn moves
+        _game.movePiece(Position.A2, Position.A3);
 
+        // black pawn moves
+        _game.movePiece(Position.B7, Position.B6);
+
+        // white pawn moves again
+        _game.movePiece(Position.A3, Position.A4);
+
+        // black pawn moves
+        _game.movePiece(Position.B6, Position.B5);
+
+        // white rook moves 2 fields forward
+        assertTrue("rook should be able to move 2 fields forwards",
+                _game.movePiece(Position.A1, Position.A3));
+    }
+
+    @Test
+    public void shouldLetRooksMoveFourFieldsSidewaysInOneMove() {
+        // white pawn moves
+        _game.movePiece(Position.A2, Position.A3);
+
+        //black pawn moves
+        _game.movePiece(Position.B7, Position.B6);
+
+        // white pawn moves
+        _game.movePiece(Position.A3, Position.A4);
+
+        // black pawn moves
+        _game.movePiece(Position.B6, Position.B5);
+
+        // white rook moves ahead 1 field
+        _game.movePiece(Position.A1, Position.A3);
+
+        // black pawn moves
+        _game.movePiece(Position.B5, Position.B4);
+
+        // white rook should be able to move 4 fields sideways
+        _game.movePiece(Position.A3, Position.E3);
+    }
 
 }

@@ -1,6 +1,8 @@
 import HotChess.Position;
 import org.junit.Test;
 
+import java.util.List;
+
 import static junit.framework.Assert.*;
 
 public class TestPositionTools {
@@ -47,6 +49,46 @@ public class TestPositionTools {
                 Position.G7, neighbours[6]);
         assertEquals("eight neighbour should be G8",
                 Position.G8, neighbours[7]);
-
     }
+
+    @Test
+    public void shouldReturnHorizontalPositionsCorrectly() {
+        Position pos = Position.B4;
+        List<Position> horizontalPositions = Position.getHorizontalPositions(pos);
+        assertTrue("should contain Position B3",
+                horizontalPositions.contains(Position.A4));
+        assertTrue("should contain Position B2",
+                horizontalPositions.contains(Position.C4));
+        assertTrue("should contain Position B1",
+                horizontalPositions.contains(Position.D4));
+        assertTrue("should contain Position B5",
+                horizontalPositions.contains(Position.E4));
+        assertTrue("should contain Position B6",
+                horizontalPositions.contains(Position.F4));
+        assertTrue("should contain Position B7",
+                horizontalPositions.contains(Position.G4));
+        assertTrue("should contain Position B8",
+                horizontalPositions.contains(Position.H4));
+    }
+
+    @Test
+    public void shouldReturnVerticalPositionsCorrectly() {
+        Position pos = Position.A4;
+        List<Position> vertPositions = Position.getVerticalPositions(pos);
+        assertTrue("should contain Position B3",
+                vertPositions.contains(Position.A3));
+        assertTrue("should contain Position B2",
+                vertPositions.contains(Position.A2));
+        assertTrue("should contain Position B1",
+                vertPositions.contains(Position.A1));
+        assertTrue("should contain Position B5",
+                vertPositions.contains(Position.A5));
+        assertTrue("should contain Position B6",
+                vertPositions.contains(Position.A6));
+        assertTrue("should contain Position B7",
+                vertPositions.contains(Position.A7));
+        assertTrue("should contain Position B8",
+                vertPositions.contains(Position.A8));
+    }
+
 }

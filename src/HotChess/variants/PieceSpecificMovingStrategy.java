@@ -13,14 +13,32 @@ public class PieceSpecificMovingStrategy implements MovingStrategy {
             return false;
         }
 
-        // PAWN
-        // if the target position is equal to neighbours[0] for white and
-        // neighbours[4] for black, corresponding to the field just in
-        // front of the piece, then the move is legal
-        if (Color.BLACK == movingPiece.getColor()) {
-            return neighbours[4] == to;
+        if (movingPiece.getType().equals(GameConstants.PAWN)) {
+
+            // PAWN
+            // if the target position is equal to neighbours[0] for white and
+            // neighbours[4] for black, corresponding to the field just in
+            // front of the piece, then the move is legal
+            if (Color.BLACK == movingPiece.getColor()) {
+                return neighbours[4] == to;
+            } else {
+                return neighbours[0] == to;
+            }
         } else {
-            return neighbours[0] == to;
+
+            // ROOK
+            // if the target position is contained in the verticalPosition-list or
+            // the horizontalPosition-list and no unit is passed while traveling,
+            // then the move is legal
+
+            if (Position.getVerticalPositions(from).contains(to)) {
+
+                return true;
+            } else if (Position.getHorizontalPositions(from).contains(to)) {
+                return true;
+            }
+
+            return false;
         }
     }
 }

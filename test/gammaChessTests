@@ -1,5 +1,6 @@
 Movement:
-Pawns should be allowed to move 1 step forward
-Pawns should not be allowed to move 2 steps forward
-Pawns should not be allowed to move sideways
-Pawns should not be allowed to move diagonally
+Pawns should be allowed to move 1 step forward              D
+Pawns should not be allowed to move 2 steps forward         D
+Pawns should not be allowed to move sideways                D
+Pawns should not be allowed to move backwards               D
+Pawns should not be allowed to move diagonally              D

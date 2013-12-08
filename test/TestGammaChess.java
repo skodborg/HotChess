@@ -22,6 +22,28 @@ public class TestGammaChess {
                 _game.movePiece(Position.A2, Position.A3));
     }
 
+
+    @Test
+    public void shouldLetBlackPawnMoveOneFieldForwards() {
+        // white moves
+        _game.movePiece(Position.A2, Position.A3);
+
+        assertTrue("Should let black pawn at A7 move to A6",
+                _game.movePiece(Position.A7, Position.A6));
+    }
+
+    @Test
+    public void shouldNotLetWhitePawnMoveBackwards() {
+        // white moves
+        _game.movePiece(Position.A2, Position.A3);
+
+        // black moves
+        _game.movePiece(Position.A7, Position.A6);
+
+        assertFalse("Should not let white pawn at A3 move to A2",
+                _game.movePiece(Position.A3, Position.A2));
+    }
+
     @Test
     public void shouldNotLetWhitePawnMoveTwoFieldsForwards() {
         // white moves
@@ -32,6 +54,24 @@ public class TestGammaChess {
 
         assertFalse("Should not let white pawn at A3 move to A5",
                 _game.movePiece(Position.A3, Position.A5));
+    }
+
+    @Test
+    public void shouldNotLetWhitePawnMoveSideways() {
+        // white moves
+        _game.movePiece(Position.A2, Position.A3);
+
+        // black moves
+        _game.movePiece(Position.A7, Position.A6);
+
+        assertFalse("should not let white pawn move sideways",
+                _game.movePiece(Position.A3, Position.B3));
+    }
+
+    @Test
+    public void shouldNotLetWhitePawnMoveDiagonally() {
+        assertFalse("should not let white pawn move diagonally",
+                _game.movePiece(Position.A2, Position.B3));
     }
 
 

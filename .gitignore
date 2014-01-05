@@ -48,3 +48,5 @@ out/production/HotChess/responsibilities.txt
 *.class
 
 HotChess.iml
+
+src/HotChess/variants/PawnMovementIterator.java

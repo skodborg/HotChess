@@ -1,5 +1,3 @@
-import HotChess.*;
-import HotChess.variants.factories.BetaChessGameFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +12,7 @@ public class TestBetaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new BetaChessGameFactory());
+        _game = new GameImpl(new FullBoardSetupStrategy(), null);
     }
 
     @Test

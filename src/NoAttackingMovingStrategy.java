@@ -1,9 +1,3 @@
-package HotChess.variants;
-
-import HotChess.Game;
-import HotChess.MovingStrategy;
-import HotChess.Position;
-
 /**
  * Created by marc on 07/12/13.
  */

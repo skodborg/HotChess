@@ -1,5 +1,3 @@
-package HotChess;
-
 import java.util.Map;
 
 /**

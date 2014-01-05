@@ -1,5 +1,3 @@
-import HotChess.*;
-import HotChess.variants.factories.AlphaChessGameFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ public class TestAlphaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new AlphaChessGameFactory());
+        _game = new GameImpl(new SimpleBoardSetupStrategy(), new NoAttackingMovingStrategy());
     }
 
     @Test

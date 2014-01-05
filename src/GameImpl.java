@@ -10,7 +10,7 @@ public class GameImpl implements Game {
 
     private Color _playerInTurn;
     private int _turnsPlayed;
-    private Map<Position, Piece> _pieceMap;
+    private Map<BoardPosition, Piece> _pieceMap;
     private BoardSetupStrategy _boardSetupStrategy;
     private MovingStrategy _movingStrategy;
 
@@ -23,7 +23,7 @@ public class GameImpl implements Game {
     }
 
     private void setupPieces() {
-        _pieceMap = new HashMap<Position, Piece>();
+        _pieceMap = new HashMap<BoardPosition, Piece>();
 
         _boardSetupStrategy.setupPieces(_pieceMap);
     }
@@ -42,12 +42,12 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public Piece getPieceAtPosition(Position p) {
+    public Piece getPieceAtPosition(BoardPosition p) {
         return _pieceMap.get(p);
     }
 
     @Override
-    public boolean movePiece(Position from, Position to) {
+    public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
             performPieceMove(from, to);
             swapPlayerTurn();
@@ -59,11 +59,11 @@ public class GameImpl implements Game {
         }
     }
 
-    private boolean isMoveValid(Position from, Position to) {
+    public boolean isMoveValid(BoardPosition from, BoardPosition to) {
         return _movingStrategy.isMoveValid(this, from, to);
     }
 
-    private void performPieceMove(Position from, Position to) {
+    private void performPieceMove(BoardPosition from, BoardPosition to) {
         Piece pieceToMove = _pieceMap.get(from);
         _pieceMap.put(to, pieceToMove);
         _pieceMap.remove(from);

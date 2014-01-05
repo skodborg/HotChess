@@ -3,7 +3,7 @@
  */
 public class AttacksAllowedMovingStrategy implements MovingStrategy {
     @Override
-    public boolean isMoveValid(Game game, Position from, Position to) {
+    public boolean isMoveValid(Game game, BoardPosition from, BoardPosition to) {
 
         Color playerInTurn = game.getPlayerInTurn();
         Piece movingPiece = game.getPieceAtPosition(from);

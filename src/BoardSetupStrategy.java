@@ -5,5 +5,5 @@ import java.util.Map;
  */
 public interface BoardSetupStrategy {
 
-    void setupPieces(Map<Position, Piece> pieceMap);
+    void setupPieces(Map<BoardPosition, Piece> pieceMap);
 }

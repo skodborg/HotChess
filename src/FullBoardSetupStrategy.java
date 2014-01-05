@@ -5,50 +5,50 @@ import java.util.Map;
  */
 public class FullBoardSetupStrategy implements BoardSetupStrategy {
     @Override
-    public void setupPieces(Map<Position, Piece> pieceMap) {
+    public void setupPieces(Map<BoardPosition, Piece> pieceMap) {
 
         // pawns
-        pieceMap.put(Position.A2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.B2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.C2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.D2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.E2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.F2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.G2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.H2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
-        pieceMap.put(Position.A7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.B7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.C7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.D7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.E7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.F7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.G7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
-        pieceMap.put(Position.H7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.A2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.B2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.C2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.D2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.E2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.F2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.G2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.H2, new PieceImpl(GameConstants.PAWN, Color.WHITE));
+        pieceMap.put(BoardPosition.A7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.B7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.C7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.D7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.E7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.F7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.G7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
+        pieceMap.put(BoardPosition.H7, new PieceImpl(GameConstants.PAWN, Color.BLACK));
 
         // rooks
-        pieceMap.put(Position.A1, new PieceImpl(GameConstants.ROOK, Color.WHITE));
-        pieceMap.put(Position.H1, new PieceImpl(GameConstants.ROOK, Color.WHITE));
-        pieceMap.put(Position.A8, new PieceImpl(GameConstants.ROOK, Color.BLACK));
-        pieceMap.put(Position.H8, new PieceImpl(GameConstants.ROOK, Color.BLACK));
+        pieceMap.put(BoardPosition.A1, new PieceImpl(GameConstants.ROOK, Color.WHITE));
+        pieceMap.put(BoardPosition.H1, new PieceImpl(GameConstants.ROOK, Color.WHITE));
+        pieceMap.put(BoardPosition.A8, new PieceImpl(GameConstants.ROOK, Color.BLACK));
+        pieceMap.put(BoardPosition.H8, new PieceImpl(GameConstants.ROOK, Color.BLACK));
 
         // knights
-        pieceMap.put(Position.B1, new PieceImpl(GameConstants.KNIGHT, Color.WHITE));
-        pieceMap.put(Position.G1, new PieceImpl(GameConstants.KNIGHT, Color.WHITE));
-        pieceMap.put(Position.B8, new PieceImpl(GameConstants.KNIGHT, Color.BLACK));
-        pieceMap.put(Position.G8, new PieceImpl(GameConstants.KNIGHT, Color.BLACK));
+        pieceMap.put(BoardPosition.B1, new PieceImpl(GameConstants.KNIGHT, Color.WHITE));
+        pieceMap.put(BoardPosition.G1, new PieceImpl(GameConstants.KNIGHT, Color.WHITE));
+        pieceMap.put(BoardPosition.B8, new PieceImpl(GameConstants.KNIGHT, Color.BLACK));
+        pieceMap.put(BoardPosition.G8, new PieceImpl(GameConstants.KNIGHT, Color.BLACK));
 
         // bishops
-        pieceMap.put(Position.C1, new PieceImpl(GameConstants.BISHOP, Color.WHITE));
-        pieceMap.put(Position.F1, new PieceImpl(GameConstants.BISHOP, Color.WHITE));
-        pieceMap.put(Position.C8, new PieceImpl(GameConstants.BISHOP, Color.BLACK));
-        pieceMap.put(Position.F8, new PieceImpl(GameConstants.BISHOP, Color.BLACK));
+        pieceMap.put(BoardPosition.C1, new PieceImpl(GameConstants.BISHOP, Color.WHITE));
+        pieceMap.put(BoardPosition.F1, new PieceImpl(GameConstants.BISHOP, Color.WHITE));
+        pieceMap.put(BoardPosition.C8, new PieceImpl(GameConstants.BISHOP, Color.BLACK));
+        pieceMap.put(BoardPosition.F8, new PieceImpl(GameConstants.BISHOP, Color.BLACK));
 
         // queens
-        pieceMap.put(Position.D1, new PieceImpl(GameConstants.QUEEN, Color.WHITE));
-        pieceMap.put(Position.D8, new PieceImpl(GameConstants.QUEEN, Color.BLACK));
+        pieceMap.put(BoardPosition.D1, new PieceImpl(GameConstants.QUEEN, Color.WHITE));
+        pieceMap.put(BoardPosition.D8, new PieceImpl(GameConstants.QUEEN, Color.BLACK));
 
         // kings
-        pieceMap.put(Position.E1, new PieceImpl(GameConstants.KING, Color.WHITE));
-        pieceMap.put(Position.E8, new PieceImpl(GameConstants.KING, Color.BLACK));
+        pieceMap.put(BoardPosition.E1, new PieceImpl(GameConstants.KING, Color.WHITE));
+        pieceMap.put(BoardPosition.E8, new PieceImpl(GameConstants.KING, Color.BLACK));
     }
 }

@@ -17,11 +17,11 @@ public class TestDeltaChess {
 
     @Test
     public void shouldLetWhitePawnAttackBlackPawn() {
-        Piece whitePiece = _game.getPieceAtPosition(Position.A2);
+        Piece whitePiece = _game.getPieceAtPosition(BoardPosition.A2);
 
         assertTrue("white pawn should be allowed to attack black pawn",
-                _game.movePiece(Position.A2, Position.A7));
+                _game.movePiece(BoardPosition.A2, BoardPosition.A7));
         assertEquals("white should now be at the position of the defeated black pawn",
-                whitePiece, _game.getPieceAtPosition(Position.A7));
+                whitePiece, _game.getPieceAtPosition(BoardPosition.A7));
     }
 }

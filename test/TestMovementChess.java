@@ -32,7 +32,7 @@ public class TestMovementChess {
         _game.movePiece(BoardPosition.A2, BoardPosition.A3);
         // black moves
         _game.movePiece(BoardPosition.A7, BoardPosition.A6);
-        assertFalse("white attempts to move distance two with a pawn in one move",
+        assertFalse("should not let white move distance two with a pawn in one move",
                 _game.movePiece(BoardPosition.A3, BoardPosition.A5));
     }
 }

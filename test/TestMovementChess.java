@@ -9,7 +9,7 @@ public class TestMovementChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new FullBoardSetupStrategy());
+        _game = new GameImpl(new MovementTestingBoardSetupStrategy());
     }
 
     @Test

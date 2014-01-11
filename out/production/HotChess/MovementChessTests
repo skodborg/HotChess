@@ -4,5 +4,5 @@ List of tests for implementing correct chess piece movement
 D   White Pawns should be allowed to move 1 step forward
 D   Black Pawns should be allowed to move 1 step forward
 D   Pawns should not be allowed to move 2 steps forward in one move
-Pawns cannot move sideways in any way
+D   Pawns cannot move sideways in any way
 D   Pawns cannot move backwards

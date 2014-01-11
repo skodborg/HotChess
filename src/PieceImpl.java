@@ -14,6 +14,12 @@ public class PieceImpl implements Piece {
         _pieceColor = pieceColor;
     }
 
+    public PieceImpl(PieceFactory pieceFactory) {
+        _pieceMoveRuleStrategy = pieceFactory.getMoveRuleStrategy();
+        _pieceType = pieceFactory.getPieceType();
+        _pieceColor = pieceFactory.getPieceColor();
+    }
+
     @Override
     public Color getColor() {
         return _pieceColor;

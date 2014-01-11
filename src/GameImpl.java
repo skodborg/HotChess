@@ -12,11 +12,9 @@ public class GameImpl implements Game {
     private int _turnsPlayed;
     private Map<BoardPosition, Piece> _pieceMap;
     private BoardSetupStrategy _boardSetupStrategy;
-    private MovingStrategy _movingStrategy;
 
-    public GameImpl(BoardSetupStrategy boardSetupStrategy, MovingStrategy movingStrategy) {
+    public GameImpl(BoardSetupStrategy boardSetupStrategy) {
         _boardSetupStrategy = boardSetupStrategy;
-        _movingStrategy = movingStrategy;
         _playerInTurn = Color.WHITE;
         _turnsPlayed = 0;
         setupPieces();
@@ -60,7 +58,7 @@ public class GameImpl implements Game {
     }
 
     public boolean isMoveValid(BoardPosition from, BoardPosition to) {
-        return _movingStrategy.isMoveValid(this, from, to);
+        return true;
     }
 
     private void performPieceMove(BoardPosition from, BoardPosition to) {

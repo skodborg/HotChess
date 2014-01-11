@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class PieceImpl implements Piece {
     private final String _pieceType;
     private final Color _pieceColor;
-    private final PieceMoveRuleStrategy _pieceMoveRuleStrategy;
+    private PieceMoveRuleStrategy _pieceMoveRuleStrategy;
 
     public PieceImpl(String pieceType, Color pieceColor, PieceMoveRuleStrategy pieceMoveRuleStrategy) {
         _pieceMoveRuleStrategy = pieceMoveRuleStrategy;

@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class NullPieceMoveRuleStrategy implements PieceMoveRuleStrategy {
+public class NullMoveRuleStrategy implements PieceMoveRuleStrategy {
     @Override
     public Iterator<BoardPosition> iterator(BoardPosition from) {
         return null;

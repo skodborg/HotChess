@@ -6,13 +6,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by marc on 07/12/13.
  */
-public class TestBetaChess {
+public class TestBoardPieceSetup {
 
     private Game _game;
 
     @Before
     public void setup() {
-        _game = new GameImpl(new FullBoardSetupStrategy(), null);
+        _game = new GameImpl(new FullBoardSetupStrategy());
     }
 
     @Test

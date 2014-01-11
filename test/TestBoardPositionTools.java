@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import static junit.framework.Assert.*;
 
-public class TestBoardPosition {
+public class TestBoardPositionTools {
 
     @Test
     public void shouldReturnA3NorthOfA2() {

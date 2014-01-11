@@ -13,7 +13,7 @@ public class TestAlphaChess {
 
     @Before
     public void setup() {
-        _game = new GameImpl(new SimpleBoardSetupStrategy(), new NoAttackingMovingStrategy());
+        _game = new GameImpl(new SimpleBoardSetupStrategy());
     }
 
     @Test
@@ -187,16 +187,6 @@ public class TestAlphaChess {
     }
 
     @Test
-    public void shouldNotLetWhiteMoveBlackPawn() {
-        assertEquals("check that white is in turn",
-                Color.WHITE, _game.getPlayerInTurn());
-        assertEquals("check that piece is black",
-                Color.BLACK, _game.getPieceAtPosition(BoardPosition.A7).getColor());
-        assertFalse("should not let white move a black pawn",
-                _game.movePiece(BoardPosition.A7, BoardPosition.A6));
-    }
-
-    @Test
     public void shouldLetBlackMoveBlackPawnAtA7ToA6() {
         // perform white move to let black be in turn
         _game.movePiece(BoardPosition.A2, BoardPosition.A3);
@@ -208,31 +198,6 @@ public class TestAlphaChess {
                 _game.movePiece(BoardPosition.A7, BoardPosition.A6));
         assertEquals("piece should have moved successfully from A7 to A6",
                 pieceAtFrom, _game.getPieceAtPosition(BoardPosition.A6));
-    }
-
-    @Test
-    public void shouldNotLetBlackMoveWhitePawn() {
-        // perform white move to let black be in turn
-        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
-
-        assertFalse("should not let black move a white pawn",
-                _game.movePiece(BoardPosition.B2, BoardPosition.B3));
-    }
-
-    @Test
-    public void shouldNotLetWhiteMoveToFieldOccupiedByAnotherWhitePiece() {
-        BoardPosition whitePawnPos = BoardPosition.B2;
-        BoardPosition otherWhitePawnPos = BoardPosition.A2;
-        assertFalse("Should not let white move a piece to an occupied field",
-                _game.movePiece(whitePawnPos, otherWhitePawnPos));
-    }
-
-    @Test
-    public void shouldNotLetWhiteMoveToFieldOccupiedByBlackPiece() {
-        BoardPosition whitePawnPos = BoardPosition.B2;
-        BoardPosition blackPawnPos = BoardPosition.A7;
-        assertFalse("Should not let white piece attack a black one",
-                _game.movePiece(whitePawnPos, blackPawnPos));
     }
 
 }

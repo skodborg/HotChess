@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -58,7 +59,29 @@ public class GameImpl implements Game {
     }
 
     public boolean isMoveValid(BoardPosition from, BoardPosition to) {
-        return true;
+        Piece movingPiece = getPieceAtPosition(from);
+
+
+        Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from);
+        boolean match = false;
+        while (it.hasNext()) {
+            BoardPosition currPos = it.next();
+            if (currPos == to) {
+                match = true;
+            }
+        }
+
+        // if the player in turn is moving his own piece and
+        // the target position is not already occupied, the move
+        // is legal
+
+        if (movingPiece.getColor() == getPlayerInTurn() &&
+                getPieceAtPosition(to) == null &&
+                match) {
+            return true;
+        }
+        // check piece move rules
+        return false;
     }
 
     private void performPieceMove(BoardPosition from, BoardPosition to) {

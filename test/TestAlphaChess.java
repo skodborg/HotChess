@@ -77,31 +77,6 @@ public class TestAlphaChess {
                 Color.NONE, _game.getWinner());
     }
 
-    @Test
-    public void shouldLetWhiteBeWinnerAfterRoundFive() {
-        for (int i = 0; i < 2; i++) {
-            // White player moves his pawn from A2 to A3
-            _game.movePiece(BoardPosition.A2, BoardPosition.A3);
-            // Black player moves his pawn from A7 to A6
-            _game.movePiece(BoardPosition.A7, BoardPosition.A6);
-
-            // White player moves his pawn from A3 to A2
-            _game.movePiece(BoardPosition.A3, BoardPosition.A2);
-            // Black player moves his pawn from A6 to A7
-            _game.movePiece(BoardPosition.A6, BoardPosition.A7);
-        }
-        // 4 rounds has now passed
-
-        // White player moves his pawn from A2 to A3
-        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
-        // Black player moves his pawn from A7 to A6
-        _game.movePiece(BoardPosition.A7, BoardPosition.A6);
-
-        // 5 rounds has passed
-
-        assertEquals("White should be the winner of the game now",
-                Color.WHITE, _game.getWinner());
-    }
 
     @Test
     public void shouldHaveWhitePawnAtPosA2() {
@@ -184,6 +159,41 @@ public class TestAlphaChess {
                 _game.movePiece(BoardPosition.A2, BoardPosition.A3));
         assertEquals("piece should have moved successfully from A2 to A3",
                 pieceAtFrom, _game.getPieceAtPosition(BoardPosition.A3));
+    }
+
+    @Test
+    public void shouldNotLetWhiteMoveBlackPawn() {
+        assertEquals("check that white is in turn",
+                Color.WHITE, _game.getPlayerInTurn());
+        assertEquals("check that piece is black",
+                Color.BLACK, _game.getPieceAtPosition(BoardPosition.A7).getColor());
+        assertFalse("should not let white move a black pawn",
+                _game.movePiece(BoardPosition.A7, BoardPosition.A6));
+    }
+
+    @Test
+    public void shouldNotLetBlackMoveWhitePawn() {
+        // perform white move to let black be in turn
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        assertFalse("should not let black move a white pawn",
+                _game.movePiece(BoardPosition.B2, BoardPosition.B3));
+    }
+
+    @Test
+    public void shouldNotLetWhiteMoveToFieldOccupiedByAnotherWhitePiece() {
+        BoardPosition whitePawnPos = BoardPosition.B2;
+        BoardPosition otherWhitePawnPos = BoardPosition.A2;
+        assertFalse("Should not let white move a piece to an occupied field",
+                _game.movePiece(whitePawnPos, otherWhitePawnPos));
+    }
+
+    @Test
+    public void shouldNotLetWhiteMoveToFieldOccupiedByBlackPiece() {
+        BoardPosition whitePawnPos = BoardPosition.B2;
+        BoardPosition blackPawnPos = BoardPosition.A7;
+        assertFalse("Should not let white piece attack a black one",
+                _game.movePiece(whitePawnPos, blackPawnPos));
     }
 
     @Test

@@ -1,3 +1,4 @@
+import java.util.*;
 
 /**
  * Created by marc on 07/12/13.
@@ -57,5 +58,47 @@ public enum BoardPosition {
         }
 
         return indexToEnum[index];
+    }
+
+    /*
+    returns a list with all the positions in the vertical column which the parameter position is in
+     */
+    public static Set<BoardPosition> getVerticalPositions(BoardPosition source) {
+        Set<BoardPosition> positionSet = new TreeSet<BoardPosition>();
+
+        // adding the vertical positions in the upward direction
+        for (int i = source._index; i <= MAX_POS_INDEX; i += 8) {
+            positionSet.add(indexToEnum[i]);
+        }
+
+        // adding the vertical positions in the downward direction
+        for (int i = source._index; i >= 0; i -= 8) {
+            positionSet.add(indexToEnum[i]);
+        }
+
+        return positionSet;
+    }
+
+    /*
+    returns a list with all the positions in the horizontal row which the parameter position is in
+     */
+    public static Set<BoardPosition> getHorizontalPositions(BoardPosition source) {
+        Set<BoardPosition> positionSet = new TreeSet<BoardPosition>();
+
+        int i = source._index;
+
+        // add the positions to the right of the source position
+        while ((i + 1) % 8 != 0) {
+            i++;
+            positionSet.add(indexToEnum[i]);
+        }
+
+        // add the positions to the left of the source position
+        while (i % 8 != 0) {
+            i--;
+            positionSet.add(indexToEnum[i]);
+        }
+
+        return positionSet;
     }
 }

@@ -6,3 +6,13 @@ D   Black Pawns should be allowed to move 1 step forward
 D   Pawns should not be allowed to move 2 steps forward in one move
 D   Pawns cannot move sideways in any way
 D   Pawns cannot move backwards
+
+D   White Rooks can move 2 fields vertically forward
+D   White Rooks can move 3 fields vertically forward
+D   White Rooks can move 2 fields horizontally
+D   White Rooks can move 3 fields horizontally
+D   Black Rooks can move 2 fields vertically
+D   Black Rooks can move 2 fields horizontally
+D   White Rooks can move backwards vertically
+D   White Rook cannot move diagonally
+White Rook cannot move through other pieces

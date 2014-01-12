@@ -1,7 +1,7 @@
 public class BlackRookPieceFactory implements PieceFactory {
     @Override
     public PieceMoveRuleStrategy getMoveRuleStrategy() {
-        return null;
+        return new RookMoveRuleStrategy();
     }
 
     @Override

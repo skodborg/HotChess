@@ -2,17 +2,17 @@ import java.util.Map;
 
 /*
 Movement Testing Chess Board Layout:
-
------------------
-|x x x x x x x x|
-|x P R x x x x x|
-|x x x x x x x x|
-|x x x x x x x x|
-|x x x x x x x x|
-|x x x x x x x x|
-|x p r x x x x x|
-|x x x x x x x x|
------------------
+   A B C D E F G H
+  -----------------
+8 |x x x x x x x x|
+7 |P R x x x x x x|
+6 |x x x x x x x x|
+5 |x x x x x x x x|
+4 |x x x x x x x x|
+3 |x x x x x x x x|
+2 |p r x x x x x x|
+1 |x x x x x x x x|
+  -----------------
 
 BIG letters = Black piece
 small letters = White piece

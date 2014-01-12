@@ -51,4 +51,61 @@ public class TestMovementChess {
         assertFalse("should not let white pawn move diagonally",
                 _game.movePiece(BoardPosition.A2, BoardPosition.B3));
     }
+
+    @Test
+    public void shouldLetWhiteRookMoveTwoPositionsVertically() {
+        assertTrue("white rook should be allowed to move two positions vertically forward",
+                _game.movePiece(BoardPosition.B2, BoardPosition.B4));
+    }
+
+    @Test
+    public void shouldLetWhiteRookMoveThreePositionsVertically() {
+        assertTrue("white rook should be allowed to move three positions vertically forward",
+                _game.movePiece(BoardPosition.B2, BoardPosition.B5));
+    }
+
+    @Test
+    public void shouldLetRookMoveTwoPositionsHorizontally() {
+        assertTrue("white rook should be allowed to move two positions horizontally",
+                _game.movePiece(BoardPosition.B2, BoardPosition.D2));
+    }
+
+    @Test
+    public void shouldLetRookMoveThreePositionsHorizontally() {
+        assertTrue("white rook should be allowed to move three positions horizontally",
+                _game.movePiece(BoardPosition.B2, BoardPosition.E2));
+    }
+
+    @Test
+    public void shouldLetBlackRookMoveTwoPositionsVertically() {
+        // white makes an initial move
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue("black rook should be allowed to move two positions vertically forward",
+                _game.movePiece(BoardPosition.B7, BoardPosition.B5));
+    }
+
+    @Test
+    public void shouldLetBlackRookMoveTwoPositionsHorizontally() {
+        // white makes an initial move
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue("black rook should be allowed to move two positions horizontally",
+                _game.movePiece(BoardPosition.B7, BoardPosition.D7));
+    }
+
+    @Test
+    public void shouldLetWhiteRookMoveBackwardsVertically() {
+        assertTrue("should let white rook move backwards",
+                _game.movePiece(BoardPosition.B2, BoardPosition.B1));
+    }
+
+    @Test
+    public void shouldNotLetWhiteRookMoveDiagonally() {
+        assertFalse("should not let white rook move diagonally",
+                _game.movePiece(BoardPosition.B2, BoardPosition.C3));
+    }
+
 }

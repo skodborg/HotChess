@@ -101,4 +101,27 @@ public enum BoardPosition {
 
         return positionSet;
     }
+
+    /*
+    returns a list with all the positions in the diagonal direction from bottom left to top right: " / "
+     */
+    public static Set<BoardPosition> getRightDiagonalPositions(BoardPosition source) {
+        Set<BoardPosition> positionSet = new TreeSet<BoardPosition>();
+
+        int i = source._index;
+
+        // find positions from source towards lower left corner
+        while (i % 8 != 0 && i > 7) {
+            i -= 9;
+            positionSet.add(indexToEnum[i]);
+        }
+
+        // find positions from source towards upper right corner
+        while ((i + 1) % 8 != 0 && i < 56) {
+            i += 9;
+            positionSet.add(indexToEnum[i]);
+        }
+
+        return positionSet;
+    }
 }

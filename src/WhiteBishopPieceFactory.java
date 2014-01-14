@@ -1,16 +1,16 @@
 public class WhiteBishopPieceFactory implements PieceFactory {
     @Override
     public PieceMoveRuleStrategy getMoveRuleStrategy() {
-        return null;
+        return new BishopMoveRuleStrategy();
     }
 
     @Override
     public String getPieceType() {
-        return null;
+        return GameConstants.BISHOP;
     }
 
     @Override
     public Color getPieceColor() {
-        return null;
+        return Color.WHITE;
     }
 }

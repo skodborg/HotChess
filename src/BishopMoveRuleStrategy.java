@@ -6,6 +6,7 @@ public class BishopMoveRuleStrategy implements PieceMoveRuleStrategy {
     public Iterator<BoardPosition> iterator(BoardPosition from) {
         ArrayList<BoardPosition> validPositions = new ArrayList<BoardPosition>();
         validPositions.addAll(BoardPosition.getRightDiagonalPositions(from));
+        validPositions.addAll(BoardPosition.getLeftDiagonalPositions(from));
         return validPositions.iterator();
     }
 }

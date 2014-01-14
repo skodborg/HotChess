@@ -131,4 +131,10 @@ public class TestMovementChess {
         assertTrue("should let white bishop move 2 positions diagonally forward",
                 _game.movePiece(BoardPosition.D3, BoardPosition.F5));
     }
+
+    @Test
+    public void shouldLetWhiteBishopMoveThreePositionsDiagonally() {
+        assertTrue("should let white bishop move 3 positions diagonally forward",
+                _game.movePiece(BoardPosition.D3, BoardPosition.A6));
+    }
 }

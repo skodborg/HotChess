@@ -16,3 +16,10 @@ D   Black Rooks can move 2 fields horizontally
 D   White Rooks can move backwards vertically
 D   White Rook cannot move diagonally
 White Rook cannot move through other pieces
+
+White Bishop can move 2 fields diagonally
+White Bishop can move 3 fields diagonally
+White Bishop can move backwards diagonally
+Black Bishop can move 2 fields diagonally
+White Bishop cannot move horizontally
+Black Bishop cannot move vertically

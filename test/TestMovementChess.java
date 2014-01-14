@@ -12,6 +12,12 @@ public class TestMovementChess {
         _game = new GameImpl(new MovementTestingBoardSetupStrategy());
     }
 
+    /*
+    -------------------------
+    Pawn tests
+    -------------------------
+     */
+
     @Test
     public void shouldLetWhitePawnMove1StepForwardInitially() {
         assertTrue("should let white pawn move 1 step forward initially",
@@ -44,6 +50,12 @@ public class TestMovementChess {
         assertFalse("should not let white pawn move backwards",
                 _game.movePiece(BoardPosition.A3, BoardPosition.A2));
     }
+
+    /*
+    -------------------------
+    Rook tests
+    -------------------------
+     */
 
     @Test
     public void shouldNotLetWhitePawnMoveDiagonally() {
@@ -108,4 +120,15 @@ public class TestMovementChess {
                 _game.movePiece(BoardPosition.B2, BoardPosition.C3));
     }
 
+    /*
+    -------------------------
+    Bishop tests
+    -------------------------
+     */
+
+    @Test
+    public void shouldLetWhiteBishopMoveTwoPositionsDiagonally() {
+        assertTrue("should let white bishop move 2 positions diagonally forward",
+                _game.movePiece(BoardPosition.D3, BoardPosition.F5));
+    }
 }

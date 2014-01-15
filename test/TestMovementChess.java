@@ -137,4 +137,30 @@ public class TestMovementChess {
         assertTrue("should let white bishop move 3 positions diagonally forward",
                 _game.movePiece(BoardPosition.D3, BoardPosition.A6));
     }
+
+    @Test
+    public void shouldLetWhiteBishopMoveDiagonallyBackwards() {
+        assertTrue("should let white bishop move 2 positions diagonally backwards",
+                _game.movePiece(BoardPosition.D3, BoardPosition.B1));
+    }
+
+    @Test
+    public void shouldLetBlackBishopMoveDiagonally() {
+        // white is in turn, moving a pawn
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is in turn
+        assertTrue("should let black bishop move diagonally forward",
+                _game.movePiece(BoardPosition.D8, BoardPosition.F6));
+    }
+
+    @Test
+    public void shouldNotLetWhiteBishopMoveHorizontally() {
+        assertFalse(_game.movePiece(BoardPosition.D3, BoardPosition.B3));
+    }
+
+    @Test
+    public void shouldNotLetBlackBishopMoveVertically() {
+        assertFalse(_game.movePiece(BoardPosition.D8, BoardPosition.D6));
+    }
 }

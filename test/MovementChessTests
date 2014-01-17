@@ -6,7 +6,7 @@ D   Black Pawns should be allowed to move 1 step forward
 D   Pawns should not be allowed to move 2 steps forward in one move
 D   Pawns cannot move sideways in any way
 D   Pawns cannot move backwards
-Should not let Pawn move to its own position (not moving)
+D   Should not let Pawn move to its own position (not moving)
 
 D   White Rooks can move 2 fields vertically forward
 D   White Rooks can move 3 fields vertically forward
@@ -17,7 +17,7 @@ D   Black Rooks can move 2 fields horizontally
 D   White Rooks can move backwards vertically
 D   White Rook cannot move diagonally
 White Rook cannot move through other pieces
-Should not let Rook move to its own position (not moving)
+D   Should not let Rook move to its own position (not moving)
 
 D   White Bishop can move 2 fields diagonally
 D   White Bishop can move 3 fields diagonally
@@ -25,4 +25,4 @@ D   White Bishop can move backwards diagonally
 D   Black Bishop can move 2 fields diagonally
 D   White Bishop cannot move horizontally
 D   Black Bishop cannot move vertically
-Should not let Bishop move to its own position (not moving)
+D   Should not let Bishop move to its own position (not moving)

@@ -51,6 +51,11 @@ public class TestMovementChess {
                 _game.movePiece(BoardPosition.A3, BoardPosition.A2));
     }
 
+    @Test
+    public void shouldNotLetPawnMoveToOwnPosition() {
+        assertFalse(_game.movePiece(BoardPosition.A2, BoardPosition.A2));
+    }
+
     /*
     -------------------------
     Rook tests
@@ -120,6 +125,11 @@ public class TestMovementChess {
                 _game.movePiece(BoardPosition.B2, BoardPosition.C3));
     }
 
+    @Test
+    public void shouldNotLetRookMoveToOwnPosition() {
+        assertFalse(_game.movePiece(BoardPosition.B2, BoardPosition.B2));
+    }
+
     /*
     -------------------------
     Bishop tests
@@ -162,5 +172,10 @@ public class TestMovementChess {
     @Test
     public void shouldNotLetBlackBishopMoveVertically() {
         assertFalse(_game.movePiece(BoardPosition.D8, BoardPosition.D6));
+    }
+
+    @Test
+    public void shouldNotLetBishopMoveToOwnPosition() {
+        assertFalse(_game.movePiece(BoardPosition.D3, BoardPosition.D3));
     }
 }

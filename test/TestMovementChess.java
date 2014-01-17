@@ -178,4 +178,15 @@ public class TestMovementChess {
     public void shouldNotLetBishopMoveToOwnPosition() {
         assertFalse(_game.movePiece(BoardPosition.D3, BoardPosition.D3));
     }
+
+    /*
+    -------------------------
+    Queen tests
+    -------------------------
+     */
+
+    @Test
+    public void shouldLetWhiteQueenMoveOnePositionDiagonally() {
+        assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.G4));
+    }
 }

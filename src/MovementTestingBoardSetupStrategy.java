@@ -4,12 +4,12 @@ import java.util.Map;
 Movement Testing Chess Board Layout:
    A B C D E F G H
   -----------------
-8 |x x x B x x x x|
+8 |x x x B x Q x x|
 7 |P R x x x x x x|
 6 |x x x x x x x x|
 5 |x x x x x x x x|
 4 |x x x x x x x x|
-3 |x x x b x x x x|
+3 |x x x b x q x x|
 2 |p r x x x x x x|
 1 |x x x x x x x x|
   -----------------
@@ -37,6 +37,9 @@ public class MovementTestingBoardSetupStrategy implements BoardSetupStrategy {
         // bishops
         pieceMap.put(BoardPosition.D3, new PieceImpl(new WhiteBishopPieceFactory()));
         pieceMap.put(BoardPosition.D8, new PieceImpl(new BlackBishopPieceFactory()));
+
+        pieceMap.put(BoardPosition.F3, new PieceImpl(new WhiteQueenPieceFactory()));
+        pieceMap.put(BoardPosition.F8, new PieceImpl(new BlackQueenPieceFactory()));
 
     }
 }

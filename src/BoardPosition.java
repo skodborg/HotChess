@@ -60,6 +60,26 @@ public enum BoardPosition {
         return indexToEnum[index];
     }
 
+    public static BoardPosition east(BoardPosition from) {
+        int index = from._index + 1;
+
+        if (index % 8 == 0) {
+            return null;
+        }
+
+        return indexToEnum[index];
+    }
+
+    public static BoardPosition west(BoardPosition from) {
+        int index = from._index - 1;
+
+        if ((index + 1) % 8 == 0) {
+            return null;
+        }
+
+        return indexToEnum[index];
+    }
+
     /*
     returns a list with all the positions in the vertical column which the parameter position is in
      */

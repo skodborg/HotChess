@@ -37,4 +37,4 @@ D   Queen cannot move when not horizontal, vertical or diagonal
 D   Black Queen can move 1 field vertically
 D   Black Queen can move 1 field horizontally
 D   Black Queen can move 1 field diagonally
-Queen cannot move to its own position (not moving)
+D   Queen cannot move to its own position (not moving)

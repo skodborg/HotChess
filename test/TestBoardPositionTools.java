@@ -105,4 +105,20 @@ public class TestBoardPositionTools {
         assertTrue("should contain position D7", positionSet.contains(BoardPosition.D7));
         assertTrue("should contain position C8", positionSet.contains(BoardPosition.C8));
     }
+
+    @Test
+    public void shouldReturnCorrectEastPositions() {
+        assertEquals("B1 east of A1", BoardPosition.B1, BoardPosition.east(BoardPosition.A1));
+        assertEquals("F5 east of E5", BoardPosition.F5, BoardPosition.east(BoardPosition.E5));
+        assertNull("null east of right board border position H3", BoardPosition.east(BoardPosition.H3));
+        assertNull("null east of right board border position H1", BoardPosition.east(BoardPosition.H1));
+    }
+
+    @Test
+    public void shouldReturnCorrectWestPositions() {
+        assertEquals("A1 west of B1", BoardPosition.A1, BoardPosition.west(BoardPosition.B1));
+        assertEquals("E5 west of F5", BoardPosition.E5, BoardPosition.west(BoardPosition.F5));
+        assertNull("null west of left board border position A3", BoardPosition.west(BoardPosition.A3));
+        assertNull("null west of left board border position A1", BoardPosition.west(BoardPosition.A1));
+    }
 }

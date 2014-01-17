@@ -189,4 +189,67 @@ public class TestMovementChess {
     public void shouldLetWhiteQueenMoveOnePositionDiagonally() {
         assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.G4));
     }
+
+    @Test
+    public void shouldLetWhiteQueenMoveTwoPositionDiagonally() {
+        assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.H5));
+    }
+
+    @Test
+    public void shouldLetWhiteQueenMoveOnePositionHorizontally() {
+        assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.G3));
+    }
+
+    @Test
+    public void shouldLetWhiteQueenMoveTwoPositionHorizontally() {
+        assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.H3));
+    }
+
+    @Test
+    public void shouldLetWhiteQueenMoveOnePositionVertically() {
+        assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.F2));
+    }
+
+    @Test
+    public void shouldLetWhiteQueenMoveTwoPositionVertically() {
+        assertTrue(_game.movePiece(BoardPosition.F3, BoardPosition.F5));
+    }
+
+    @Test
+    public void shouldNotLetQueenMoveWeird() {
+        assertFalse(_game.movePiece(BoardPosition.F3, BoardPosition.G5));
+    }
+
+    @Test
+    public void shouldLetBlackQueenMoveOnePositionHorizontally() {
+        // white is in turn, moving
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue(_game.movePiece(BoardPosition.F8, BoardPosition.E8));
+    }
+
+    @Test
+    public void shouldLetBlackQueenMoveOnePositionVertically() {
+        // white is in turn, moving
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue(_game.movePiece(BoardPosition.F8, BoardPosition.F7));
+    }
+
+    @Test
+    public void shouldLetBlackQueenMoveOnePositionDiagonally() {
+        // white is in turn, moving
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue(_game.movePiece(BoardPosition.F8, BoardPosition.E7));
+    }
+
+    @Test
+    public void shouldNotLetQueenMoveToOwnPosition() {
+        assertFalse(_game.movePiece(BoardPosition.F3, BoardPosition.F3));
+    }
+
 }

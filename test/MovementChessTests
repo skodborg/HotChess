@@ -28,12 +28,13 @@ D   Black Bishop cannot move vertically
 D   Should not let Bishop move to its own position (not moving)
 
 D   White Queen can move 1 fields diagonally
-White Queen can move 2 fields diagonally
-White Queen can move 1 fields horizontally
-White Queen can move 2 fields horizontally
-White Queen can move 1 fields vertically
-White Queen can move 2 fields vertically
-Black Queen can move 1 field vertically
-Black Queen can move 1 field horizontally
-Black Queen can move 1 field diagonally
-Queen cannot move to its own position (not moving)
+D   White Queen can move 2 fields diagonally
+D   White Queen can move 1 fields horizontally
+D   White Queen can move 2 fields horizontally
+D   White Queen can move 1 fields vertically
+D   White Queen can move 2 fields vertically
+D   Queen cannot move when not horizontal, vertical or diagonal
+D   Black Queen can move 1 field vertically
+D   Black Queen can move 1 field horizontally
+D   Black Queen can move 1 field diagonally
+D   Queen cannot move to its own position (not moving)

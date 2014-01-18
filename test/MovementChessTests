@@ -38,3 +38,12 @@ D   Black Queen can move 1 field vertically
 D   Black Queen can move 1 field horizontally
 D   Black Queen can move 1 field diagonally
 D   Queen cannot move to its own position (not moving)
+
+D   White King can move 1 field vertically
+D   White King can move 1 field horizontally
+D   White King can move 1 field diagonally
+D   White King cannot move 2 fields vertically
+D   White King cannot move 2 fields horizontally
+D   White King cannot move 2 fields diagonally
+D   Black King can move 1 field
+D   King cannot move to its own position (not moving)

@@ -252,4 +252,71 @@ public class TestMovementChess {
         assertFalse(_game.movePiece(BoardPosition.F3, BoardPosition.F3));
     }
 
+    /*
+    -------------------------
+    King tests
+    -------------------------
+     */
+
+    @Test
+    public void shouldLetKingMoveOnePositionNorth() {
+        assertTrue("White king should be allowed to move 1 field north",
+                _game.movePiece(BoardPosition.E5, BoardPosition.E6));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionNorthEast() {
+        assertTrue("White king should be allowed to move 1 field north-east",
+                _game.movePiece(BoardPosition.E5, BoardPosition.F6));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionEast() {
+        assertTrue("White king should be allowed to move 1 field east",
+                _game.movePiece(BoardPosition.E5, BoardPosition.F5));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionSouthEast() {
+        assertTrue("White king should be allowed to move 1 field south-east",
+                _game.movePiece(BoardPosition.E5, BoardPosition.F4));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionSouth() {
+        assertTrue("White king should be allowed to move 1 field south",
+                _game.movePiece(BoardPosition.E5, BoardPosition.E4));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionSouthWest() {
+        assertTrue("White king should be allowed to move 1 field south-west",
+                _game.movePiece(BoardPosition.E5, BoardPosition.D4));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionWest() {
+        assertTrue("White king should be allowed to move 1 field west",
+                _game.movePiece(BoardPosition.E5, BoardPosition.D5));
+    }
+
+    @Test
+    public void shouldLetKingMoveOnePositionNorthWest() {
+        assertTrue("White king should be allowed to move 1 field north-west",
+                _game.movePiece(BoardPosition.E5, BoardPosition.D6));
+    }
+
+    @Test
+    public void shouldNotLetKingMoveToOwnPosition() {
+        assertFalse(_game.movePiece(BoardPosition.E5, BoardPosition.E5));
+    }
+
+    @Test
+    public void shouldLetBlackKingMoveOnePosition() {
+        // white is in turn, moving
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue(_game.movePiece(BoardPosition.H8, BoardPosition.H7));
+    }
 }

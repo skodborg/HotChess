@@ -39,6 +39,11 @@ public enum BoardPosition {
     returns null if no position north of the given position exist
      */
     public static BoardPosition north(BoardPosition from) {
+        // for the nested calls in the northWest, northEast methods
+        if (from == null) {
+            return null;
+        }
+
         int index = from._index + 8;
 
         // if the index when incremented with 8 is out of the board,
@@ -51,6 +56,11 @@ public enum BoardPosition {
     }
 
     public static BoardPosition south(BoardPosition from) {
+        // for the nested calls in the southWest, southEast methods
+        if (from == null) {
+            return null;
+        }
+
         int index = from._index - 8;
 
         if (index < 0) {
@@ -61,6 +71,11 @@ public enum BoardPosition {
     }
 
     public static BoardPosition east(BoardPosition from) {
+        // for the nested calls in the northEast, southEast methods
+        if (from == null) {
+            return null;
+        }
+
         int index = from._index + 1;
 
         if (index % 8 == 0) {
@@ -71,6 +86,11 @@ public enum BoardPosition {
     }
 
     public static BoardPosition west(BoardPosition from) {
+        // for the nested calls in the northWest, southWest methods
+        if (from == null) {
+            return null;
+        }
+
         int index = from._index - 1;
 
         if ((index + 1) % 8 == 0) {
@@ -78,6 +98,22 @@ public enum BoardPosition {
         }
 
         return indexToEnum[index];
+    }
+
+    public static BoardPosition northEast(BoardPosition from) {
+        return north(east(from));
+    }
+
+    public static BoardPosition southEast(BoardPosition from) {
+        return south(east(from));
+    }
+
+    public static BoardPosition southWest(BoardPosition from) {
+        return south(west(from));
+    }
+
+    public static BoardPosition northWest(BoardPosition from) {
+        return north(west(from));
     }
 
     /*

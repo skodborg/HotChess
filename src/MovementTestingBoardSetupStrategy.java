@@ -4,10 +4,10 @@ import java.util.Map;
 Movement Testing Chess Board Layout:
    A B C D E F G H
   -----------------
-8 |x x x B x Q x x|
+8 |x x x B x Q x K|
 7 |P R x x x x x x|
 6 |x x x x x x x x|
-5 |x x x x x x x x|
+5 |x x x x k x x x|
 4 |x x x x x x x x|
 3 |x x x b x q x x|
 2 |p r x x x x x x|
@@ -20,6 +20,7 @@ small letters = White piece
 Pawn = P/p
 Rook = R/r
 Bishop = B/b
+King = K/k
 
  */
 
@@ -38,8 +39,13 @@ public class MovementTestingBoardSetupStrategy implements BoardSetupStrategy {
         pieceMap.put(BoardPosition.D3, new PieceImpl(new WhiteBishopPieceFactory()));
         pieceMap.put(BoardPosition.D8, new PieceImpl(new BlackBishopPieceFactory()));
 
+        // queens
         pieceMap.put(BoardPosition.F3, new PieceImpl(new WhiteQueenPieceFactory()));
         pieceMap.put(BoardPosition.F8, new PieceImpl(new BlackQueenPieceFactory()));
+
+        // kings
+        pieceMap.put(BoardPosition.E5, new PieceImpl(new WhiteKingPieceFactory()));
+        pieceMap.put(BoardPosition.H8, new PieceImpl(new BlackKingPieceFactory()));
 
     }
 }

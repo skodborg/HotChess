@@ -295,12 +295,6 @@ public class TestMovementChess {
     }
 
     @Test
-    public void shouldLetKingMoveOnePositionWest() {
-        assertTrue("White king should be allowed to move 1 field west",
-                _game.movePiece(BoardPosition.E5, BoardPosition.D5));
-    }
-
-    @Test
     public void shouldLetKingMoveOnePositionNorthWest() {
         assertTrue("White king should be allowed to move 1 field north-west",
                 _game.movePiece(BoardPosition.E5, BoardPosition.D6));
@@ -318,5 +312,70 @@ public class TestMovementChess {
 
         // black is now in turn
         assertTrue(_game.movePiece(BoardPosition.H8, BoardPosition.H7));
+    }
+
+    /*
+    -------------------------
+    Knight tests
+    -------------------------
+     */
+
+    @Test
+    public void shouldLetWhiteKnightMoveNorthNorthEast() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.E7));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveNorthEastEast() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.F6));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveSouthEastEast() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.F4));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveSouthSouthEast() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.E3));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveSouthSouthWest() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.C3));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveSouthWestWest() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.B4));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveNorthWestWest() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.B6));
+    }
+
+    @Test
+    public void shouldLetWhiteKnightMoveNorthNorthWest() {
+        assertTrue(_game.movePiece(BoardPosition.D5, BoardPosition.C7));
+    }
+
+    @Test
+    public void shouldNotLetWhiteKnightMoveToOwnPosition() {
+        assertFalse(_game.movePiece(BoardPosition.D5, BoardPosition.D5));
+    }
+
+    @Test
+    public void shouldNotLetWhiteKnightMoveToAPosDifferentFromTheValidEight() {
+        assertFalse(_game.movePiece(BoardPosition.D5, BoardPosition.D6));
+    }
+
+    @Test
+    public void shouldLetBlackKnightMoveToOneOfTheEightValidPositions() {
+        // white is in turn, moving
+        _game.movePiece(BoardPosition.A2, BoardPosition.A3);
+
+        // black is now in turn
+        assertTrue(_game.movePiece(BoardPosition.H4, BoardPosition.G6));
     }
 }

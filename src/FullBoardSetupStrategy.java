@@ -26,29 +26,29 @@ public class FullBoardSetupStrategy implements BoardSetupStrategy {
         pieceMap.put(BoardPosition.H7, new PieceImpl(new BlackPawnPieceFactory()));
 
         // rooks
-        pieceMap.put(BoardPosition.A1, new PieceImpl(GameConstants.ROOK, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.H1, new PieceImpl(GameConstants.ROOK, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.A8, new PieceImpl(GameConstants.ROOK, Color.BLACK, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.H8, new PieceImpl(GameConstants.ROOK, Color.BLACK, new NullMoveRuleStrategy()));
+        pieceMap.put(BoardPosition.A1, new PieceImpl(new WhiteRookPieceFactory()));
+        pieceMap.put(BoardPosition.H1, new PieceImpl(new WhiteRookPieceFactory()));
+        pieceMap.put(BoardPosition.A8, new PieceImpl(new BlackRookPieceFactory()));
+        pieceMap.put(BoardPosition.H8, new PieceImpl(new BlackRookPieceFactory()));
 
         // knights
-        pieceMap.put(BoardPosition.B1, new PieceImpl(GameConstants.KNIGHT, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.G1, new PieceImpl(GameConstants.KNIGHT, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.B8, new PieceImpl(GameConstants.KNIGHT, Color.BLACK, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.G8, new PieceImpl(GameConstants.KNIGHT, Color.BLACK, new NullMoveRuleStrategy()));
+        pieceMap.put(BoardPosition.B1, new PieceImpl(new WhiteKnightPieceFactory()));
+        pieceMap.put(BoardPosition.G1, new PieceImpl(new WhiteKnightPieceFactory()));
+        pieceMap.put(BoardPosition.B8, new PieceImpl(new BlackKnightPieceFactory()));
+        pieceMap.put(BoardPosition.G8, new PieceImpl(new BlackKnightPieceFactory()));
 
         // bishops
-        pieceMap.put(BoardPosition.C1, new PieceImpl(GameConstants.BISHOP, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.F1, new PieceImpl(GameConstants.BISHOP, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.C8, new PieceImpl(GameConstants.BISHOP, Color.BLACK, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.F8, new PieceImpl(GameConstants.BISHOP, Color.BLACK, new NullMoveRuleStrategy()));
+        pieceMap.put(BoardPosition.C1, new PieceImpl(new WhiteBishopPieceFactory()));
+        pieceMap.put(BoardPosition.F1, new PieceImpl(new WhiteBishopPieceFactory()));
+        pieceMap.put(BoardPosition.C8, new PieceImpl(new BlackBishopPieceFactory()));
+        pieceMap.put(BoardPosition.F8, new PieceImpl(new BlackBishopPieceFactory()));
 
         // queens
-        pieceMap.put(BoardPosition.D1, new PieceImpl(GameConstants.QUEEN, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.D8, new PieceImpl(GameConstants.QUEEN, Color.BLACK, new NullMoveRuleStrategy()));
+        pieceMap.put(BoardPosition.D1, new PieceImpl(new WhiteQueenPieceFactory()));
+        pieceMap.put(BoardPosition.D8, new PieceImpl(new BlackQueenPieceFactory()));
 
         // kings
-        pieceMap.put(BoardPosition.E1, new PieceImpl(GameConstants.KING, Color.WHITE, new NullMoveRuleStrategy()));
-        pieceMap.put(BoardPosition.E8, new PieceImpl(GameConstants.KING, Color.BLACK, new NullMoveRuleStrategy()));
+        pieceMap.put(BoardPosition.E1, new PieceImpl(new WhiteKingPieceFactory()));
+        pieceMap.put(BoardPosition.E8, new PieceImpl(new BlackKingPieceFactory()));
     }
 }

@@ -47,3 +47,8 @@ D   White King cannot move 2 fields horizontally
 D   White King cannot move 2 fields diagonally
 D   Black King can move 1 field
 D   King cannot move to its own position (not moving)
+
+D   White Knight can move to all 8 positions
+D   White Knight cannot move to a position different from these 8
+D   Knight cannot move to its own position (not moving)
+D   Black Knight can move to one of the 8 positions

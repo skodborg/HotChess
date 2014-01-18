@@ -39,6 +39,8 @@ public class AsciiGameView implements Observer {
             pieceChar = 'q';
         } else if (piece.getType().equals(GameConstants.KING)) {
             pieceChar = 'k';
+        } else if (piece.getType().equals(GameConstants.KNIGHT)) {
+            pieceChar = 'n';
         } else {
             // leave it at 'x'
         }
@@ -70,9 +72,13 @@ public class AsciiGameView implements Observer {
     public static void main(String[] args) {
         Game game = new GameImpl(new FullBoardSetupStrategy());
         AsciiGameView asciiView = new AsciiGameView(game);
-        game.movePiece(BoardPosition.A2, BoardPosition.A3);
+        game.movePiece(BoardPosition.D2, BoardPosition.D3);
         asciiView.update();
         game.movePiece(BoardPosition.C7, BoardPosition.C6);
+        asciiView.update();
+        game.movePiece(BoardPosition.C1, BoardPosition.F4);
+        asciiView.update();
+        game.movePiece(BoardPosition.B8, BoardPosition.A6);
         asciiView.update();
     }
 }

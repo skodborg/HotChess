@@ -7,8 +7,8 @@ Movement Testing Chess Board Layout:
 8 |x x x B x Q x K|
 7 |P R x x x x x x|
 6 |x x x x x x x x|
-5 |x x x x k x x x|
-4 |x x x x x x x x|
+5 |x x x n k x x x|
+4 |x x x x x x x N|
 3 |x x x b x q x x|
 2 |p r x x x x x x|
 1 |x x x x x x x x|
@@ -22,6 +22,7 @@ Rook = R/r
 Bishop = B/b
 Queen = Q/q
 King = K/k
+Knight = N/n
 
  */
 
@@ -47,6 +48,10 @@ public class MovementTestingBoardSetupStrategy implements BoardSetupStrategy {
         // kings
         pieceMap.put(BoardPosition.E5, new PieceImpl(new WhiteKingPieceFactory()));
         pieceMap.put(BoardPosition.H8, new PieceImpl(new BlackKingPieceFactory()));
+
+        // knights
+        pieceMap.put(BoardPosition.D5, new PieceImpl(new WhiteKnightPieceFactory()));
+        pieceMap.put(BoardPosition.H4, new PieceImpl(new BlackKnightPieceFactory()));
 
     }
 }

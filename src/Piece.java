@@ -17,6 +17,11 @@ public interface Piece {
     public String getType();
 
     /*
+    returns a string representation of the piece
+     */
+    public String toString();
+
+    /*
     returns an iterator of all the possible positions a piece can be moved to,
     according to the movement rules defined for the piece.
     Game state is not considered here, but is a responsibility of the Game itself

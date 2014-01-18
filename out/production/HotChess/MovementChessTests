@@ -45,5 +45,5 @@ D   White King can move 1 field diagonally
 D   White King cannot move 2 fields vertically
 D   White King cannot move 2 fields horizontally
 D   White King cannot move 2 fields diagonally
-Black King can move 1 field
-King cannot move to its own position (not moving)
+D   Black King can move 1 field
+D   King cannot move to its own position (not moving)

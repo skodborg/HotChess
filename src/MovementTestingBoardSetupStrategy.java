@@ -20,6 +20,7 @@ small letters = White piece
 Pawn = P/p
 Rook = R/r
 Bishop = B/b
+Queen = Q/q
 King = K/k
 
  */

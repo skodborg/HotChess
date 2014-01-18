@@ -31,6 +31,11 @@ public class PieceImpl implements Piece {
     }
 
     @Override
+    public String toString() {
+        return _pieceColor + " " + _pieceType;
+    }
+
+    @Override
     public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from) {
         return _pieceMoveRuleStrategy.iterator(from);
     }

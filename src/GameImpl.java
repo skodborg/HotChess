@@ -61,6 +61,8 @@ public class GameImpl implements Game {
     public boolean isMoveValid(BoardPosition from, BoardPosition to) {
         Piece movingPiece = getPieceAtPosition(from);
 
+        // bail out
+        if (movingPiece == null) return false;
 
         Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from);
         boolean match = false;

@@ -1,11 +1,9 @@
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by marc on 07/12/13.
  */
-public class GameImpl implements Game {
+public class GameImpl implements Game, Observable{
 
     private static final int TURNS_PLAYED_IN_ROUND_5 = 10;
 
@@ -13,11 +11,13 @@ public class GameImpl implements Game {
     private int _turnsPlayed;
     private Map<BoardPosition, Piece> _pieceMap;
     private BoardSetupStrategy _boardSetupStrategy;
+    private Set<Observer> _observers;
 
     public GameImpl(BoardSetupStrategy boardSetupStrategy) {
         _boardSetupStrategy = boardSetupStrategy;
         _playerInTurn = Color.WHITE;
         _turnsPlayed = 0;
+        _observers = new HashSet<Observer>();
         setupPieces();
     }
 
@@ -97,6 +97,23 @@ public class GameImpl implements Game {
             _playerInTurn = Color.WHITE;
         } else {
             _playerInTurn = Color.BLACK;
+        }
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        _observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        _observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer o : _observers) {
+            o.update();
         }
     }
 }

@@ -1,4 +1,4 @@
-public class AsciiGameView {
+public class AsciiGameView implements Observer {
 
     private Game _game;
     private char[][] board;

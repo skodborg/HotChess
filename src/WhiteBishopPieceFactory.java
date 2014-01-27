@@ -1,7 +1,7 @@
 public class WhiteBishopPieceFactory implements PieceFactory {
     @Override
     public PieceMoveRuleStrategy getMoveRuleStrategy() {
-        return new BishopMoveRuleStrategy();
+        return new BishopNoPassMoveRuleStrategy();
     }
 
     @Override

@@ -14,7 +14,7 @@ public enum BoardPosition {
     A2(8), B2(9), C2(10), D2(11), E2(12), F2(13), G2(14), H2(15),
     A1(0), B1(1), C1(2), D1(3), E1(4), F1(5), G1(6), H1(7);
 
-    private static final int MAX_POS_INDEX = 63;
+    public static final int MAX_POS_INDEX = 63;
 
     // index of the position on the board, for easier relative position calculations
     private final int _index;
@@ -32,6 +32,13 @@ public enum BoardPosition {
 
     private BoardPosition(int index) {
         _index = index;
+    }
+
+    /*
+    returns the index of the position, for boundary checking
+     */
+    public int getIndex() {
+        return _index;
     }
 
     /*

@@ -33,4 +33,9 @@ public class TestNoPassing {
         assertFalse("should not let white rook move past friendly piece horizontally",
                 _game.movePiece(BoardPosition.D4, BoardPosition.A4));
     }
+
+    @Test
+    public void shouldLetRookMoveToBoardEnd() {
+        assertTrue(_game.movePiece(BoardPosition.F2, BoardPosition.F7));
+    }
 }

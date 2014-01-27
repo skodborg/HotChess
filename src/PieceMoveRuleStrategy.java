@@ -4,5 +4,5 @@ public interface PieceMoveRuleStrategy {
     /*
     returns an iterator over the valid positions of the piece
      */
-    public Iterator<BoardPosition> iterator(BoardPosition from);
+    public Iterator<BoardPosition> iterator(BoardPosition from, Game game);
 }

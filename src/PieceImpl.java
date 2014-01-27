@@ -36,7 +36,7 @@ public class PieceImpl implements Piece {
     }
 
     @Override
-    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from) {
-        return _pieceMoveRuleStrategy.iterator(from);
+    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game) {
+        return _pieceMoveRuleStrategy.iterator(from, game);
     }
 }

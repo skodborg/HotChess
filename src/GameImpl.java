@@ -64,7 +64,7 @@ public class GameImpl implements Game, Observable{
         // bail out
         if (movingPiece == null) return false;
 
-        Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from);
+        Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from, this);
         boolean match = false;
         while (it.hasNext()) {
             BoardPosition currPos = it.next();

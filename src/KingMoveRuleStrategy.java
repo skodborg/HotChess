@@ -4,7 +4,7 @@ import java.util.TreeSet;
 
 public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
     @Override
-    public Iterator<BoardPosition> iterator(BoardPosition from) {
+    public Iterator<BoardPosition> iterator(BoardPosition from, Game game) {
         Set<BoardPosition> validPositions = new TreeSet<BoardPosition>();
         BoardPosition currentPos;
         if ((currentPos = BoardPosition.north(from)) != null) {

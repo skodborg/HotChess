@@ -26,5 +26,5 @@ public interface Piece {
     according to the movement rules defined for the piece.
     Game state is not considered here, but is a responsibility of the Game itself
      */
-    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from);
+    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game);
 }

@@ -1,3 +1,7 @@
+import Production.BoardPosition;
+import Production.Game;
+import Production.GameImpl;
+import Production.MovementTestingBoardSetupStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

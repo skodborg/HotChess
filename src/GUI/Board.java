@@ -131,4 +131,11 @@ public class Board extends JPanel {
             }
         }
     }
+
+    private Image getClickedImage(int x, int y) {
+        // separate the board using FIELD_SIZE and intervals
+        // determine which entry in boardState[][] is clicked
+        // use switch from paintPieces, but return Image field variable instead
+        return null;
+    }
 }

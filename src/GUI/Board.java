@@ -88,10 +88,10 @@ public class Board extends JPanel implements MouseListener{
                 g2.draw(rect);
                 g2.fill(rect);
                 // alternate black/white fields painted
-                whiteFieldNext = (whiteFieldNext) ? false : true;
+                whiteFieldNext = !whiteFieldNext;
             }
             // alternate black/white fields painted
-            whiteFieldNext = (whiteFieldNext) ? false : true;
+            whiteFieldNext = !whiteFieldNext;
         }
 
         // paint highlights on valid moving positions if any
@@ -100,7 +100,13 @@ public class Board extends JPanel implements MouseListener{
                 int bp_X = bp.getIndex() % 8;
                 int bp_Y = 7 - (bp.getIndex() - (bp.getIndex() % 8)) / 8;
                 g2.setColor(validMove);
-                Rectangle2D rect = new Rectangle2D.Double(bp_X * FIELD_SIZE, bp_Y * FIELD_SIZE, 10, 10);
+                // alternative: cornered rectangle commented out below
+                // Rectangle2D rect = new Rectangle2D.Double(bp_X * FIELD_SIZE, bp_Y * FIELD_SIZE, 10, 10);
+                Rectangle2D rect = new Rectangle2D.Double(
+                        bp_X * FIELD_SIZE + (FIELD_SIZE / 2 - (10 / 2)),
+                        bp_Y * FIELD_SIZE + (FIELD_SIZE / 2 - (10 / 2)),
+                        10,
+                        10);
                 g2.draw(rect);
                 g2.fill(rect);
             }
@@ -243,7 +249,7 @@ public class Board extends JPanel implements MouseListener{
             _game.movePiece(selectedPosition, clickedPosition);
             selectedPosition = null;
         }
-        
+
         repaint();
     }
 

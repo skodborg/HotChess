@@ -8,6 +8,9 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Board extends JPanel implements MouseListener{
 
@@ -45,11 +48,13 @@ public class Board extends JPanel implements MouseListener{
     private char[][] boardState;
     private ViewUtility _viewUtil;
     private BoardPosition selectedPosition;
+    private List<BoardPosition> validMovePositions;
 
     public Board(Game game) {
         _game = game;
         _viewUtil = new ViewUtility();
         boardState = _viewUtil.describeBoardState(game);
+        validMovePositions = new ArrayList<BoardPosition>();
 
         addMouseListener(this);
     }
@@ -69,6 +74,7 @@ public class Board extends JPanel implements MouseListener{
     private void paintBoardSquares(Graphics2D g2) {
         Color lightColor = new Color(255, 190, 80);
         Color darkColor = new Color(160, 100, 0);
+        Color validMove = new Color(105, 200, 80);
         boolean whiteFieldNext = true;
 
         for (int i = 0; i < 8; i++) {
@@ -86,6 +92,18 @@ public class Board extends JPanel implements MouseListener{
             }
             // alternate black/white fields painted
             whiteFieldNext = (whiteFieldNext) ? false : true;
+        }
+
+        // paint highlights on valid moving positions if any
+        if (validMovePositions != null && validMovePositions.size() != 0) {
+            for (BoardPosition bp : validMovePositions) {
+                int bp_X = bp.getIndex() % 8;
+                int bp_Y = 7 - (bp.getIndex() - (bp.getIndex() % 8)) / 8;
+                g2.setColor(validMove);
+                Rectangle2D rect = new Rectangle2D.Double(bp_X * FIELD_SIZE, bp_Y * FIELD_SIZE, 20, 20);
+                g2.draw(rect);
+                g2.fill(rect);
+            }
         }
     }
 
@@ -203,6 +221,17 @@ public class Board extends JPanel implements MouseListener{
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
         BoardPosition clickedPosition = getBoardPositionFromCoordinates(x, y);
+
+        Piece p;
+        if ((p = _game.getPieceAtPosition(clickedPosition)) != null) {
+            validMovePositions.clear();
+            Iterator<BoardPosition> it = p.possibleMovingPositions(clickedPosition, _game);
+            while (it.hasNext()) {
+                validMovePositions.add(it.next());
+            }
+        } else {
+            validMovePositions.clear();
+        }
 
         // clumsy movement handling in two clicks
         if (selectedPosition == null) {

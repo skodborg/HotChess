@@ -92,43 +92,43 @@ public class Board extends JPanel implements MouseListener{
     private void paintPieces(Graphics2D g2) {
 
         for (int i = 0; i < 8; i++) {
-            for (int j = 7; j >= 0; j--) {
+            for (int j = 0; j < 8; j++) {
                 switch (boardState[i][j]) {
                     case 'p' :
-                        g2.drawImage(whitePawnImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(whitePawnImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'P' :
-                        g2.drawImage(blackPawnImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(blackPawnImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'r' :
-                        g2.drawImage(whiteRookImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(whiteRookImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'R' :
-                        g2.drawImage(blackRookImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(blackRookImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'b' :
-                        g2.drawImage(whiteBishopImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(whiteBishopImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'B' :
-                        g2.drawImage(blackBishopImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(blackBishopImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'n' :
-                        g2.drawImage(whiteKnightImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(whiteKnightImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'N' :
-                        g2.drawImage(blackKnightImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(blackKnightImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'q' :
-                        g2.drawImage(whiteQueenImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(whiteQueenImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'Q' :
-                        g2.drawImage(blackQueenImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(blackQueenImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'k' :
-                        g2.drawImage(whiteKingImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(whiteKingImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     case 'K' :
-                        g2.drawImage(blackKingImg, FIELD_SIZE * i, FIELD_SIZE * (7 - j), null);
+                        g2.drawImage(blackKingImg, FIELD_SIZE * j, FIELD_SIZE * i, null);
                         break;
                     default:
                         break;
@@ -151,10 +151,7 @@ public class Board extends JPanel implements MouseListener{
         int col = (x - (x % FIELD_SIZE)) / FIELD_SIZE;
 
         // determine which entry in boardState[][] is clicked
-        // TODO: correct and coordinate the board state coordinates across program logic,
-        // col:row is not consistent
-        char piece = boardState[col][row];
-        System.out.println(piece);
+        char piece = boardState[row][col];
 
         // use switch from paintPieces, but return Image field variable instead
         Image pieceImg = null;

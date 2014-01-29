@@ -17,7 +17,7 @@ public class ViewUtility {
     private void updateBoardInfo(char[][] boardState, Game game) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                boardState[i][j] = identifyPiece(BoardPosition.indexToEnum[8 * j + i], game);
+                boardState[i][j] = identifyPiece(BoardPosition.indexToEnum[8 * (7 - i) + j], game);
             }
         }
     }

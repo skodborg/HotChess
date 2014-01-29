@@ -44,6 +44,7 @@ public class Board extends JPanel implements MouseListener{
     private final Game _game;
     private char[][] boardState;
     private ViewUtility _viewUtil;
+    private BoardPosition selectedPosition;
 
     public Board(Game game) {
         _game = game;
@@ -204,9 +205,16 @@ public class Board extends JPanel implements MouseListener{
     public void mouseClicked(MouseEvent mouseEvent) {
         int x = mouseEvent.getX();
         int y = mouseEvent.getY();
-        System.out.println("x: " + x + " y: " + y);
-        System.out.println(getClickedImage(x, y));
-        System.out.println(getBoardPositionFromCoordinates(x, y));
+        BoardPosition clickedPosition = getBoardPositionFromCoordinates(x, y);
+
+        // clumsy movement handling in two clicks
+        if (selectedPosition == null) {
+            selectedPosition = clickedPosition;
+        } else {
+            _game.movePiece(selectedPosition, clickedPosition);
+            selectedPosition = null;
+        }
+        repaint();
     }
 
     @Override

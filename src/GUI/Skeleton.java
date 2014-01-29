@@ -22,6 +22,7 @@ public class Skeleton extends JFrame {
         setVisible(true);
         setResizable(false);
 
+        /*
         try {
             Thread.sleep(1000);
             game.movePiece(BoardPosition.D2, BoardPosition.D3);
@@ -44,6 +45,7 @@ public class Skeleton extends JFrame {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
 
     }
 

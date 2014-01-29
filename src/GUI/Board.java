@@ -136,6 +136,14 @@ public class Board extends JPanel implements MouseListener{
         }
     }
 
+    private BoardPosition getBoardPositionFromCoordinates(int x, int y) {
+        int row = (Skeleton.BOARD_SIZE - 1 - (y - (y % FIELD_SIZE))) / FIELD_SIZE;
+        int col = (x - (x % FIELD_SIZE)) / FIELD_SIZE;
+
+        int boardPositionIndex = (8 * row) + col;
+        return BoardPosition.indexToEnum[boardPositionIndex];
+    }
+
     private Image getClickedImage(int x, int y) {
         // separate the board using FIELD_SIZE and modulo
         int row = (Skeleton.BOARD_SIZE - 1 - (y - (y % FIELD_SIZE))) / FIELD_SIZE;
@@ -198,6 +206,7 @@ public class Board extends JPanel implements MouseListener{
         int y = mouseEvent.getY();
         System.out.println("x: " + x + " y: " + y);
         System.out.println(getClickedImage(x, y));
+        System.out.println(getBoardPositionFromCoordinates(x, y));
     }
 
     @Override

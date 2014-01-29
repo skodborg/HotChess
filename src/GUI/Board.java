@@ -5,9 +5,11 @@ import Production.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener{
 
     public static final int FIELD_SIZE = Skeleton.BOARD_SIZE / 8;
 
@@ -47,6 +49,8 @@ public class Board extends JPanel {
         _game = game;
         _viewUtil = new ViewUtility();
         boardState = _viewUtil.describeBoardState(game);
+
+        addMouseListener(this);
     }
 
     @Override
@@ -133,9 +137,86 @@ public class Board extends JPanel {
     }
 
     private Image getClickedImage(int x, int y) {
-        // separate the board using FIELD_SIZE and intervals
+        // separate the board using FIELD_SIZE and modulo
+        int row = (Skeleton.BOARD_SIZE - 1 - (y - (y % FIELD_SIZE))) / FIELD_SIZE;
+        int col = (x - (x % FIELD_SIZE)) / FIELD_SIZE;
+
         // determine which entry in boardState[][] is clicked
+        // TODO: correct and coordinate the board state coordinates across program logic,
+        // col:row is not consistent
+        char piece = boardState[col][row];
+        System.out.println(piece);
+
         // use switch from paintPieces, but return Image field variable instead
-        return null;
+        Image pieceImg = null;
+        switch (piece) {
+            case 'p' :
+                pieceImg = whitePawnImg;
+                break;
+            case 'P' :
+                pieceImg = blackPawnImg;
+                break;
+            case 'r' :
+                pieceImg = whiteRookImg;
+                break;
+            case 'R' :
+                pieceImg = blackRookImg;
+                break;
+            case 'b' :
+                pieceImg = whiteBishopImg;
+                break;
+            case 'B' :
+                pieceImg = blackBishopImg;
+                break;
+            case 'n' :
+                pieceImg = whiteKnightImg;
+                break;
+            case 'N' :
+                pieceImg = blackKnightImg;
+                break;
+            case 'q' :
+                pieceImg = whiteQueenImg;
+                break;
+            case 'Q' :
+                pieceImg = blackQueenImg;
+                break;
+            case 'k' :
+                pieceImg = whiteKingImg;
+                break;
+            case 'K' :
+                pieceImg = blackKingImg;
+                break;
+            default:
+                break;
+        }
+        return pieceImg;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+        int x = mouseEvent.getX();
+        int y = mouseEvent.getY();
+        System.out.println("x: " + x + " y: " + y);
+        System.out.println(getClickedImage(x, y));
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
     }
 }

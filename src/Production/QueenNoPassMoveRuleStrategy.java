@@ -8,13 +8,21 @@ public class QueenNoPassMoveRuleStrategy implements PieceMoveRuleStrategy {
     @Override
     public Iterator<BoardPosition> iterator(BoardPosition from, Game game) {
         Set<BoardPosition> resultSet = new TreeSet<BoardPosition>();
+        Color movingPieceColor = game.getPieceAtPosition(from).getColor();
 
         // valid positions in the north direction
         BoardPosition current = BoardPosition.north(from);
         while (current != null &&
-                game.getPieceAtPosition(current) == null) {
-            resultSet.add(current);
-            current = BoardPosition.north(current);
+                (game.getPieceAtPosition(current) == null ||
+                 game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                resultSet.add(current);
+                current = null;
+            } else {
+                resultSet.add(current);
+                current = BoardPosition.north(current);
+            }
         }
 
         // valid positions in the east direction

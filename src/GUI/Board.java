@@ -68,13 +68,13 @@ public class Board extends JPanel implements MouseListener{
 
         paintBoardSquares(g2);
         paintPieces(g2);
+        paintValidMoves(g2);
 
     }
 
     private void paintBoardSquares(Graphics2D g2) {
         Color lightColor = new Color(255, 190, 80);
         Color darkColor = new Color(160, 100, 0);
-        Color validMove = new Color(105, 200, 80);
         boolean whiteFieldNext = true;
 
         for (int i = 0; i < 8; i++) {
@@ -93,6 +93,11 @@ public class Board extends JPanel implements MouseListener{
             // alternate black/white fields painted
             whiteFieldNext = !whiteFieldNext;
         }
+    }
+
+    private void paintValidMoves(Graphics2D g2) {
+
+        Color validMove = new Color(105, 200, 80);
 
         // paint highlights on valid moving positions if any
         if (validMovePositions != null && validMovePositions.size() != 0) {

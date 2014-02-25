@@ -79,9 +79,7 @@ public class GameImpl implements Game, Observable{
         // if the player in turn is moving his own piece and
         // the target position is not already occupied, the move
         // is legal
-
         if (movingPiece.getColor() == getPlayerInTurn() &&
-                getPieceAtPosition(to) == null &&
                 match) {
             return true;
         }
@@ -90,6 +88,7 @@ public class GameImpl implements Game, Observable{
     }
 
     private void performPieceMove(BoardPosition from, BoardPosition to) {
+        // TODO: Handle attack
         Piece pieceToMove = _pieceMap.get(from);
         _pieceMap.put(to, pieceToMove);
         _pieceMap.remove(from);

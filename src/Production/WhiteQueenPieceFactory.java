@@ -3,7 +3,7 @@ package Production;
 public class WhiteQueenPieceFactory implements PieceFactory {
     @Override
     public PieceMoveRuleStrategy getMoveRuleStrategy() {
-        return new QueenMoveRuleStrategy();
+        return new QueenNoPassMoveRuleStrategy();
     }
 
     @Override

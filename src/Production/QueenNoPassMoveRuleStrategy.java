@@ -15,12 +15,12 @@ public class QueenNoPassMoveRuleStrategy implements PieceMoveRuleStrategy {
         while (current != null &&
                 (game.getPieceAtPosition(current) == null ||
                  game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
+            resultSet.add(current);
+
             // if we identify a possible attack, stop looking further in this direction
             if (game.getPieceAtPosition(current) != null) {
-                resultSet.add(current);
                 current = null;
             } else {
-                resultSet.add(current);
                 current = BoardPosition.north(current);
             }
         }
@@ -28,57 +28,106 @@ public class QueenNoPassMoveRuleStrategy implements PieceMoveRuleStrategy {
         // valid positions in the east direction
         current = BoardPosition.east(from);
         while (current != null &&
-                game.getPieceAtPosition(current) == null) {
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.east(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.east(current);
+            }
         }
 
         // valid positions in the south direction
         current = BoardPosition.south(from);
         while (current != null &&
-                game.getPieceAtPosition(current) == null) {
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.south(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.south(current);
+            }
         }
 
         // valid positions in the west direction
         current = BoardPosition.west(from);
         while (current != null &&
-                game.getPieceAtPosition(current) == null) {
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.west(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.west(current);
+            }
         }
 
-        // adding north-east positions
+        // valid positions in the northEast direction
         current = BoardPosition.northEast(from);
-        while(current != null &&
-                game.getPieceAtPosition(current) == null) {
+        while (current != null &&
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.northEast(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.northEast(current);
+            }
         }
 
-        // adding north-West positions
+        // valid positions in the northWest direction
         current = BoardPosition.northWest(from);
-        while(current != null &&
-                game.getPieceAtPosition(current) == null) {
+        while (current != null &&
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.northWest(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.northWest(current);
+            }
         }
 
-        // adding south-west positions
+        // valid positions in the southWest direction
         current = BoardPosition.southWest(from);
-        while(current != null &&
-                game.getPieceAtPosition(current) == null) {
+        while (current != null &&
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.southWest(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.southWest(current);
+            }
         }
 
-        // adding south-east positions
+        // valid positions in the southEast direction
         current = BoardPosition.southEast(from);
-        while(current != null &&
-                game.getPieceAtPosition(current) == null) {
+        while (current != null &&
+                (game.getPieceAtPosition(current) == null ||
+                        game.getPieceAtPosition(current).getColor() != movingPieceColor)) {
             resultSet.add(current);
-            current = BoardPosition.southEast(current);
+
+            // if we identify a possible attack, stop looking further in this direction
+            if (game.getPieceAtPosition(current) != null) {
+                current = null;
+            } else {
+                current = BoardPosition.southEast(current);
+            }
         }
 
         return resultSet.iterator();

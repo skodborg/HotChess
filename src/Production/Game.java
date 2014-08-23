@@ -42,5 +42,5 @@ public interface Game extends Observable {
     /*
     returns true if one of the players is check mate and the game is over, false otherwise
      */
-    public boolean isCheckMate();
+    public boolean isWhiteInMate();
 }

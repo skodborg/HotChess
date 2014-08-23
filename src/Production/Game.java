@@ -3,7 +3,7 @@ package Production;
 /**
  * Created by marc on 07/12/13.
  */
-public interface Game {
+public interface Game extends Observable {
 
     /*
     returns the color of the winning player, or Color.NONE
@@ -33,4 +33,14 @@ public interface Game {
     returns false otherwise
      */
     public boolean isMoveValid(BoardPosition from, BoardPosition to);
+
+    /*
+    returns true if one of the players is in check
+     */
+    public boolean isCheck();
+
+    /*
+    returns true if one of the players is check mate and the game is over, false otherwise
+     */
+    public boolean isCheckMate();
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Board extends JPanel implements MouseListener{
+public class Board extends JPanel implements MouseListener {
 
     public static final int FIELD_SIZE = Skeleton.BOARD_SIZE / 8;
 
@@ -69,7 +69,16 @@ public class Board extends JPanel implements MouseListener{
         paintBoardSquares(g2);
         paintPieces(g2);
         paintValidMoves(g2);
+        //paintWinningText(g2);
 
+    }
+
+    private void paintWinningText(Graphics2D g2) {
+        if (_game.getWinner() != Production.Color.NONE) {
+            g2.setColor(Color.CYAN);
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2.drawString("Spillet er slut", 200, 200);
+        }
     }
 
     private void paintBoardSquares(Graphics2D g2) {
@@ -102,18 +111,20 @@ public class Board extends JPanel implements MouseListener{
         // paint highlights on valid moving positions if any
         if (validMovePositions != null && validMovePositions.size() != 0) {
             for (BoardPosition bp : validMovePositions) {
-                int bp_X = bp.getIndex() % 8;
-                int bp_Y = 7 - (bp.getIndex() - (bp.getIndex() % 8)) / 8;
-                g2.setColor(validMove);
-                // alternative: cornered rectangle commented out below
-                // Rectangle2D rect = new Rectangle2D.Double(bp_X * FIELD_SIZE, bp_Y * FIELD_SIZE, 10, 10);
-                Rectangle2D rect = new Rectangle2D.Double(
-                        bp_X * FIELD_SIZE + (FIELD_SIZE / 2 - (10 / 2)),
-                        bp_Y * FIELD_SIZE + (FIELD_SIZE / 2 - (10 / 2)),
-                        10,
-                        10);
-                g2.draw(rect);
-                g2.fill(rect);
+                if (bp != null) {
+                    int bp_X = bp.getIndex() % 8;
+                    int bp_Y = 7 - (bp.getIndex() - (bp.getIndex() % 8)) / 8;
+                    g2.setColor(validMove);
+                    // alternative: cornered rectangle commented out below
+                    // Rectangle2D rect = new Rectangle2D.Double(bp_X * FIELD_SIZE, bp_Y * FIELD_SIZE, 10, 10);
+                    Rectangle2D rect = new Rectangle2D.Double(
+                            bp_X * FIELD_SIZE + (FIELD_SIZE / 2 - (10 / 2)),
+                            bp_Y * FIELD_SIZE + (FIELD_SIZE / 2 - (10 / 2)),
+                            10,
+                            10);
+                    g2.draw(rect);
+                    g2.fill(rect);
+                }
             }
         }
     }

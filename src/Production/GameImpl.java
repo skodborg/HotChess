@@ -129,6 +129,7 @@ public class GameImpl implements Game, Observable{
         Set<BoardPosition> black_CoveredPositions = new TreeSet<BoardPosition>();
         Set<BoardPosition> white_CoveredPositions = new TreeSet<BoardPosition>();
         Map<Piece, List<BoardPosition>> blackPieceMappings = new HashMap<Piece, List<BoardPosition>>();
+        Map<Piece, List<BoardPosition>> whitePieceMappings = new HashMap<Piece, List<BoardPosition>>();
 
         // fill the above set of possible black moving positions
         for (Entry<BoardPosition, Piece> entry : _pieceMap.entrySet()) {
@@ -144,10 +145,14 @@ public class GameImpl implements Game, Observable{
                 }
                 blackPieceMappings.put(currPiece, tempPosList);
             } else {
+                ArrayList<BoardPosition> tempPosList = new ArrayList<BoardPosition>();
                 it = currPiece.possibleMovingPositions(currPos, this);
                 while (it.hasNext()) {
-                    white_CoveredPositions.add(it.next());
+                    BoardPosition itPos = it.next();
+                    white_CoveredPositions.add(itPos);
+                    tempPosList.add(itPos);
                 }
+                whitePieceMappings.put(currPiece, tempPosList);
             }
         }
 
@@ -180,25 +185,32 @@ public class GameImpl implements Game, Observable{
             }
         }
 
-        // check if any of our pieces can remove this(these) pieces
+        // check that white is still in check if the threatening black piece is attacked;
+        //      if not in check post-attack, return false as this is a possible move to survive; white is not mated
+        for (Entry<Piece, List<BoardPosition>> entry : whitePieceMappings.entrySet()) {
+            ArrayList<BoardPosition> temp_blkThreatPos = new ArrayList<BoardPosition>();
+            temp_blkThreatPos.addAll(black_threateningPiecePositions);
+            temp_blkThreatPos.retainAll(entry.getValue());
 
-        System.out.println("WHITE:");
-        for (BoardPosition bp : white_CoveredPositions) {
-            System.out.print(bp + " ");
-        }
-        System.out.println();
-        System.out.println("BLACK:");
-        for (BoardPosition bp : black_threateningPiecePositions) {
-            System.out.print(bp + " ");
-        }
-        System.out.println();
-        System.out.println("does white cover all black threatening pieces?: ");
-        System.out.println(white_CoveredPositions.containsAll(black_threateningPiecePositions));
+            if (!temp_blkThreatPos.isEmpty()) {
+                // denne brik dækker en eller flere af de sorte truende brikker
+                // find denne briks BoardPosition
+                for (BoardPosition blackBP : temp_blkThreatPos) {
+                    for (BoardPosition bp : BoardPosition.values()) {
+                        if (getPieceAtPosition(bp) == entry.getKey()
+                                && entry.getValue().contains(blackBP)) {
+                            // simulate move and check if still in check; if not, return false as this move is valid
+                            Map<BoardPosition, Piece> tempPieceMap = new HashMap<BoardPosition, Piece>();
+                            tempPieceMap.putAll(_pieceMap);
+                            if (!AlgorithmUtility.isCheck(this, tempPieceMap)) {
+                                return false;
+                            }
 
-        for (Piece p : black_threateningPieces) {
-            System.out.print(p + " ");
+                        }
+                    }
+                }
+            }
         }
-        System.out.println();
 
 
         // check, for all possible moving positions for all threatening black pieces,

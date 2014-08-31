@@ -2,13 +2,19 @@ package GUI;
 
 import Production.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AsciiGameView implements Observer {
 
-    private Game _game;
+    //private Game _game;
+    private Map<BoardPosition, Piece> _pieceMap;
+
     private char[][] board;
 
-    public AsciiGameView(Game game) {
-        _game = game;
+    public AsciiGameView(Map<BoardPosition, Piece> pieceMap) {
+        //_game = game;
+        _pieceMap = pieceMap;
         board = new char[8][8];
         update();
     }
@@ -27,7 +33,7 @@ public class AsciiGameView implements Observer {
     }
 
     private char identifyPiece(BoardPosition pos) {
-        Piece piece = _game.getPieceAtPosition(pos);
+        Piece piece = _pieceMap.get(pos);
         char pieceChar = 'x';
 
         if (piece == null) {
@@ -74,15 +80,9 @@ public class AsciiGameView implements Observer {
     }
 
     public static void main(String[] args) {
-        Game game = new GameImpl(new FullBoardSetupStrategy());
-        AsciiGameView asciiView = new AsciiGameView(game);
-        game.movePiece(BoardPosition.D2, BoardPosition.D3);
-        asciiView.update();
-        game.movePiece(BoardPosition.C7, BoardPosition.C6);
-        asciiView.update();
-        game.movePiece(BoardPosition.C1, BoardPosition.F4);
-        asciiView.update();
-        game.movePiece(BoardPosition.B8, BoardPosition.A6);
-        asciiView.update();
+        FullBoardSetupStrategy strat = new FullBoardSetupStrategy();
+        Map<BoardPosition, Piece> newPieceMap = new HashMap<BoardPosition, Piece>();
+        strat.setupPieces(newPieceMap);
+        AsciiGameView asciiView = new AsciiGameView(newPieceMap);
     }
 }

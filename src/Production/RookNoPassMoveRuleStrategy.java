@@ -1,13 +1,14 @@
 package Production;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class RookNoPassMoveRuleStrategy implements PieceMoveRuleStrategy {
 
     @Override
-    public Iterator<BoardPosition> iterator(BoardPosition from, Game game) {
+    public Iterator<BoardPosition> iterator(BoardPosition from, Game game, Map<BoardPosition, Piece> pieceMap) {
         Set<BoardPosition> resultSet = new TreeSet<BoardPosition>();
         Color movingPieceColor = game.getPieceAtPosition(from).getColor();
 

@@ -53,7 +53,7 @@ public class Board extends JPanel implements MouseListener {
     public Board(Game game) {
         _game = game;
         _viewUtil = new ViewUtility();
-        boardState = _viewUtil.describeBoardState(game);
+        boardState = _viewUtil.describeBoardState(game.getPieceMap());
         validMovePositions = new ArrayList<BoardPosition>();
 
         addMouseListener(this);
@@ -64,7 +64,7 @@ public class Board extends JPanel implements MouseListener {
         Graphics2D g2 = (Graphics2D) g;
 
         // update game state before repainting
-        boardState = _viewUtil.describeBoardState(_game);
+        boardState = _viewUtil.describeBoardState(_game.getPieceMap());
 
         paintBoardSquares(g2);
         paintPieces(g2);
@@ -247,7 +247,7 @@ public class Board extends JPanel implements MouseListener {
         Piece p;
         if ((p = _game.getPieceAtPosition(clickedPosition)) != null) {
             validMovePositions.clear();
-            Iterator<BoardPosition> it = p.possibleMovingPositions(clickedPosition, _game);
+            Iterator<BoardPosition> it = p.possibleMovingPositions(clickedPosition, _game, _game.getPieceMap());
             while (it.hasNext()) {
                 BoardPosition nextPossiblePos = it.next();
                 if (_game.isMoveValid(clickedPosition, nextPossiblePos)) {

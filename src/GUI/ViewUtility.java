@@ -2,28 +2,30 @@ package GUI;
 
 import Production.*;
 
+import java.util.Map;
+
 public class ViewUtility {
 
     /*
     returns a char[8][8] array describing the state of the board
     on the game given as parameter
      */
-    public char[][] describeBoardState(Game game) {
+    public char[][] describeBoardState(Map<BoardPosition, Piece> pieceMap) {
         char[][] boardState = new char[8][8];
-        updateBoardInfo(boardState, game);
+        updateBoardInfo(boardState, pieceMap);
         return boardState;
     }
 
-    private void updateBoardInfo(char[][] boardState, Game game) {
+    private void updateBoardInfo(char[][] boardState, Map<BoardPosition, Piece> pieceMap) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                boardState[i][j] = identifyPiece(BoardPosition.indexToEnum[8 * (7 - i) + j], game);
+                boardState[i][j] = identifyPiece(BoardPosition.indexToEnum[8 * (7 - i) + j], pieceMap);
             }
         }
     }
 
-    private char identifyPiece(BoardPosition pos, Game game) {
-        Piece piece = game.getPieceAtPosition(pos);
+    private char identifyPiece(BoardPosition pos, Map<BoardPosition, Piece> pieceMap) {
+        Piece piece = pieceMap.get(pos);
         char pieceChar = 'x';
 
         if (piece == null) {

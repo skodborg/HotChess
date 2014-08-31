@@ -25,6 +25,11 @@ public interface Game extends Observable {
     public Piece getPieceAtPosition(BoardPosition p);
 
     /*
+    returns a shallow copy of the mapping of BoardPositions to Pieces currently in use
+     */
+    public Map<BoardPosition, Piece> getPieceMap();
+
+    /*
     returns true and moves the piece if the move is valid,
     returns false otherwise
      */

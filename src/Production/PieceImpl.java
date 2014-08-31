@@ -1,6 +1,7 @@
 package Production;
 
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by marc on 07/12/13.
@@ -38,7 +39,7 @@ public class PieceImpl implements Piece {
     }
 
     @Override
-    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game) {
-        return _pieceMoveRuleStrategy.iterator(from, game);
+    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game, Map<BoardPosition, Piece> pieceMap) {
+        return _pieceMoveRuleStrategy.iterator(from, game, pieceMap);
     }
 }

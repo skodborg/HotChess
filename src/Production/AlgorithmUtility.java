@@ -24,7 +24,7 @@ public class AlgorithmUtility {
             if (entry.getValue().getColor() == Color.BLACK) {
                 Piece curr = entry.getValue();
                 BoardPosition currPos = entry.getKey();
-                Iterator<BoardPosition> currentIt = curr.possibleMovingPositions(currPos, game);
+                Iterator<BoardPosition> currentIt = curr.possibleMovingPositions(currPos, game, pieceMap);
                 while (currentIt.hasNext()) {
                     possibleBlackMovingPositions.add(currentIt.next());
                 }

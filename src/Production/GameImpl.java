@@ -47,6 +47,12 @@ public class GameImpl implements Game, Observable{
         return _pieceMap.get(p);
     }
 
+    // returns a shallow copy of the _pieceMap
+    @Override
+    public Map<BoardPosition, Piece> getPieceMap() {
+        return new HashMap<BoardPosition, Piece>(_pieceMap);
+    }
+
     @Override
     public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
@@ -65,12 +71,12 @@ public class GameImpl implements Game, Observable{
     }
 
     public boolean isMoveValid(BoardPosition from, BoardPosition to) {
-        Piece movingPiece = getPieceAtPosition(from);
+        Piece movingPiece = _pieceMap.get(from);
 
         // bail out
         if (movingPiece == null) return false;
 
-        Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from, this);
+        Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from, this, _pieceMap);
         boolean match = false;
         while (it.hasNext()) {
             BoardPosition currPos = it.next();
@@ -97,7 +103,7 @@ public class GameImpl implements Game, Observable{
         return AlgorithmUtility.isCheck(this, _pieceMap);
     }
 
-    // TODO: Does not work
+    // TODO: REFACTOR!!!
     @Override
     public boolean isWhiteInMate() {
         BoardPosition whiteKingPos = null;
@@ -117,13 +123,13 @@ public class GameImpl implements Game, Observable{
         TreeSet<BoardPosition> whiteKing_PossibleMoves = new TreeSet<BoardPosition>();
 
         // fill the above set with white kings possible moving destinations
-        Iterator<BoardPosition> it = whiteKingPiece.possibleMovingPositions(whiteKingPos, this);
+        Iterator<BoardPosition> it = whiteKingPiece.possibleMovingPositions(whiteKingPos, this, _pieceMap);
         while (it.hasNext()) {
             whiteKing_PossibleMoves.add(it.next());
         }
 
         // temporarily remove the white king
-        _pieceMap.remove(whiteKingPos);
+        //_pieceMap.remove(whiteKingPos);
 
 
         Set<BoardPosition> black_CoveredPositions = new TreeSet<BoardPosition>();
@@ -137,7 +143,7 @@ public class GameImpl implements Game, Observable{
             BoardPosition currPos = entry.getKey();
             if (currPiece.getColor().equals(Color.BLACK)) {
                 ArrayList<BoardPosition> tempPosList = new ArrayList<BoardPosition>();
-                it = currPiece.possibleMovingPositions(currPos, this);
+                it = currPiece.possibleMovingPositions(currPos, this, _pieceMap);
                 while (it.hasNext()) {
                     BoardPosition itPos = it.next();
                     black_CoveredPositions.add(itPos);
@@ -146,7 +152,7 @@ public class GameImpl implements Game, Observable{
                 blackPieceMappings.put(currPiece, tempPosList);
             } else {
                 ArrayList<BoardPosition> tempPosList = new ArrayList<BoardPosition>();
-                it = currPiece.possibleMovingPositions(currPos, this);
+                it = currPiece.possibleMovingPositions(currPos, this, _pieceMap);
                 while (it.hasNext()) {
                     BoardPosition itPos = it.next();
                     white_CoveredPositions.add(itPos);
@@ -156,6 +162,19 @@ public class GameImpl implements Game, Observable{
             }
         }
 
+        Set<BoardPosition> black_CoveredPositions_noWhiteKing = new TreeSet<BoardPosition>();
+        // remove white king temporarily to check that it is not blocking its own fleeing positions
+        _pieceMap.remove(whiteKingPos);
+        for (Entry<BoardPosition, Piece> entry : _pieceMap.entrySet()) {
+            Piece currPiece = entry.getValue();
+            BoardPosition currPos = entry.getKey();
+            if (currPiece.getColor().equals(Color.BLACK)) {
+                it = currPiece.possibleMovingPositions(currPos, this, _pieceMap);
+                while (it.hasNext()) {
+                    black_CoveredPositions_noWhiteKing.add(it.next());
+                }
+            }
+        }
         // restore white king
         _pieceMap.put(whiteKingPos, whiteKingPiece);
 
@@ -163,10 +182,17 @@ public class GameImpl implements Game, Observable{
         temp_whiteKing_possibleMoves.addAll(whiteKing_PossibleMoves);
 
         // find the white king moves not covered by black, if any
-        temp_whiteKing_possibleMoves.removeAll(black_CoveredPositions);
+        temp_whiteKing_possibleMoves.removeAll(black_CoveredPositions_noWhiteKing);
 
         // if white king has possible moves, return false with no further analysis
-        if (!temp_whiteKing_possibleMoves.isEmpty()) { return false; }
+        if (!temp_whiteKing_possibleMoves.isEmpty()) {
+            System.out.print("king can flee to ");
+            for (BoardPosition bp : temp_whiteKing_possibleMoves) {
+                System.out.print(bp + " ");
+            }
+            System.out.println();
+            return false;
+        }
 
 
         // check which pieces threatens the white king
@@ -188,21 +214,25 @@ public class GameImpl implements Game, Observable{
         // check that white is still in check if the threatening black piece is attacked;
         //      if not in check post-attack, return false as this is a possible move to survive; white is not mated
         for (Entry<Piece, List<BoardPosition>> entry : whitePieceMappings.entrySet()) {
-            ArrayList<BoardPosition> temp_blkThreatPos = new ArrayList<BoardPosition>();
-            temp_blkThreatPos.addAll(black_threateningPiecePositions);
-            temp_blkThreatPos.retainAll(entry.getValue());
+            Piece currWhitePiece = entry.getKey();
+            List<BoardPosition> currWhitePiecePossMoves = entry.getValue();
+
+            ArrayList<BoardPosition> temp_blkThreatPos = new ArrayList<BoardPosition>(black_threateningPiecePositions);
+            temp_blkThreatPos.retainAll(currWhitePiecePossMoves);
 
             if (!temp_blkThreatPos.isEmpty()) {
                 // denne brik dækker en eller flere af de sorte truende brikker
                 // find denne briks BoardPosition
                 for (BoardPosition blackBP : temp_blkThreatPos) {
                     for (BoardPosition bp : BoardPosition.values()) {
-                        if (getPieceAtPosition(bp) == entry.getKey()
-                                && entry.getValue().contains(blackBP)) {
+                        if (_pieceMap.get(bp) == currWhitePiece
+                                && currWhitePiecePossMoves.contains(blackBP)) {
                             // simulate move and check if still in check; if not, return false as this move is valid
-                            Map<BoardPosition, Piece> tempPieceMap = new HashMap<BoardPosition, Piece>();
-                            tempPieceMap.putAll(_pieceMap);
+                            Map<BoardPosition, Piece> tempPieceMap = new HashMap<BoardPosition, Piece>(_pieceMap);
+                            tempPieceMap.put(blackBP, currWhitePiece);
+                            tempPieceMap.remove(bp);
                             if (!AlgorithmUtility.isCheck(this, tempPieceMap)) {
+                                System.out.println("Attack possible with " + _pieceMap.get(bp));
                                 return false;
                             }
 
@@ -212,13 +242,69 @@ public class GameImpl implements Game, Observable{
             }
         }
 
-
         // check, for all possible moving positions for all threatening black pieces,
         // if we are still checked (isCheck()) in another instance of the chess board if
         // one of our pieces could intervene (stand on one of these positions of the black piece)
 
+        for (Piece blkThreateningPiece : black_threateningPieces) {
+            // find pos of black piece
+            BoardPosition blkThreateningPiecePos = null;
+            for (BoardPosition bp : BoardPosition.values()) {
+                if (_pieceMap.get(bp) == blkThreateningPiece) {
+                    blkThreateningPiecePos = bp;
+                }
+            }
 
-        return temp_whiteKing_possibleMoves.isEmpty();
+            // collect possible moves of all threatening pieces in one set to check
+            Set<BoardPosition> blkPossMovesToCheck = new TreeSet<BoardPosition>();
+            it = blkThreateningPiece.possibleMovingPositions(blkThreateningPiecePos, this, _pieceMap);
+            while (it.hasNext()) {
+                blkPossMovesToCheck.add(it.next());
+            }
+
+            // run through all white pieces
+            // - if current piece has a possible move that is contained in blkPossMovesToCheck
+            //   - move this piece to this position and check if still in check. if not, return false
+
+            for (Entry<Piece, List<BoardPosition>> entry : whitePieceMappings.entrySet()) {
+                Piece currPiece = entry.getKey();
+                List<BoardPosition> currPiecePossMoves = entry.getValue();
+                BoardPosition currPiecePos = null;
+
+                if (currPiece == whiteKingPiece) continue;
+
+                // find white piece pos
+                for (BoardPosition bp : BoardPosition.values()) {
+                    if (_pieceMap.get(bp) == currPiece) {
+                        currPiecePos = bp;
+                    }
+                }
+
+                // save the intersection of the threatening black piece possible movements, and this current
+                // white piece possible movements
+                Set<BoardPosition> tmp_currWhiteRelevantMoves = new HashSet<BoardPosition>(currPiecePossMoves);
+                tmp_currWhiteRelevantMoves.retainAll(blkPossMovesToCheck);
+
+                for (BoardPosition possMove : tmp_currWhiteRelevantMoves) {
+                    // create a temporary new instance of the game in which this possible move has happened
+                    // and check if white is still mated; return false if not, as this is a possible move
+                    Map<BoardPosition, Piece> tmp_pieceMap = new HashMap<BoardPosition, Piece>(_pieceMap);
+                    tmp_pieceMap.put(possMove, currPiece);
+                    tmp_pieceMap.remove(currPiecePos);
+                    boolean result = AlgorithmUtility.isCheck(this, tmp_pieceMap);
+                    if (!result) {
+                        System.out.print("moved new piece " + currPiece + " from " + currPiecePos + " ");
+                        System.out.print("to " + possMove + " ");
+                        System.out.print("with result: " + result);
+                        System.out.println();
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // if this statement is reached, white is mated and game is over
+        return true;
     }
 
     private void performPieceMove(BoardPosition from, BoardPosition to) {

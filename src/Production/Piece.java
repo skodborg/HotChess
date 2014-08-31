@@ -1,6 +1,7 @@
 package Production;
 
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by marc on 07/12/13.
@@ -27,5 +28,5 @@ public interface Piece {
     according to the movement rules defined for the piece.
     Game state is not considered here, but is a responsibility of the Game itself
      */
-    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game);
+    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game, Map<BoardPosition, Piece> pieceMap);
 }

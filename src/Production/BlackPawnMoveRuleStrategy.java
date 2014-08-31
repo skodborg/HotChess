@@ -32,6 +32,7 @@ public class BlackPawnMoveRuleStrategy implements PieceMoveRuleStrategy {
 
         // if in initial position, allow to move two steps forward
         if (from.getIndex() >= 48
+                && pieceMap.get(BoardPosition.south(from)) == null
                 && pieceMap.get(BoardPosition.south(BoardPosition.south(from))) == null) {
             validPositions.add(BoardPosition.south(BoardPosition.south(from)));
         }

@@ -32,6 +32,7 @@ public class WhitePawnMoveRuleStrategy implements PieceMoveRuleStrategy {
 
         // if in initial position, allow to move two steps forward
         if (from.getIndex() <= 15
+                && pieceMap.get(BoardPosition.north(from)) == null
                 && pieceMap.get(BoardPosition.north(BoardPosition.north(from))) == null) {
             validPositions.add(BoardPosition.north(BoardPosition.north(from)));
         }

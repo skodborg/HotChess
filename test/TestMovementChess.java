@@ -37,12 +37,6 @@ public class TestMovementChess {
     }
 
     @Test
-    public void shouldNotLetWhitePawnMove2StepsForwardInOneMove() {
-        assertFalse("should not let white pawn move 2 steps forward in one move",
-                _game.movePiece(BoardPosition.A2, BoardPosition.A4));
-    }
-
-    @Test
     public void shouldNotLetWhitePawnMoveBackwards() {
         // move white pawn forwards
         _game.movePiece(BoardPosition.A2, BoardPosition.A3);

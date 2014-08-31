@@ -25,6 +25,12 @@ public interface Game extends Observable {
     public Piece getPieceAtPosition(BoardPosition p);
 
     /*
+    returns the BoardPosition currently housing the given Piece, or null
+    if no such Piece is found
+     */
+    public BoardPosition getPositionOfPiece(Piece p);
+
+    /*
     returns a shallow copy of the mapping of BoardPositions to Pieces currently in use
      */
     public Map<BoardPosition, Piece> getPieceMap();

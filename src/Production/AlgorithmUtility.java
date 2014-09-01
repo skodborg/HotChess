@@ -37,7 +37,7 @@ public class AlgorithmUtility {
         return possibleEnemyMovingPositions.contains(friendlyKingPos);
     }
 
-    public static boolean isPlayerCheckMated(Game game,
+    public static Color isPlayerCheckMated(Game game,
                                              Map<BoardPosition, Piece> pieceMap,
                                              Color playerToCheckIfMated) {
 
@@ -112,8 +112,8 @@ public class AlgorithmUtility {
                 new TreeSet<BoardPosition>(friendlyPieceMappings.get(friendlyKingPiece));
         temp_friendlyKing_possibleMoves.removeAll(enemy_CoveredPositions_noFriendlyKing);
 
-        // if friendly king has possible moves, return false with no further analysis
-        if (!temp_friendlyKing_possibleMoves.isEmpty()) { return false; }
+        // if friendly king has possible moves, return Color.NONE with no further analysis
+        if (!temp_friendlyKing_possibleMoves.isEmpty()) { return Color.NONE; }
 
         /*
         -------------------------
@@ -155,7 +155,7 @@ public class AlgorithmUtility {
                     tempPieceMap.remove(currFriendlyPiecePos);
                     if (!AlgorithmUtility.isPlayerChecked(game, tempPieceMap, friendlyColor)) {
                         // friendly player can avoid the check with an attack
-                        return false;
+                        return Color.NONE;
                     }
                 }
             }
@@ -193,13 +193,13 @@ public class AlgorithmUtility {
                 tmp_pieceMap.remove(currPiecePos);
                 if (!AlgorithmUtility.isPlayerChecked(game, tmp_pieceMap, friendlyColor)) {
                     // a friendly piece can successfully intervene the enemy attack and avoid check mate
-                    return false;
+                    return Color.NONE;
                 }
             }
         }
 
         // if this statement is reached, friendly player is mated
-        return true;
+        return friendlyColor;
 
     }
 

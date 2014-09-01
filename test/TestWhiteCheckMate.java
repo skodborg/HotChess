@@ -1,7 +1,4 @@
-import Production.BoardPosition;
-import Production.FullBoardSetupStrategy;
-import Production.Game;
-import Production.GameImpl;
+import Production.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +29,7 @@ public class TestWhiteCheckMate {
         _game.movePiece(BoardPosition.F1, BoardPosition.G2);
         _game.movePiece(BoardPosition.G5, BoardPosition.H5);
 
-        assertTrue(_game.isWhiteInMate());
+        assertTrue(_game.isPlayerInCheckMate() == Color.WHITE);
     }
 
     @Test
@@ -44,7 +41,7 @@ public class TestWhiteCheckMate {
         _game.movePiece(BoardPosition.E2, BoardPosition.E3);
         _game.movePiece(BoardPosition.H4, BoardPosition.G3);
 
-        assertFalse(_game.isWhiteInMate());
+        assertFalse(_game.isPlayerInCheckMate() == Color.WHITE);
 
         assertTrue(_game.isCheck());
     }
@@ -58,7 +55,7 @@ public class TestWhiteCheckMate {
         _game.movePiece(BoardPosition.B1, BoardPosition.A3);
         _game.movePiece(BoardPosition.D4, BoardPosition.F3);
 
-        assertFalse(_game.isWhiteInMate());
+        assertFalse(_game.isPlayerInCheckMate() == Color.WHITE);
 
         assertTrue(_game.isCheck());
     }
@@ -70,7 +67,7 @@ public class TestWhiteCheckMate {
         _game.movePiece(BoardPosition.D4, BoardPosition.C5);
         _game.movePiece(BoardPosition.D8, BoardPosition.A5);
 
-        assertFalse(_game.isWhiteInMate());
+        assertFalse(_game.isPlayerInCheckMate() == Color.WHITE);
         assertTrue(_game.isCheck());
     }
 
@@ -87,7 +84,7 @@ public class TestWhiteCheckMate {
         _game.movePiece(BoardPosition.A3, BoardPosition.C4);
         _game.movePiece(BoardPosition.D8, BoardPosition.A5);
 
-        assertTrue(_game.isWhiteInMate());
+        assertTrue(_game.isPlayerInCheckMate() == Color.WHITE);
     }
 
 

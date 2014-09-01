@@ -105,13 +105,20 @@ public class GameImpl implements Game, Observable{
 
     // returns true if a player is in check
     public boolean isCheck() {
-        return AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE);
+        return AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE)
+                || AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.BLACK);
     }
 
     @Override
-    public boolean isWhiteInMate() {
-
-        return AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.WHITE);
+    public Color isPlayerInCheckMate() {
+        Color whiteTestResult;
+        Color blackTestResult;
+        if ((whiteTestResult = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.WHITE)) != Color.NONE) {
+            return whiteTestResult;
+        } else if ((blackTestResult = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.BLACK)) != Color.NONE) {
+            return blackTestResult;
+        }
+        return Color.NONE;
     }
 
     private void performPieceMove(BoardPosition from, BoardPosition to) {

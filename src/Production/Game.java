@@ -53,7 +53,7 @@ public interface Game extends Observable {
     public boolean isCheck();
 
     /*
-    returns true if one of the players is check mate and the game is over, false otherwise
+    returns the color of the player currently in check mate if one exists, otherwise returns Color.NONE
      */
-    public boolean isWhiteInMate();
+    public Color isPlayerInCheckMate();
 }

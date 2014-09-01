@@ -2,6 +2,7 @@ package GUI;
 
 import Production.Game;
 import Production.Observer;
+import Production.Color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,8 +39,9 @@ public class InfoPanel extends JPanel implements Observer {
     public void update() {
         lblPlayerInTurn.setText("In turn: " + _game.getPlayerInTurn());
         if (_game.isCheck()) {
-            if (_game.isWhiteInMate()) {
-                lblWhiteCheckMateStatus.setText("White is in Check Mate!");
+            Color checkMatedPlayer;
+            if ((checkMatedPlayer = _game.isPlayerInCheckMate()) != Color.NONE) {
+                lblWhiteCheckMateStatus.setText(checkMatedPlayer.name() + " is in Check Mate!");
             } else {
                 lblWhiteCheckMateStatus.setText("White is in Check");
             }

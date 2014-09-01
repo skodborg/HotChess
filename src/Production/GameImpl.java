@@ -2,7 +2,6 @@ package Production;
 
 
 import java.util.*;
-import java.util.Map.*;
 
 
 public class GameImpl implements Game, Observable{
@@ -106,13 +105,13 @@ public class GameImpl implements Game, Observable{
 
     // returns true if a player is in check
     public boolean isCheck() {
-        return AlgorithmUtility.isCheck(this, _pieceMap);
+        return AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE);
     }
 
     @Override
     public boolean isWhiteInMate() {
 
-        return AlgorithmUtility.isWhiteCheckMated(this, _pieceMap);
+        return AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.WHITE);
     }
 
     private void performPieceMove(BoardPosition from, BoardPosition to) {

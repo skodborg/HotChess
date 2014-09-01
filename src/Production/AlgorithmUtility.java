@@ -4,36 +4,42 @@ import java.util.*;
 
 public class AlgorithmUtility {
 
-    public static boolean isCheck(Game game, Map<BoardPosition, Piece> pieceMap) {
+    public static boolean isPlayerChecked(Game game,
+                                          Map<BoardPosition, Piece> pieceMap,
+                                          Color playerToCheckIfChecked) {
 
-        BoardPosition whiteKingPos = null;
+        Color friendlyColor = playerToCheckIfChecked;
+        Color enemyColor = (friendlyColor == Color.WHITE) ? Color.BLACK : Color.WHITE;
+        BoardPosition friendlyKingPos = null;
 
-        // find the positions of the white king
+        // find the positions of the friendly king
         for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
             if (entry.getValue().getType().equals(GameConstants.KING)
-                    && entry.getValue().getColor() == Color.WHITE) {
-                whiteKingPos = entry.getKey();
+                    && entry.getValue().getColor() == friendlyColor) {
+                friendlyKingPos = entry.getKey();
             }
         }
 
-        // for each black piece, save their possible moving positions
-        TreeSet<BoardPosition> possibleBlackMovingPositions = new TreeSet<BoardPosition>();
+        // for each enemy piece, save their possible moving positions
+        TreeSet<BoardPosition> possibleEnemyMovingPositions = new TreeSet<BoardPosition>();
         for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
-            if (entry.getValue().getColor() == Color.BLACK) {
+            if (entry.getValue().getColor() == enemyColor) {
                 Piece curr = entry.getValue();
                 BoardPosition currPos = entry.getKey();
                 Iterator<BoardPosition> currentIt = curr.possibleMovingPositions(currPos, game, pieceMap);
                 while (currentIt.hasNext()) {
-                    possibleBlackMovingPositions.add(currentIt.next());
+                    possibleEnemyMovingPositions.add(currentIt.next());
                 }
             }
         }
 
-        // returns whether the position of the white king is covered by the set of possible black moving targets
-        return possibleBlackMovingPositions.contains(whiteKingPos);
+        // returns whether the position of the friendly king is covered by the set of possible enemy moving targets
+        return possibleEnemyMovingPositions.contains(friendlyKingPos);
     }
 
-    public static boolean isWhiteCheckMated(Game game, Map<BoardPosition, Piece> pieceMap) {
+    public static boolean isPlayerCheckMated(Game game,
+                                             Map<BoardPosition, Piece> pieceMap,
+                                             Color playerToCheckIfMated) {
 
         /*
         -------------------------
@@ -41,30 +47,33 @@ public class AlgorithmUtility {
         -------------------------
          */
 
-        BoardPosition whiteKingPos = null;
-        Piece whiteKingPiece = null;
+        Color friendlyColor = playerToCheckIfMated;
+        Color enemyColor = (friendlyColor == Color.WHITE) ? Color.BLACK : Color.WHITE;
 
-        // find the positions of the white king
+        BoardPosition friendlyKingPos = null;
+        Piece friendlyKingPiece = null;
+
+        // find the positions of the friendly king
         for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
             BoardPosition currPos = entry.getKey();
             Piece currPiece = entry.getValue();
             if (currPiece.getType().equals(GameConstants.KING)
-                    && currPiece.getColor() == Color.WHITE) {
-                whiteKingPos = currPos;
-                whiteKingPiece = currPiece;
+                    && currPiece.getColor() == friendlyColor) {
+                friendlyKingPos = currPos;
+                friendlyKingPiece = currPiece;
             }
         }
 
         Iterator<BoardPosition> it;
 
-        Map<Piece, List<BoardPosition>> blackPieceMappings = new HashMap<Piece, List<BoardPosition>>();
-        Map<Piece, List<BoardPosition>> whitePieceMappings = new HashMap<Piece, List<BoardPosition>>();
+        Map<Piece, List<BoardPosition>> enemyPieceMappings = new HashMap<Piece, List<BoardPosition>>();
+        Map<Piece, List<BoardPosition>> friendlyPieceMappings = new HashMap<Piece, List<BoardPosition>>();
 
         // fill the above sets
         for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
             Piece currPiece = entry.getValue();
             BoardPosition currPos = entry.getKey();
-            boolean currPieceIsWhite = currPiece.getColor().equals(Color.WHITE);
+            boolean currPieceIsFriendly = currPiece.getColor().equals(friendlyColor);
             ArrayList<BoardPosition> tempPosList = new ArrayList<BoardPosition>();
             it = currPiece.possibleMovingPositions(currPos, game, pieceMap);
 
@@ -72,7 +81,7 @@ public class AlgorithmUtility {
                 tempPosList.add(it.next());
             }
 
-            (currPieceIsWhite ? whitePieceMappings : blackPieceMappings).put(currPiece, tempPosList);
+            (currPieceIsFriendly ? friendlyPieceMappings : enemyPieceMappings).put(currPiece, tempPosList);
         }
 
         /*
@@ -81,30 +90,30 @@ public class AlgorithmUtility {
         -------------------------
          */
 
-        // remove white king temporarily to check that it is not blocking its own fleeing positions
-        pieceMap.remove(whiteKingPos);
+        // remove friendly king temporarily to check that it is not blocking its own fleeing positions
+        pieceMap.remove(friendlyKingPos);
 
-        Set<BoardPosition> black_CoveredPositions_noWhiteKing = new TreeSet<BoardPosition>();
+        Set<BoardPosition> enemy_CoveredPositions_noFriendlyKing = new TreeSet<BoardPosition>();
         for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
             Piece currPiece = entry.getValue();
             BoardPosition currPos = entry.getKey();
-            if (currPiece.getColor().equals(Color.BLACK)) {
+            if (currPiece.getColor().equals(enemyColor)) {
                 it = currPiece.possibleMovingPositions(currPos, game, pieceMap);
                 while (it.hasNext()) {
-                    black_CoveredPositions_noWhiteKing.add(it.next());
+                    enemy_CoveredPositions_noFriendlyKing.add(it.next());
                 }
             }
         }
-        // restore white king
-        pieceMap.put(whiteKingPos, whiteKingPiece);
+        // restore friendly king
+        pieceMap.put(friendlyKingPos, friendlyKingPiece);
 
-        // find the white king moves not covered by black, if any
-        TreeSet<BoardPosition> temp_whiteKing_possibleMoves =
-                new TreeSet<BoardPosition>(whitePieceMappings.get(whiteKingPiece));
-        temp_whiteKing_possibleMoves.removeAll(black_CoveredPositions_noWhiteKing);
+        // find the friendly king moves not covered by enemy, if any
+        TreeSet<BoardPosition> temp_friendlyKing_possibleMoves =
+                new TreeSet<BoardPosition>(friendlyPieceMappings.get(friendlyKingPiece));
+        temp_friendlyKing_possibleMoves.removeAll(enemy_CoveredPositions_noFriendlyKing);
 
-        // if white king has possible moves, return false with no further analysis
-        if (!temp_whiteKing_possibleMoves.isEmpty()) { return false; }
+        // if friendly king has possible moves, return false with no further analysis
+        if (!temp_friendlyKing_possibleMoves.isEmpty()) { return false; }
 
         /*
         -------------------------
@@ -112,40 +121,40 @@ public class AlgorithmUtility {
         -------------------------
          */
 
-        // check which pieces threatens the white king
+        // check which pieces threatens the friendly king
 
-        Set<Piece> black_threateningPieces = new HashSet<Piece>();
-        Set<BoardPosition> black_threateningPiecePositions = new HashSet<BoardPosition>();
+        Set<Piece> enemy_threateningPieces = new HashSet<Piece>();
+        Set<BoardPosition> enemy_threateningPiecePositions = new HashSet<BoardPosition>();
 
-        for (Map.Entry<Piece, List<BoardPosition>> entry : blackPieceMappings.entrySet()) {
+        for (Map.Entry<Piece, List<BoardPosition>> entry : enemyPieceMappings.entrySet()) {
             Piece currPiece = entry.getKey();
             List<BoardPosition> currPiecePossibleMoves = entry.getValue();
-            if (currPiecePossibleMoves.contains(whiteKingPos)) {
-                black_threateningPieces.add(currPiece);
-                black_threateningPiecePositions.add(game.getPositionOfPiece(currPiece));
+            if (currPiecePossibleMoves.contains(friendlyKingPos)) {
+                enemy_threateningPieces.add(currPiece);
+                enemy_threateningPiecePositions.add(game.getPositionOfPiece(currPiece));
             }
         }
 
-        // check that white is still in check if the threatening black piece is attacked;
-        for (Map.Entry<Piece, List<BoardPosition>> entry : whitePieceMappings.entrySet()) {
-            Piece currWhitePiece = entry.getKey();
-            List<BoardPosition> currWhitePiecePossMoves = entry.getValue();
+        // check that friendly player is still in check if the threatening enemy piece is attacked;
+        for (Map.Entry<Piece, List<BoardPosition>> entry : friendlyPieceMappings.entrySet()) {
+            Piece currFriendlyPiece = entry.getKey();
+            List<BoardPosition> currFriendlyPiecePossMoves = entry.getValue();
 
-            // Check if the current white piece can attack a black threatening piece
-            ArrayList<BoardPosition> temp_blkThreatPos = new ArrayList<BoardPosition>(black_threateningPiecePositions);
-            temp_blkThreatPos.retainAll(currWhitePiecePossMoves);
-            if (!temp_blkThreatPos.isEmpty()) {
+            // Check if the current friendly piece can attack a enemy threatening piece
+            ArrayList<BoardPosition> temp_enemyThreatPos = new ArrayList<BoardPosition>(enemy_threateningPiecePositions);
+            temp_enemyThreatPos.retainAll(currFriendlyPiecePossMoves);
+            if (!temp_enemyThreatPos.isEmpty()) {
 
-                // check if such an attack lets white avoid the black Check
-                BoardPosition currWhitePiecePos = game.getPositionOfPiece(currWhitePiece);
+                // check if such an attack lets friendly player avoid the enemy Check
+                BoardPosition currFriendlyPiecePos = game.getPositionOfPiece(currFriendlyPiece);
 
-                for (BoardPosition blackBP : temp_blkThreatPos) {
+                for (BoardPosition enemyBP : temp_enemyThreatPos) {
                     // simulate move and check if still in check; if not, return false as game move is valid
                     Map<BoardPosition, Piece> tempPieceMap = new HashMap<BoardPosition, Piece>(pieceMap);
-                    tempPieceMap.put(blackBP, currWhitePiece);
-                    tempPieceMap.remove(currWhitePiecePos);
-                    if (!AlgorithmUtility.isCheck(game, tempPieceMap)) {
-                        // white can avoid the check with an attack
+                    tempPieceMap.put(enemyBP, currFriendlyPiece);
+                    tempPieceMap.remove(currFriendlyPiecePos);
+                    if (!AlgorithmUtility.isPlayerChecked(game, tempPieceMap, friendlyColor)) {
+                        // friendly player can avoid the check with an attack
                         return false;
                     }
                 }
@@ -158,38 +167,38 @@ public class AlgorithmUtility {
         -------------------------
          */
 
-        // find all the possible moves of the threatening black pieces to try and intervene here
-        Set<BoardPosition> black_PossMovesToCheck = new TreeSet<BoardPosition>();
-        for (Piece blkThreateningPiece : black_threateningPieces) {
-            black_PossMovesToCheck.addAll(blackPieceMappings.get(blkThreateningPiece));
+        // find all the possible moves of the threatening enemy pieces to try and intervene here
+        Set<BoardPosition> enemy_PossMovesToCheck = new TreeSet<BoardPosition>();
+        for (Piece enemy_ThreateningPiece : enemy_threateningPieces) {
+            enemy_PossMovesToCheck.addAll(enemyPieceMappings.get(enemy_ThreateningPiece));
         }
 
-        for (Map.Entry<Piece, List<BoardPosition>> entry : whitePieceMappings.entrySet()) {
+        for (Map.Entry<Piece, List<BoardPosition>> entry : friendlyPieceMappings.entrySet()) {
             Piece currPiece = entry.getKey();
             List<BoardPosition> currPiecePossMoves = entry.getValue();
             BoardPosition currPiecePos = game.getPositionOfPiece(currPiece);
 
-            if (currPiece == whiteKingPiece) continue; // already determined that king cannot move
+            if (currPiece == friendlyKingPiece) continue; // already determined that king cannot move
 
-            // check which possible moves the current piece has in common with the black threatening piece(s),
-            // and check if white is still in check when the current piece moves to each one of them
-            Set<BoardPosition> tmp_currWhiteRelevantMoves = new HashSet<BoardPosition>(currPiecePossMoves);
-            tmp_currWhiteRelevantMoves.retainAll(black_PossMovesToCheck);
+            // check which possible moves the current piece has in common with the enemy threatening piece(s),
+            // and check if friendly player is still in Check when the current piece moves to each one of them
+            Set<BoardPosition> tmp_currFriendlyRelevantMoves = new HashSet<BoardPosition>(currPiecePossMoves);
+            tmp_currFriendlyRelevantMoves.retainAll(enemy_PossMovesToCheck);
 
-            for (BoardPosition possMove : tmp_currWhiteRelevantMoves) {
+            for (BoardPosition possMove : tmp_currFriendlyRelevantMoves) {
                 // create a temporary new instance of the game in which game possible move has happened
-                // and check if white is still in check; return false if not, as mate can then be avoided
+                // and check if friendly player is still in Check; return false if not, as mate can then be avoided
                 Map<BoardPosition, Piece> tmp_pieceMap = new HashMap<BoardPosition, Piece>(pieceMap);
                 tmp_pieceMap.put(possMove, currPiece);
                 tmp_pieceMap.remove(currPiecePos);
-                if (!AlgorithmUtility.isCheck(game, tmp_pieceMap)) {
-                    // a white piece can successfully intervene the black attack and avoid check mate
+                if (!AlgorithmUtility.isPlayerChecked(game, tmp_pieceMap, friendlyColor)) {
+                    // a friendly piece can successfully intervene the enemy attack and avoid check mate
                     return false;
                 }
             }
         }
 
-        // if this statement is reached, white is mated
+        // if this statement is reached, friendly player is mated
         return true;
 
     }

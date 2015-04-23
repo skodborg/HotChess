@@ -258,12 +258,29 @@ public class Board extends JPanel implements MouseListener {
             validMovePositions.clear();
         }
 
-        // clumsy movement handling in two clicks
-        if (selectedPosition == null) {
-            selectedPosition = clickedPosition;
+        if (p == null) {
+            if (selectedPosition != null) {
+                _game.movePiece(selectedPosition, clickedPosition);
+                selectedPosition = null;
+            }
         } else {
-            _game.movePiece(selectedPosition, clickedPosition);
-            selectedPosition = null;
+            if (selectedPosition != null) {
+                Piece selectedPiece = _game.getPieceAtPosition(selectedPosition);
+                Production.Color selectedPieceColor = selectedPiece.getColor();
+                if (selectedPieceColor != p.getColor()) {
+                    // different piece colors, try and attack!
+                    if (_game.movePiece(selectedPosition, clickedPosition)) {
+                        // move successful, reset selectedPosition
+                        selectedPosition = null;
+                    }
+                    selectedPosition = null;
+                } else {
+                    // same colors, update state
+                    selectedPosition = clickedPosition;
+                }
+            } else {
+                selectedPosition = clickedPosition;
+            }
         }
 
         repaint();

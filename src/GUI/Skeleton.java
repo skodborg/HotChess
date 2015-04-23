@@ -32,31 +32,6 @@ public class Skeleton extends JFrame {
         setVisible(true);
         setResizable(false);
 
-        /*
-        try {
-            Thread.sleep(1000);
-            game.movePiece(BoardPosition.D2, BoardPosition.D3);
-            repaint();
-            Thread.sleep(1000);
-            game.movePiece(BoardPosition.C7, BoardPosition.C6);
-            repaint();
-            Thread.sleep(1000);
-            game.movePiece(BoardPosition.C1, BoardPosition.F4);
-            repaint();
-            Thread.sleep(1000);
-            game.movePiece(BoardPosition.G8, BoardPosition.F7);
-            repaint();
-            Thread.sleep(1000);
-            game.movePiece(BoardPosition.G8, BoardPosition.F6);
-            repaint();
-            Thread.sleep(1000);
-            game.movePiece(BoardPosition.F4, BoardPosition.C7);
-            repaint();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
-
     }
 
     public static void main(String[] args) {

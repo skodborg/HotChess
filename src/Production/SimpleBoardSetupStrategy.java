@@ -18,5 +18,7 @@ public class SimpleBoardSetupStrategy implements BoardSetupStrategy {
         pieceMap.put(BoardPosition.C7, new PieceImpl(new BlackPawnPieceFactory()));
         pieceMap.put(BoardPosition.D7, new PieceImpl(new BlackPawnPieceFactory()));
         pieceMap.put(BoardPosition.D1, new PieceImpl(GameConstants.QUEEN, Color.WHITE, new NullMoveRuleStrategy()));
+        pieceMap.put(BoardPosition.H7, new PieceImpl(new WhiteKingPieceFactory()));
+        pieceMap.put(BoardPosition.H3, new PieceImpl(new BlackKingPieceFactory()));
     }
 }

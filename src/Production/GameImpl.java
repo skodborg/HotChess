@@ -55,7 +55,7 @@ public class GameImpl implements Game, Observable{
     @Override
     public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
-            performPieceMove(from, to);
+            performPieceMove(from, to, _pieceMap);
             swapPlayerTurn();
             _turnsPlayed++;
 
@@ -77,23 +77,29 @@ public class GameImpl implements Game, Observable{
         if (movingPiece == null) return false;
 
         Iterator<BoardPosition> it = movingPiece.possibleMovingPositions(from, this, _pieceMap);
-        boolean match = false;
+        boolean toPosIsValidMove = false;
         while (it.hasNext()) {
             BoardPosition currPos = it.next();
             if (currPos == to) {
-                match = true;
+                toPosIsValidMove = true;
             }
         }
 
-        // if the player in turn is moving his own piece and
-        // the target position is not already occupied, the move
-        // is legal
-        if (movingPiece.getColor() == getPlayerInTurn() &&
-                match) {
-            return true;
-        }
+        // simulate move on a temporary game copy
+        Map<BoardPosition, Piece> tempMap = new HashMap<BoardPosition, Piece>(_pieceMap);
+        performPieceMove(from, to, tempMap);
+        boolean isCheckAfterMoving = AlgorithmUtility.isPlayerChecked(this, tempMap, movingPiece.getColor());
 
-        return false;
+        // must not be checked after moving
+        boolean noPlayersViolatesCheckRules = !isCheckAfterMoving;
+
+        // if the player in turn is moving his own piece and
+        // the target position is not already occupied, and
+        // the player moving is not checked after moving,
+        // the move is legal
+        return (movingPiece.getColor() == getPlayerInTurn()) &&
+                toPosIsValidMove &&
+                noPlayersViolatesCheckRules;
     }
 
     public BoardPosition getPositionOfPiece(Piece piece) {
@@ -121,10 +127,10 @@ public class GameImpl implements Game, Observable{
         return Color.NONE;
     }
 
-    private void performPieceMove(BoardPosition from, BoardPosition to) {
-        Piece pieceToMove = _pieceMap.get(from);
-        _pieceMap.put(to, pieceToMove);
-        _pieceMap.remove(from);
+    private void performPieceMove(BoardPosition from, BoardPosition to, Map<BoardPosition, Piece> pMap) {
+        Piece pieceToMove = pMap.get(from);
+        pMap.put(to, pieceToMove);
+        pMap.remove(from);
     }
 
     private void swapPlayerTurn() {

@@ -71,22 +71,5 @@ public class TestWhiteCheckMate {
         assertTrue(_game.isCheck());
     }
 
-    @Test
-    public void shouldStillLetWhiteBeMatedWhenThreatenedByTwoPieces() {
-        _game.movePiece(BoardPosition.F2, BoardPosition.F4);
-        _game.movePiece(BoardPosition.C7, BoardPosition.C6);
-        _game.movePiece(BoardPosition.D2, BoardPosition.D4);
-        _game.movePiece(BoardPosition.E7, BoardPosition.E6);
-        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
-        _game.movePiece(BoardPosition.F8, BoardPosition.E7);
-        _game.movePiece(BoardPosition.B1, BoardPosition.A3);
-        _game.movePiece(BoardPosition.E7, BoardPosition.H4);
-        _game.movePiece(BoardPosition.A3, BoardPosition.C4);
-        _game.movePiece(BoardPosition.D8, BoardPosition.A5);
-
-        assertTrue(_game.isPlayerInCheckMate() == Color.WHITE);
-    }
-
-
 
 }

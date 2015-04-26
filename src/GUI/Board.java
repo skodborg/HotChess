@@ -258,6 +258,11 @@ public class Board extends JPanel implements MouseListener {
             validMovePositions.clear();
         }
 
+
+        _game.getPlayerInTurn();
+
+
+
         if (p == null) {
             if (selectedPosition != null) {
                 _game.movePiece(selectedPosition, clickedPosition);
@@ -279,7 +284,9 @@ public class Board extends JPanel implements MouseListener {
                     selectedPosition = clickedPosition;
                 }
             } else {
-                selectedPosition = clickedPosition;
+                if (p.getColor() == _game.getPlayerInTurn()) {
+                    selectedPosition = clickedPosition;
+                }
             }
         }
 

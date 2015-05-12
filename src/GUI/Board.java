@@ -7,12 +7,13 @@ import java.awt.*;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Board extends JPanel implements MouseListener {
+public class Board extends JPanel implements MouseListener, MouseMotionListener {
 
     public static final int FIELD_SIZE = Skeleton.BOARD_SIZE / 8;
 
@@ -57,6 +58,7 @@ public class Board extends JPanel implements MouseListener {
         validMovePositions = new ArrayList<BoardPosition>();
 
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
 
     @Override
@@ -259,10 +261,6 @@ public class Board extends JPanel implements MouseListener {
         }
 
 
-        _game.getPlayerInTurn();
-
-
-
         if (p == null) {
             if (selectedPosition != null) {
                 _game.movePiece(selectedPosition, clickedPosition);
@@ -310,6 +308,16 @@ public class Board extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent mouseEvent) {
 
     }
 }

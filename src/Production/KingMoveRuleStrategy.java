@@ -1,5 +1,7 @@
 package Production;
 
+import GUI.Board;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -44,6 +46,15 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
             validPositions.add(currentPos);
         }
 
+        if ((currentPos = BoardPosition.east(BoardPosition.east(from))) != null
+                && isCastlingShortValid(pieceMap, movingPiece, currentPos)) {
+            validPositions.add(currentPos);
+        }
+        if ((currentPos = BoardPosition.west(BoardPosition.west(from))) != null
+                && isCastlingLongValid(pieceMap, movingPiece, currentPos)) {
+            validPositions.add(currentPos);
+        }
+
         return validPositions.iterator();
     }
 
@@ -53,5 +64,19 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                                      BoardPosition targetPosition) {
         Piece targetPiece = pieceMap.get(targetPosition);
         return targetPiece == null || targetPiece.getColor() != movingPiece.getColor();
+    }
+
+    private boolean isCastlingShortValid(Map<BoardPosition, Piece> pieceMap,
+                                         Piece kingPiece,
+                                         BoardPosition kingPosition) {
+        // TODO: implement
+        return true;
+    }
+
+    private boolean isCastlingLongValid(Map<BoardPosition, Piece> pieceMap,
+                                         Piece kingPiece,
+                                         BoardPosition kingPosition) {
+        // TODO: implement
+        return true;
     }
 }

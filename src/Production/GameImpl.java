@@ -55,6 +55,9 @@ public class GameImpl implements Game, Observable{
     @Override
     public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
+            // TODO: DELETE BELOW CONSOLE PRINTOUT
+            // System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");");
+
             performPieceMove(from, to, _pieceMap);
             swapPlayerTurn();
             _turnsPlayed++;
@@ -131,6 +134,49 @@ public class GameImpl implements Game, Observable{
         Piece pieceToMove = pMap.get(from);
         pMap.put(to, pieceToMove);
         pMap.remove(from);
+
+        // Special case handling: Castling (moving rook accordingly)
+
+        // W/B+K/R : White/Black King/Rook
+        BoardPosition WK_initPos = BoardPosition.E1;
+        BoardPosition WK_shortCastlingMoveTarget= BoardPosition.G1;
+        BoardPosition WK_longCastlingMoveTarget= BoardPosition.C1;
+        BoardPosition WR_shortInitPos = BoardPosition.H1;
+        BoardPosition WR_shortCastlingMoveTarget = BoardPosition.F1;
+        BoardPosition WR_longInitPos = BoardPosition.A1;
+        BoardPosition WR_longCastlingMoveTarget = BoardPosition.D1;
+        BoardPosition BK_initPos = BoardPosition.E8;
+        BoardPosition BK_longCastlingMoveTarget= BoardPosition.C8;
+        BoardPosition BK_shortCastlingMoveTarget= BoardPosition.G8;
+        BoardPosition BR_shortInitPos = BoardPosition.H8;
+        BoardPosition BR_shortCastlingMoveTarget = BoardPosition.F8;
+        BoardPosition BR_longInitPos = BoardPosition.A8;
+        BoardPosition BR_longCastlingMoveTarget = BoardPosition.D8;
+        // in case of castling on either side, perform special actions below
+        if (from == WK_initPos && to == WK_shortCastlingMoveTarget) {
+            // White performing small castling(right side), move white rook (H1 to F1)
+            Piece shortRook = pMap.get(WR_shortInitPos);
+            pMap.put(WR_shortCastlingMoveTarget, shortRook);
+            pMap.remove(WR_shortInitPos);
+        }
+        else if (from == WK_initPos && to == WK_longCastlingMoveTarget) {
+            // White performing long castling(left side), move white rook (A1 to D1)
+            Piece longRook = pMap.get(WR_longInitPos);
+            pMap.put(WR_longCastlingMoveTarget, longRook);
+            pMap.remove(WR_longInitPos);
+        }
+        else if (from == BK_initPos && to == BK_shortCastlingMoveTarget) {
+            // Black performing short castling(right side), move black rook (H8 to F8)
+            Piece shortRook = pMap.get(BR_shortInitPos);
+            pMap.put(BR_shortCastlingMoveTarget, shortRook);
+            pMap.remove(BR_shortInitPos);
+        }
+        else if (from == BK_initPos && to == BK_longCastlingMoveTarget) {
+            // Black performing long castling(left side), move black rook (A8 to D8)
+            Piece longRook = pMap.get(BR_longInitPos);
+            pMap.put(BR_longCastlingMoveTarget, longRook);
+            pMap.remove(BR_longInitPos);
+        }
     }
 
     private void swapPlayerTurn() {

@@ -2,6 +2,7 @@ import Production.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestCastling {
@@ -23,7 +24,9 @@ public class TestCastling {
         _game.movePiece(BoardPosition.G8, BoardPosition.H6);
 
         // castling move by moving king
-        assertTrue(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+        boolean result = _game.movePiece(BoardPosition.E1, BoardPosition.G1);
+        System.out.println(result);
+        assertTrue(result);
     }
 
     @Test
@@ -146,6 +149,57 @@ public class TestCastling {
 
         Piece rook = _game.getPieceAtPosition(BoardPosition.D8);
         assertTrue(rook.getType().equals(GameConstants.ROOK));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingWhenWhiteKingHasMoved() {
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.F6);
+        _game.movePiece(BoardPosition.E1, BoardPosition.E2);
+        _game.movePiece(BoardPosition.F6, BoardPosition.H5);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E3);
+        _game.movePiece(BoardPosition.H5, BoardPosition.F6);
+
+        assertFalse(_game.movePiece(BoardPosition.E3, BoardPosition.G3));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingWhenBlackKingHasMoved() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E5);
+        _game.movePiece(BoardPosition.F3, BoardPosition.G1);
+        _game.movePiece(BoardPosition.E8, BoardPosition.E7);
+        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E6);
+        _game.movePiece(BoardPosition.F3, BoardPosition.G1);
+
+        assertFalse(_game.movePiece(BoardPosition.E6, BoardPosition.G6));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingWhenKingHasPreviouslyMoved() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.E1, BoardPosition.E2);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E1);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingWhenRookHasMoved() {
+
+    }
+
+    @Test
+    public void shouldNotAllowCastlingWhenRookHasPreviouslyMoved() {
+
     }
 
 

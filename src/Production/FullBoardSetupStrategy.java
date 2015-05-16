@@ -2,9 +2,6 @@ package Production;
 
 import java.util.Map;
 
-/**
- * Created by marc on 07/12/13.
- */
 public class FullBoardSetupStrategy implements BoardSetupStrategy {
     @Override
     public void setupPieces(Map<BoardPosition, Piece> pieceMap) {
@@ -50,7 +47,7 @@ public class FullBoardSetupStrategy implements BoardSetupStrategy {
         pieceMap.put(BoardPosition.D8, new PieceImpl(new BlackQueenPieceFactory()));
 
         // kings
-        pieceMap.put(BoardPosition.E1, new PieceImpl(new WhiteKingPieceFactory()));
-        pieceMap.put(BoardPosition.E8, new PieceImpl(new BlackKingPieceFactory()));
+        pieceMap.put(BoardPosition.E1, new StatePieceImpl(new WhiteKingPieceFactory()));
+        pieceMap.put(BoardPosition.E8, new StatePieceImpl(new BlackKingPieceFactory()));
     }
 }

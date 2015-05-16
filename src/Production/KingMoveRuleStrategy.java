@@ -70,6 +70,10 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                                          Piece kingPiece,
                                          BoardPosition kingPosition) {
         // TODO: implement
+        if (kingPiece instanceof StatePieceImpl) {
+            StatePieceImpl stateKingPiece = (StatePieceImpl) kingPiece;
+            return !stateKingPiece.hasMoved();
+        }
         return true;
     }
 
@@ -77,6 +81,10 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                                          Piece kingPiece,
                                          BoardPosition kingPosition) {
         // TODO: implement
+        if (kingPiece instanceof StatePieceImpl) {
+            StatePieceImpl stateKingPiece = (StatePieceImpl) kingPiece;
+            return !stateKingPiece.hasMoved();
+        }
         return true;
     }
 }

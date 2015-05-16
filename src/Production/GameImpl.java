@@ -88,8 +88,18 @@ public class GameImpl implements Game, Observable{
             }
         }
 
-        // simulate move on a temporary game copy
-        Map<BoardPosition, Piece> tempMap = new HashMap<BoardPosition, Piece>(_pieceMap);
+        // simulate move on a temporary game copy (deep copy)
+        Map<BoardPosition, Piece> tempMap = new HashMap<BoardPosition, Piece>();
+        for (Map.Entry e : _pieceMap.entrySet()) {
+            BoardPosition bp = (BoardPosition) e.getKey();
+            Piece p = (Piece) e.getValue();
+            if (p instanceof StatePieceImpl) {
+                StatePieceImpl sp = (StatePieceImpl) p;
+                p = (Piece) sp.clone();
+            }
+            tempMap.put(bp, p);
+        }
+
         performPieceMove(from, to, tempMap);
         boolean isCheckAfterMoving = AlgorithmUtility.isPlayerChecked(this, tempMap, movingPiece.getColor());
 
@@ -176,6 +186,12 @@ public class GameImpl implements Game, Observable{
             Piece longRook = pMap.get(BR_longInitPos);
             pMap.put(BR_longCastlingMoveTarget, longRook);
             pMap.remove(BR_longInitPos);
+        }
+
+        // ouch, another special case..
+        // update state of piece if it was moved, to notify MoveRuleStrategies of this (castling)
+        if (pieceToMove instanceof StatePieceImpl) {
+            ((StatePieceImpl)pieceToMove).setHasMoved(true);
         }
     }
 

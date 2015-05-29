@@ -56,7 +56,7 @@ public class GameImpl implements Game, Observable{
     public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
             // TODO: DELETE BELOW CONSOLE PRINTOUT
-            // System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");");
+             System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");");
 
             performPieceMove(from, to, _pieceMap);
             swapPlayerTurn();
@@ -100,8 +100,11 @@ public class GameImpl implements Game, Observable{
             tempMap.put(bp, p);
         }
 
-        performPieceMove(from, to, tempMap);
-        boolean isCheckAfterMoving = AlgorithmUtility.isPlayerChecked(this, tempMap, movingPiece.getColor());
+        boolean isCheckAfterMoving = false;
+        if (toPosIsValidMove) {
+            performPieceMove(from, to, tempMap);
+            isCheckAfterMoving = AlgorithmUtility.isPlayerChecked(this, tempMap, movingPiece.getColor());
+        }
 
         // must not be checked after moving
         boolean noPlayersViolatesCheckRules = !isCheckAfterMoving;

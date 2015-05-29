@@ -70,9 +70,33 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                                          Piece kingPiece,
                                          BoardPosition kingPosition) {
         // TODO: implement
+        if (!kingPiece.getType().equals(GameConstants.KING)) {
+            // castling piece is not a king; bail out
+            return false;
+        }
         if (kingPiece instanceof StatePieceImpl) {
             StatePieceImpl stateKingPiece = (StatePieceImpl) kingPiece;
-            return !stateKingPiece.hasMoved();
+            if (stateKingPiece.hasMoved()) {
+                return false;
+            }
+            Piece rookShort = (kingPiece.getColor() == Color.WHITE) ? pieceMap.get(BoardPosition.H1) : pieceMap.get(BoardPosition.H8);
+            if (rookShort != null) {
+
+                // bail out if the castling rook is not actually a rook type piece
+                if (!rookShort.getType().equals(GameConstants.ROOK)) { return false; }
+
+                if (rookShort instanceof StatePieceImpl) {
+                    StatePieceImpl stateRook = (StatePieceImpl) rookShort;
+                    if (stateRook.hasMoved()) {
+                        return false;
+                    }
+                }
+            }
+
+
+            else {
+                return false;
+            }
         }
         return true;
     }

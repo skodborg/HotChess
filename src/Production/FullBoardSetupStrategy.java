@@ -25,10 +25,10 @@ public class FullBoardSetupStrategy implements BoardSetupStrategy {
         pieceMap.put(BoardPosition.H7, new PieceImpl(new BlackPawnPieceFactory()));
 
         // rooks
-        pieceMap.put(BoardPosition.A1, new PieceImpl(new WhiteRookPieceFactory()));
-        pieceMap.put(BoardPosition.H1, new PieceImpl(new WhiteRookPieceFactory()));
-        pieceMap.put(BoardPosition.A8, new PieceImpl(new BlackRookPieceFactory()));
-        pieceMap.put(BoardPosition.H8, new PieceImpl(new BlackRookPieceFactory()));
+        pieceMap.put(BoardPosition.A1, new StatePieceImpl(new WhiteRookPieceFactory()));
+        pieceMap.put(BoardPosition.H1, new StatePieceImpl(new WhiteRookPieceFactory()));
+        pieceMap.put(BoardPosition.A8, new StatePieceImpl(new BlackRookPieceFactory()));
+        pieceMap.put(BoardPosition.H8, new StatePieceImpl(new BlackRookPieceFactory()));
 
         // knights
         pieceMap.put(BoardPosition.B1, new PieceImpl(new WhiteKnightPieceFactory()));

@@ -194,13 +194,81 @@ public class TestCastling {
 
     @Test
     public void shouldNotAllowCastlingWhenRookHasMoved() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.H1, BoardPosition.F1);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
 
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
     }
 
     @Test
     public void shouldNotAllowCastlingWhenRookHasPreviouslyMoved() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.H1, BoardPosition.F1);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.F1, BoardPosition.H1);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
 
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
     }
 
+    @Test
+    public void shouldNotAllowBlackCastlingShortWhenRookHasPreviouslyMoved() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E5);
+        _game.movePiece(BoardPosition.F3, BoardPosition.G1);
+        _game.movePiece(BoardPosition.F8, BoardPosition.C5);
+        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
+        _game.movePiece(BoardPosition.G8, BoardPosition.F6);
+        _game.movePiece(BoardPosition.F3, BoardPosition.G1);
+        _game.movePiece(BoardPosition.H8, BoardPosition.F8);
+        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
+        _game.movePiece(BoardPosition.F8, BoardPosition.H8);
+        _game.movePiece(BoardPosition.F3, BoardPosition.G1);
+
+        assertFalse(_game.movePiece(BoardPosition.E8, BoardPosition.G8));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingThroughOtherPieces() {
+        _game.movePiece(BoardPosition.D2, BoardPosition.D4);
+        _game.movePiece(BoardPosition.B8, BoardPosition.A6);
+        _game.movePiece(BoardPosition.D1, BoardPosition.D3);
+        _game.movePiece(BoardPosition.A6, BoardPosition.B8);
+        _game.movePiece(BoardPosition.C1, BoardPosition.F4);
+        _game.movePiece(BoardPosition.B8, BoardPosition.A6);
+
+        // white castling long through the knight
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.C1));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingIfNotWithRook() {
+        _game.movePiece(BoardPosition.G2, BoardPosition.G4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.F1, BoardPosition.G2);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.H2, BoardPosition.H4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.H1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.G2, BoardPosition.H1);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.G1, BoardPosition.F3);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+
+        // white attempting short castling with bishop on rooks position
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
 
 }

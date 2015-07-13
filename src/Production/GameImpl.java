@@ -55,8 +55,8 @@ public class GameImpl implements Game, Observable{
     @Override
     public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
-            // TODO: DELETE BELOW CONSOLE PRINTOUT
-             System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");");
+             // TODO: DELETE BELOW CONSOLE PRINTOUT
+             // System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");");
 
             performPieceMove(from, to, _pieceMap);
             swapPlayerTurn();

@@ -47,7 +47,7 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
         }
 
         if ((currentPos = BoardPosition.east(BoardPosition.east(from))) != null
-                && isCastlingShortValid(pieceMap, movingPiece, currentPos)) {
+                && isCastlingShortValid(pieceMap, movingPiece, from)) {
             validPositions.add(currentPos);
         }
         if ((currentPos = BoardPosition.west(BoardPosition.west(from))) != null
@@ -68,35 +68,53 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
 
     private boolean isCastlingShortValid(Map<BoardPosition, Piece> pieceMap,
                                          Piece kingPiece,
-                                         BoardPosition kingPosition) {
+                                         BoardPosition kingCurrPosition) {
         // TODO: implement
         if (!kingPiece.getType().equals(GameConstants.KING)) {
             // castling piece is not a king; bail out
             return false;
         }
+
         if (kingPiece instanceof StatePieceImpl) {
             StatePieceImpl stateKingPiece = (StatePieceImpl) kingPiece;
             if (stateKingPiece.hasMoved()) {
+                // king has previously moved; bail out
                 return false;
             }
+
             Piece rookShort = (kingPiece.getColor() == Color.WHITE) ? pieceMap.get(BoardPosition.H1) : pieceMap.get(BoardPosition.H8);
             if (rookShort != null) {
 
-                // bail out if the castling rook is not actually a rook type piece
-                if (!rookShort.getType().equals(GameConstants.ROOK)) { return false; }
+                // the castling rook is not actually a rook type piece; bail out
+                if (!rookShort.getType().equals(GameConstants.ROOK)) {
+                    return false;
+                }
 
+                // the castling rook has previously moved; bail out
                 if (rookShort instanceof StatePieceImpl) {
                     StatePieceImpl stateRook = (StatePieceImpl) rookShort;
                     if (stateRook.hasMoved()) {
                         return false;
                     }
                 }
-            }
 
+                // TODO: check that the two fields between king and rook are not occupied
+                BoardPosition nearNeighbourPos = BoardPosition.east(kingCurrPosition);
+                Piece nearNeighbour = pieceMap.get(nearNeighbourPos);
+                BoardPosition farNeighbourPos = BoardPosition.east(BoardPosition.east(kingCurrPosition));
+                Piece farNeighbour = pieceMap.get(farNeighbourPos);
+
+                if (nearNeighbour != null || farNeighbour != null) {
+                    // one of the neighbouring fields on the short castling side of the king is occupied; bail out
+                    return false;
+                }
+            }
 
             else {
+                // there is no piece on the rooks position; bail out
                 return false;
             }
+
         }
         return true;
     }

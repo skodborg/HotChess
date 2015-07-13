@@ -240,7 +240,16 @@ public class TestCastling {
     }
 
     @Test
-    public void shouldNotAllowCastlingThroughOtherPieces() {
+    public void shouldNotAllowCastlingShortThroughOtherPieces() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+
+        // white castling short through the bishop
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingLongThroughOtherPieces() {
         _game.movePiece(BoardPosition.D2, BoardPosition.D4);
         _game.movePiece(BoardPosition.B8, BoardPosition.A6);
         _game.movePiece(BoardPosition.D1, BoardPosition.D3);

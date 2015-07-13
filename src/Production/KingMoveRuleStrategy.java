@@ -47,11 +47,11 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
         }
 
         if ((currentPos = BoardPosition.east(BoardPosition.east(from))) != null
-                && isCastlingShortValid(pieceMap, movingPiece, from)) {
+                && isCastlingValid(pieceMap, movingPiece, from, true)) {
             validPositions.add(currentPos);
         }
         if ((currentPos = BoardPosition.west(BoardPosition.west(from))) != null
-                && isCastlingLongValid(pieceMap, movingPiece, currentPos)) {
+                && isCastlingValid(pieceMap, movingPiece, from, false)) {
             validPositions.add(currentPos);
         }
 
@@ -66,10 +66,10 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
         return targetPiece == null || targetPiece.getColor() != movingPiece.getColor();
     }
 
-    private boolean isCastlingShortValid(Map<BoardPosition, Piece> pieceMap,
-                                         Piece kingPiece,
-                                         BoardPosition kingCurrPosition) {
-        // TODO: implement
+    private boolean isCastlingValid(Map<BoardPosition, Piece> pieceMap,
+                                    Piece kingPiece,
+                                    BoardPosition kingCurrPos,
+                                    boolean isCastlingShort) {
         if (!kingPiece.getType().equals(GameConstants.KING)) {
             // castling piece is not a king; bail out
             return false;
@@ -82,30 +82,45 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                 return false;
             }
 
-            Piece rookShort = (kingPiece.getColor() == Color.WHITE) ? pieceMap.get(BoardPosition.H1) : pieceMap.get(BoardPosition.H8);
-            if (rookShort != null) {
+            // initialize correct rook depending on king color and short/long castling
+            Piece rook;
+            if (isCastlingShort) {
+                rook = (kingPiece.getColor() == Color.WHITE) ? pieceMap.get(BoardPosition.H1) : pieceMap.get(BoardPosition.H8);
+            } else {
+                rook = (kingPiece.getColor() == Color.WHITE) ? pieceMap.get(BoardPosition.A1) : pieceMap.get(BoardPosition.A8);
+            }
 
+            if (rook != null) {
                 // the castling rook is not actually a rook type piece; bail out
-                if (!rookShort.getType().equals(GameConstants.ROOK)) {
+                if (!rook.getType().equals(GameConstants.ROOK)) {
                     return false;
                 }
 
                 // the castling rook has previously moved; bail out
-                if (rookShort instanceof StatePieceImpl) {
-                    StatePieceImpl stateRook = (StatePieceImpl) rookShort;
+                if (rook instanceof StatePieceImpl) {
+                    StatePieceImpl stateRook = (StatePieceImpl) rook;
                     if (stateRook.hasMoved()) {
                         return false;
                     }
                 }
 
-                // TODO: check that the two fields between king and rook are not occupied
-                BoardPosition nearNeighbourPos = BoardPosition.east(kingCurrPosition);
-                Piece nearNeighbour = pieceMap.get(nearNeighbourPos);
-                BoardPosition farNeighbourPos = BoardPosition.east(BoardPosition.east(kingCurrPosition));
-                Piece farNeighbour = pieceMap.get(farNeighbourPos);
+                // check that the two/three fields between the king and rook are not occupied
+                // - trdNeighbour is only relevant when castling long
+                BoardPosition fstNeighbourPos =
+                        isCastlingShort ? BoardPosition.east(kingCurrPos) :
+                                          BoardPosition.west(kingCurrPos);
+                Piece fstNeighbour= pieceMap.get(fstNeighbourPos);
+                BoardPosition sndNeighbourPos =
+                        isCastlingShort ? BoardPosition.east(BoardPosition.east(kingCurrPos)) :
+                                          BoardPosition.west(BoardPosition.west(kingCurrPos));
+                Piece sndNeighbour = pieceMap.get(sndNeighbourPos);
+                // trdNeighbourPos is only relevant when castling long, should be initialized to null if castling short
+                BoardPosition trdNeighbourPos =
+                        isCastlingShort ? null : BoardPosition.west(BoardPosition.west(BoardPosition.west(kingCurrPos)));
+                Piece trdNeighbour = pieceMap.get(trdNeighbourPos);
 
-                if (nearNeighbour != null || farNeighbour != null) {
-                    // one of the neighbouring fields on the short castling side of the king is occupied; bail out
+                if (fstNeighbour != null || sndNeighbour != null || trdNeighbour != null) {
+                    // one of the neighbouring fields on the castling side of the king is occupied; bail out
                     return false;
                 }
             }
@@ -119,14 +134,4 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
         return true;
     }
 
-    private boolean isCastlingLongValid(Map<BoardPosition, Piece> pieceMap,
-                                         Piece kingPiece,
-                                         BoardPosition kingPosition) {
-        // TODO: implement
-        if (kingPiece instanceof StatePieceImpl) {
-            StatePieceImpl stateKingPiece = (StatePieceImpl) kingPiece;
-            return !stateKingPiece.hasMoved();
-        }
-        return true;
-    }
 }

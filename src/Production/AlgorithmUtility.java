@@ -28,7 +28,10 @@ public class AlgorithmUtility {
                 BoardPosition currPos = entry.getKey();
                 Iterator<BoardPosition> currentIt = curr.possibleMovingPositions(currPos, game, pieceMap);
                 while (currentIt.hasNext()) {
-                    possibleEnemyMovingPositions.add(currentIt.next());
+                    BoardPosition next = currentIt.next();
+                    if (next != null) { // next might be null because of BoardPosition.north()
+                        possibleEnemyMovingPositions.add(next);
+                    }
                 }
             }
         }

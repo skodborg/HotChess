@@ -25,7 +25,6 @@ public class TestCastling {
 
         // castling move by moving king
         boolean result = _game.movePiece(BoardPosition.E1, BoardPosition.G1);
-        System.out.println(result);
         assertTrue(result);
     }
 

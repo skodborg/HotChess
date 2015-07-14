@@ -280,4 +280,23 @@ public class TestCastling {
         assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
     }
 
+    @Test
+    public void shouldNotAllowCastlingIfNotWithKing() {
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.E1, BoardPosition.E2);
+        _game.movePiece(BoardPosition.H6, BoardPosition.G8);
+        _game.movePiece(BoardPosition.D1, BoardPosition.E1);
+        _game.movePiece(BoardPosition.G8, BoardPosition.H6);
+        _game.movePiece(BoardPosition.E1, BoardPosition.G1);
+
+        // rook should not have moved as we castled with the queen, not the king
+        Piece rook = _game.getPieceAtPosition(BoardPosition.H1);
+        assertTrue(rook != null);
+    }
+
 }

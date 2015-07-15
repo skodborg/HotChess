@@ -200,6 +200,28 @@ public class GameImpl implements Game, Observable{
         if (pieceToMove instanceof StatePieceImpl) {
             ((StatePieceImpl)pieceToMove).setHasMoved(true);
         }
+
+        // special case
+        // replace pawn by queen if it reaches enemy players back row
+        if (pieceToMove.getType().equals(GameConstants.PAWN)) {
+            if (pieceToMove.getColor().equals(Color.WHITE)) {
+                if (to == BoardPosition.A8 || to == BoardPosition.B8 ||
+                        to == BoardPosition.C8 || to == BoardPosition.D8 ||
+                        to == BoardPosition.E8 || to == BoardPosition.F8 ||
+                        to == BoardPosition.G8 || to == BoardPosition.H8) {
+                    Piece newWhiteQueen = new PieceImpl(new WhiteQueenPieceFactory());
+                    pMap.put(to, newWhiteQueen);
+                }
+            } else {
+                if (to == BoardPosition.A1 || to == BoardPosition.B1 ||
+                        to == BoardPosition.C1 || to == BoardPosition.D1 ||
+                        to == BoardPosition.E1 || to == BoardPosition.F1 ||
+                        to == BoardPosition.G1 || to == BoardPosition.H1) {
+                    Piece newBlackQueen = new PieceImpl(new BlackQueenPieceFactory());
+                    pMap.put(to, newBlackQueen);
+                }
+            }
+        }
     }
 
     private void swapPlayerTurn() {

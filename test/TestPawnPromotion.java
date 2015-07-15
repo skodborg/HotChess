@@ -1,7 +1,4 @@
-import Production.BoardPosition;
-import Production.FullBoardSetupStrategy;
-import Production.Game;
-import Production.GameImpl;
+import Production.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,5 +25,21 @@ public class TestPawnPromotion {
         _game.movePiece(BoardPosition.G6, BoardPosition.G7);
         _game.movePiece(BoardPosition.D5, BoardPosition.F6);
         assertTrue(_game.movePiece(BoardPosition.G7, BoardPosition.G8));
+    }
+
+    @Test
+    public void shouldReplacePawnByQueenOnBackRow() {
+        _game.movePiece(BoardPosition.H2, BoardPosition.H4);
+        _game.movePiece(BoardPosition.G7, BoardPosition.G5);
+        _game.movePiece(BoardPosition.H4, BoardPosition.G5);
+        _game.movePiece(BoardPosition.G8, BoardPosition.F6);
+        _game.movePiece(BoardPosition.G5, BoardPosition.G6);
+        _game.movePiece(BoardPosition.F6, BoardPosition.D5);
+        _game.movePiece(BoardPosition.G6, BoardPosition.G7);
+        _game.movePiece(BoardPosition.D5, BoardPosition.F6);
+        _game.movePiece(BoardPosition.G7, BoardPosition.G8);
+
+        // should be a queen piece at G8 now
+        assertTrue(_game.getPieceAtPosition(BoardPosition.G8).getType().equals(GameConstants.QUEEN));
     }
 }

@@ -1,11 +1,13 @@
 package Production;
 
+import Production.Factories.PieceFactory;
+import Production.Strategies.MoveRules.PieceMoveRuleStrategy;
+import Production.Utility.BoardPosition;
+import Production.Utility.Color;
+
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by marc on 07/12/13.
- */
 public class PieceImpl implements Piece {
     private final String _pieceType;
     private final Color _pieceColor;

@@ -1,4 +1,7 @@
 import Production.*;
+import Production.Strategies.BoardSetup.FullBoardSetupStrategy;
+import Production.Utility.BoardPosition;
+import Production.Utility.GameConstants;
 import org.junit.Before;
 import org.junit.Test;
 

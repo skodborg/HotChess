@@ -1,7 +1,7 @@
-import Production.BoardPosition;
+import Production.Utility.BoardPosition;
 import Production.Game;
 import Production.GameImpl;
-import Production.NoPassBoardSetupStrategy;
+import Production.Strategies.BoardSetup.NoPassBoardSetupStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,9 @@
 package Production;
 
+import Production.Factories.PieceFactory;
+import Production.Strategies.MoveRules.PieceMoveRuleStrategy;
+import Production.Utility.Color;
+
 public class StatePieceImpl extends PieceImpl {
 
     private boolean _hasMoved;

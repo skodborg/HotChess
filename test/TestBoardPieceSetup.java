@@ -1,12 +1,13 @@
 import Production.*;
+import Production.Strategies.BoardSetup.FullBoardSetupStrategy;
+import Production.Utility.BoardPosition;
+import Production.Utility.Color;
+import Production.Utility.GameConstants;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by marc on 07/12/13.
- */
 public class TestBoardPieceSetup {
 
     private Game _game;

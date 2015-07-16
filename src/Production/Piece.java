@@ -1,5 +1,8 @@
 package Production;
 
+import Production.Utility.BoardPosition;
+import Production.Utility.Color;
+
 import java.util.Iterator;
 import java.util.Map;
 

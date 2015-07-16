@@ -46,7 +46,7 @@ public class TestWhiteCheckMate {
 
         assertFalse(_game.isPlayerInCheckMate() == Color.WHITE);
 
-        assertTrue(_game.isCheck());
+        assertTrue(_game.isCheck() == Color.WHITE);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TestWhiteCheckMate {
 
         assertFalse(_game.isPlayerInCheckMate() == Color.WHITE);
 
-        assertTrue(_game.isCheck());
+        assertTrue(_game.isCheck() == Color.WHITE); // equal
     }
 
     @Test
@@ -71,7 +71,7 @@ public class TestWhiteCheckMate {
         _game.movePiece(BoardPosition.D8, BoardPosition.A5);
 
         assertFalse(_game.isPlayerInCheckMate() == Color.WHITE);
-        assertTrue(_game.isCheck());
+        assertTrue(_game.isCheck() == Color.WHITE); // equal
     }
 
 

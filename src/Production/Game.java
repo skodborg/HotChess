@@ -48,9 +48,9 @@ public interface Game extends Observable {
     boolean isMoveValid(BoardPosition from, BoardPosition to);
 
     /*
-    returns true if one of the players is in check
+    returns the color of the checked player, or Color.NONE if no player is currently checked
      */
-    boolean isCheck();
+    Color isCheck();
 
     /*
     returns the color of the player currently in check mate if one exists, otherwise returns Color.NONE

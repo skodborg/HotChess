@@ -38,12 +38,13 @@ public class InfoPanel extends JPanel implements Observer {
     @Override
     public void update() {
         lblPlayerInTurn.setText("In turn: " + _game.getPlayerInTurn());
-        if (_game.isCheck()) {
+        Color checkedPlayer = _game.isCheck();
+        if (checkedPlayer != Color.NONE) {
             Color checkMatedPlayer;
             if ((checkMatedPlayer = _game.isPlayerInCheckMate()) != Color.NONE) {
-                lblWhiteCheckMateStatus.setText(checkMatedPlayer.name() + " is in Check Mate!");
+                lblWhiteCheckMateStatus.setText(checkMatedPlayer.name() + " is Check Mated!");
             } else {
-                lblWhiteCheckMateStatus.setText("White is in Check");
+                lblWhiteCheckMateStatus.setText(checkedPlayer + " is Checked");
             }
         } else {
             lblWhiteCheckMateStatus.setText("");

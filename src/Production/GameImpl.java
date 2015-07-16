@@ -134,9 +134,10 @@ public class GameImpl implements Game, Observable{
     }
 
     // returns true if a player is in check
-    public boolean isCheck() {
-        return AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE)
-                || AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.BLACK);
+    public Color isCheck() {
+        if (AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE)) { return Color.WHITE; }
+        if (AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.BLACK)) { return Color.BLACK; }
+        return Color.NONE;
     }
 
     @Override

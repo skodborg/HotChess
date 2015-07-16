@@ -46,6 +46,11 @@ public class AlgorithmUtility {
     public static Color isPlayerCheckMated(Game game,
                                              Map<BoardPosition, Piece> pieceMap,
                                              Color playerToCheckIfMated) {
+
+        // If this method is called without the player being checked, the result might be incorrect.
+        // Therefore, we bail out if the player is not even checked
+        if (!isPlayerChecked(game, pieceMap, playerToCheckIfMated)) { return Color.NONE; }
+
         /*
         -------------------------
         STEP 0: Initialize data structures for use throughout

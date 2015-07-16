@@ -73,6 +73,11 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                                     Piece kingPiece,
                                     BoardPosition kingCurrPos,
                                     boolean isCastlingShort) {
+
+        // TODO: missing rules
+        //   - castling invalid when player is checked
+        //   - castling into check
+        //   - castling through an attacked field
         if (!kingPiece.getType().equals(GameConstants.KING)) {
             // castling piece is not a king; bail out
             return false;

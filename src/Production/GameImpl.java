@@ -21,11 +21,19 @@ public class GameImpl implements Game, Observable{
     private Map<BoardPosition, Piece> _pieceMap;
     private BoardSetupStrategy _boardSetupStrategy;
     private Set<Observer> _observers;
+    private boolean _isWhiteChecked;
+    private boolean _isWhiteCheckMated;
+    private boolean _isBlackChecked;
+    private boolean _isBlackCheckMated;
 
     public GameImpl(BoardSetupStrategy boardSetupStrategy) {
         _boardSetupStrategy = boardSetupStrategy;
         _playerInTurn = Color.WHITE;
         _turnsPlayed = 0;
+        _isWhiteChecked = false;
+        _isWhiteCheckMated = false;
+        _isBlackChecked = false;
+        _isBlackCheckMated = false;
         _observers = new HashSet<Observer>();
         setupPieces();
     }
@@ -69,6 +77,11 @@ public class GameImpl implements Game, Observable{
             performPieceMove(from, to, _pieceMap);
             swapPlayerTurn();
             _turnsPlayed++;
+
+            _isWhiteChecked = AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE);
+            _isWhiteCheckMated = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.WHITE);
+            _isBlackChecked = AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.BLACK);
+            _isBlackCheckMated = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.BLACK);
 
             // notify observers of changes
             notifyObservers();
@@ -135,20 +148,15 @@ public class GameImpl implements Game, Observable{
 
     // returns true if a player is in check
     public Color isCheck() {
-        if (AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE)) { return Color.WHITE; }
-        if (AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.BLACK)) { return Color.BLACK; }
+        if (_isWhiteChecked) return Color.WHITE;
+        if (_isBlackChecked) return Color.BLACK;
         return Color.NONE;
     }
 
     @Override
     public Color isPlayerInCheckMate() {
-        Color whiteTestResult;
-        Color blackTestResult;
-        if ((whiteTestResult = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.WHITE)) != Color.NONE) {
-            return whiteTestResult;
-        } else if ((blackTestResult = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.BLACK)) != Color.NONE) {
-            return blackTestResult;
-        }
+        if (_isWhiteCheckMated) return Color.WHITE;
+        if (_isBlackCheckMated) return Color.BLACK;
         return Color.NONE;
     }
 

@@ -43,13 +43,13 @@ public class AlgorithmUtility {
         return possibleEnemyMovingPositions.contains(friendlyKingPos);
     }
 
-    public static Color isPlayerCheckMated(Game game,
+    public static boolean isPlayerCheckMated(Game game,
                                              Map<BoardPosition, Piece> pieceMap,
                                              Color playerToCheckIfMated) {
 
         // If this method is called without the player being checked, the result might be incorrect.
         // Therefore, we bail out if the player is not even checked
-        if (!isPlayerChecked(game, pieceMap, playerToCheckIfMated)) { return Color.NONE; }
+        if (!isPlayerChecked(game, pieceMap, playerToCheckIfMated)) { return false; }
 
         /*
         -------------------------
@@ -123,7 +123,7 @@ public class AlgorithmUtility {
         temp_friendlyKing_possibleMoves.removeAll(enemy_CoveredPositions_noFriendlyKing);
 
         // if friendly king has possible moves, return Color.NONE with no further analysis
-        if (!temp_friendlyKing_possibleMoves.isEmpty()) { return Color.NONE; }
+        if (!temp_friendlyKing_possibleMoves.isEmpty()) { return false; }
 
         /*
         -------------------------
@@ -165,7 +165,7 @@ public class AlgorithmUtility {
                     tempPieceMap.remove(currFriendlyPiecePos);
                     if (!AlgorithmUtility.isPlayerChecked(game, tempPieceMap, friendlyColor)) {
                         // friendly player can avoid the check with an attack
-                        return Color.NONE;
+                        return false;
                     }
                 }
             }
@@ -203,13 +203,13 @@ public class AlgorithmUtility {
                 tmp_pieceMap.remove(currPiecePos);
                 if (!AlgorithmUtility.isPlayerChecked(game, tmp_pieceMap, friendlyColor)) {
                     // a friendly piece can successfully intervene the enemy attack and avoid check mate
-                    return Color.NONE;
+                    return false;
                 }
             }
         }
 
         // if this statement is reached, friendly player is mated
-        return friendlyColor;
+        return true;
 
     }
 

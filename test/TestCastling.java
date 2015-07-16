@@ -301,4 +301,78 @@ public class TestCastling {
         assertTrue(rook != null);
     }
 
+    @Test
+    public void shouldlNotAllowCastlingWhenKingIsChecked() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E5);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.D8, BoardPosition.H4);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.H4, BoardPosition.E4);
+
+        // should not allow white king to make a castling move, as it is checked by black queen
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingShortThroughSquareCoveredByAnEnemyPiece() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E5);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.D8, BoardPosition.G5);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.G5, BoardPosition.F5);
+        _game.movePiece(BoardPosition.F2, BoardPosition.F4);
+        _game.movePiece(BoardPosition.F5, BoardPosition.F4);
+
+        // should not let white king castle short as F1 is covered by black queen
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingLongThroughSquareCoveredByAnEnemyPiece() {
+
+        _game.movePiece(BoardPosition.B1, BoardPosition.A3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E6);
+        _game.movePiece(BoardPosition.D2, BoardPosition.D4);
+        _game.movePiece(BoardPosition.D8, BoardPosition.G5);
+        _game.movePiece(BoardPosition.C1, BoardPosition.F4);
+        _game.movePiece(BoardPosition.G5, BoardPosition.F4);
+        _game.movePiece(BoardPosition.D1, BoardPosition.D3);
+        _game.movePiece(BoardPosition.F4, BoardPosition.E4);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E3);
+        _game.movePiece(BoardPosition.E4, BoardPosition.G4);
+
+        // should not let white king castle long as D1 is covered by black queen
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.C1));
+    }
+
+    @Test
+    public void shouldNotAllowCastlingWhenKingEndsUpChecked() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E5);
+        _game.movePiece(BoardPosition.G2, BoardPosition.G4);
+        _game.movePiece(BoardPosition.D8, BoardPosition.G5);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.B8, BoardPosition.A6);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.G5, BoardPosition.G4);
+
+        assertFalse(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
+
+    @Test
+    public void shouldAllowCastlingWhenPreviousCheckWasAvoidedWithoutMovingTheKingOrRook() {
+        _game.movePiece(BoardPosition.G1, BoardPosition.H3);
+        _game.movePiece(BoardPosition.E7, BoardPosition.E5);
+        _game.movePiece(BoardPosition.E2, BoardPosition.E4);
+        _game.movePiece(BoardPosition.D8, BoardPosition.H4);
+        _game.movePiece(BoardPosition.F1, BoardPosition.C4);
+        _game.movePiece(BoardPosition.H4, BoardPosition.E4);
+        _game.movePiece(BoardPosition.D1, BoardPosition.E2);
+        _game.movePiece(BoardPosition.E4, BoardPosition.G6);
+
+        assertTrue(_game.movePiece(BoardPosition.E1, BoardPosition.G1));
+    }
+
 }

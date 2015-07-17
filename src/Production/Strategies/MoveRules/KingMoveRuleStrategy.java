@@ -6,10 +6,7 @@ import Production.Utility.BoardPosition;
 import Production.Utility.Color;
 import Production.Utility.GameConstants;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
     @Override
@@ -133,6 +130,49 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                     // one of the neighbouring fields on the castling side of the king is occupied; bail out
                     return false;
                 }
+
+
+                // check that no position passed by the king during castling is covered by an enemy piece
+
+                Iterator<BoardPosition> it;
+                List<BoardPosition> enemyCoveredPositions = new ArrayList<BoardPosition>();
+
+                // fill the above set
+                for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
+                    Piece currPiece = entry.getValue();
+                    BoardPosition currPos = entry.getKey();
+                    boolean currPieceIsEnemys = !currPiece.getColor().equals(kingPiece.getColor());
+                    if (currPieceIsEnemys) {
+                        it = currPiece.possibleMovingPositions(currPos, game, pieceMap);
+                        while (it.hasNext()) {
+                            enemyCoveredPositions.add(it.next());
+                        }
+                    }
+                }
+
+                List<BoardPosition> kingPassingPositions = new ArrayList<BoardPosition>();
+                if (isCastlingShort) {
+                    if (kingPiece.getColor().equals(Color.WHITE)) {
+                        kingPassingPositions.add(BoardPosition.F1);
+                        kingPassingPositions.add(BoardPosition.G1);
+                    } else {
+                        kingPassingPositions.add(BoardPosition.F8);
+                        kingPassingPositions.add(BoardPosition.G8);
+                    }
+                } else {
+                    if (kingPiece.getColor().equals(Color.WHITE)) {
+                        kingPassingPositions.add(BoardPosition.C1);
+                        kingPassingPositions.add(BoardPosition.D1);
+                    } else {
+                        kingPassingPositions.add(BoardPosition.C8);
+                        kingPassingPositions.add(BoardPosition.D8);
+                    }
+                }
+
+                // if one of the positions passed by the king during castling is covered by the enemy,
+                // castling is not allowed; bail out
+                enemyCoveredPositions.retainAll(kingPassingPositions);
+                if (enemyCoveredPositions.size() > 0) return false;
             }
 
             else {

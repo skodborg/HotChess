@@ -1,6 +1,7 @@
 package Production.Strategies.MoveRules;
 
 import Production.*;
+import Production.Utility.AlgorithmUtility;
 import Production.Utility.BoardPosition;
 import Production.Utility.Color;
 import Production.Utility.GameConstants;
@@ -50,11 +51,11 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
         }
 
         if ((currentPos = BoardPosition.east(BoardPosition.east(from))) != null
-                && isCastlingValid(pieceMap, movingPiece, from, true)) {
+                && isCastlingValid(pieceMap, movingPiece, from, game, true)) {
             validPositions.add(currentPos);
         }
         if ((currentPos = BoardPosition.west(BoardPosition.west(from))) != null
-                && isCastlingValid(pieceMap, movingPiece, from, false)) {
+                && isCastlingValid(pieceMap, movingPiece, from, game, false)) {
             validPositions.add(currentPos);
         }
 
@@ -72,16 +73,17 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
     private boolean isCastlingValid(Map<BoardPosition, Piece> pieceMap,
                                     Piece kingPiece,
                                     BoardPosition kingCurrPos,
+                                    Game game,
                                     boolean isCastlingShort) {
 
         // TODO: missing rules
-        //   - castling invalid when player is checked
-        //   - castling into check
         //   - castling through an attacked field
-        if (!kingPiece.getType().equals(GameConstants.KING)) {
-            // castling piece is not a king; bail out
-            return false;
-        }
+
+        // castling piece is not a king; bail out
+        if (!kingPiece.getType().equals(GameConstants.KING)) return false;
+
+        // if the king trying to castle is checked, castling is not allowed; bail out
+        if (game.isCheck().equals(kingPiece.getColor())) return false;
 
         if (kingPiece instanceof StatePieceImpl) {
             StatePieceImpl stateKingPiece = (StatePieceImpl) kingPiece;

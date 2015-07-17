@@ -1,4 +1,4 @@
-import Production.BoardPosition;
+import Production.Utility.BoardPosition;
 import org.junit.Test;
 
 import java.util.Set;

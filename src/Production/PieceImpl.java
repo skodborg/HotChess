@@ -1,10 +1,13 @@
 package Production;
 
-import java.util.Iterator;
+import Production.Factories.PieceFactory;
+import Production.Strategies.MoveRules.PieceMoveRuleStrategy;
+import Production.Utility.BoardPosition;
+import Production.Utility.Color;
 
-/**
- * Created by marc on 07/12/13.
- */
+import java.util.Iterator;
+import java.util.Map;
+
 public class PieceImpl implements Piece {
     private final String _pieceType;
     private final Color _pieceColor;
@@ -38,7 +41,7 @@ public class PieceImpl implements Piece {
     }
 
     @Override
-    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game) {
-        return _pieceMoveRuleStrategy.iterator(from, game);
+    public Iterator<BoardPosition> possibleMovingPositions(BoardPosition from, Game game, Map<BoardPosition, Piece> pieceMap) {
+        return _pieceMoveRuleStrategy.iterator(from, game, pieceMap);
     }
 }

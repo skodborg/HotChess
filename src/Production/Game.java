@@ -1,36 +1,59 @@
 package Production;
 
-/**
- * Created by marc on 07/12/13.
- */
-public interface Game {
+import Production.Utility.BoardPosition;
+import Production.Utility.Color;
+
+import java.util.Map;
+
+public interface Game extends Observable {
 
     /*
     returns the color of the winning player, or Color.NONE
     if no winner has been found yet
      */
-    public Color getWinner();
+    Color getWinner();
 
     /*
     returns the color of the player currently in turn
      */
-    public Color getPlayerInTurn();
+    Color getPlayerInTurn();
 
     /*
     returns the Piece at the given position, or null if no pieces is
     at the given position
      */
-    public Piece getPieceAtPosition(BoardPosition p);
+    Piece getPieceAtPosition(BoardPosition p);
+
+    /*
+    returns the BoardPosition currently housing the given Piece, or null
+    if no such Piece is found
+     */
+    BoardPosition getPositionOfPiece(Piece p);
+
+    /*
+    returns a shallow copy of the mapping of BoardPositions to Pieces currently in use
+     */
+    Map<BoardPosition, Piece> getPieceMap();
 
     /*
     returns true and moves the piece if the move is valid,
     returns false otherwise
      */
-    public boolean movePiece(BoardPosition from, BoardPosition to);
+    boolean movePiece(BoardPosition from, BoardPosition to);
 
     /*
     returns true if the move is valid according to the current game rules,
     returns false otherwise
      */
-    public boolean isMoveValid(BoardPosition from, BoardPosition to);
+    boolean isMoveValid(BoardPosition from, BoardPosition to);
+
+    /*
+    returns the color of the checked player, or Color.NONE if no player is currently checked
+     */
+    Color isCheck();
+
+    /*
+    returns the color of the player currently in check mate if one exists, otherwise returns Color.NONE
+     */
+    Color isPlayerInCheckMate();
 }

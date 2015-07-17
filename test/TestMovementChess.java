@@ -1,7 +1,7 @@
-import Production.BoardPosition;
+import Production.Utility.BoardPosition;
 import Production.Game;
 import Production.GameImpl;
-import Production.MovementTestingBoardSetupStrategy;
+import Production.Strategies.BoardSetup.MovementTestingBoardSetupStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,12 +34,6 @@ public class TestMovementChess {
         _game.movePiece(BoardPosition.A2, BoardPosition.A3);
         assertTrue("should let black pawn move 1 step forward after white has moved once",
                 _game.movePiece(BoardPosition.A7, BoardPosition.A6));
-    }
-
-    @Test
-    public void shouldNotLetWhitePawnMove2StepsForwardInOneMove() {
-        assertFalse("should not let white pawn move 2 steps forward in one move",
-                _game.movePiece(BoardPosition.A2, BoardPosition.A4));
     }
 
     @Test
@@ -76,25 +70,25 @@ public class TestMovementChess {
     @Test
     public void shouldLetWhiteRookMoveTwoPositionsVertically() {
         assertTrue("white rook should be allowed to move two positions vertically forward",
-                _game.movePiece(BoardPosition.B2, BoardPosition.B4));
+                _game.movePiece(BoardPosition.B1, BoardPosition.B3));
     }
 
     @Test
     public void shouldLetWhiteRookMoveThreePositionsVertically() {
         assertTrue("white rook should be allowed to move three positions vertically forward",
-                _game.movePiece(BoardPosition.B2, BoardPosition.B5));
+                _game.movePiece(BoardPosition.B1, BoardPosition.B4));
     }
 
     @Test
     public void shouldLetRookMoveTwoPositionsHorizontally() {
         assertTrue("white rook should be allowed to move two positions horizontally",
-                _game.movePiece(BoardPosition.B2, BoardPosition.D2));
+                _game.movePiece(BoardPosition.B1, BoardPosition.D1));
     }
 
     @Test
     public void shouldLetRookMoveThreePositionsHorizontally() {
         assertTrue("white rook should be allowed to move three positions horizontally",
-                _game.movePiece(BoardPosition.B2, BoardPosition.E2));
+                _game.movePiece(BoardPosition.B1, BoardPosition.E1));
     }
 
     @Test
@@ -118,9 +112,9 @@ public class TestMovementChess {
     }
 
     @Test
-    public void shouldLetWhiteRookMoveBackwardsVertically() {
+    public void shouldLetWhiteRookMoveLeftHorizontally() {
         assertTrue("should let white rook move backwards",
-                _game.movePiece(BoardPosition.B2, BoardPosition.B1));
+                _game.movePiece(BoardPosition.B1, BoardPosition.A1));
     }
 
     @Test
@@ -143,19 +137,19 @@ public class TestMovementChess {
     @Test
     public void shouldLetWhiteBishopMoveTwoPositionsDiagonally() {
         assertTrue("should let white bishop move 2 positions diagonally forward",
-                _game.movePiece(BoardPosition.D3, BoardPosition.F5));
+                _game.movePiece(BoardPosition.D4, BoardPosition.F6));
     }
 
     @Test
     public void shouldLetWhiteBishopMoveThreePositionsDiagonally() {
         assertTrue("should let white bishop move 3 positions diagonally forward",
-                _game.movePiece(BoardPosition.D3, BoardPosition.A6));
+                _game.movePiece(BoardPosition.D4, BoardPosition.G7));
     }
 
     @Test
     public void shouldLetWhiteBishopMoveDiagonallyBackwards() {
         assertTrue("should let white bishop move 2 positions diagonally backwards",
-                _game.movePiece(BoardPosition.D3, BoardPosition.B1));
+                _game.movePiece(BoardPosition.D4, BoardPosition.F2));
     }
 
     @Test
@@ -262,46 +256,47 @@ public class TestMovementChess {
     -------------------------
      */
 
+
     @Test
     public void shouldLetKingMoveOnePositionNorth() {
         assertTrue("White king should be allowed to move 1 field north",
-                _game.movePiece(BoardPosition.E5, BoardPosition.E6));
+                _game.movePiece(BoardPosition.D2, BoardPosition.D3));
     }
 
     @Test
     public void shouldLetKingMoveOnePositionNorthEast() {
         assertTrue("White king should be allowed to move 1 field north-east",
-                _game.movePiece(BoardPosition.E5, BoardPosition.F6));
+                _game.movePiece(BoardPosition.D2, BoardPosition.E3));
     }
 
     @Test
     public void shouldLetKingMoveOnePositionEast() {
         assertTrue("White king should be allowed to move 1 field east",
-                _game.movePiece(BoardPosition.E5, BoardPosition.F5));
+                _game.movePiece(BoardPosition.D2, BoardPosition.E2));
     }
 
     @Test
     public void shouldLetKingMoveOnePositionSouthEast() {
         assertTrue("White king should be allowed to move 1 field south-east",
-                _game.movePiece(BoardPosition.E5, BoardPosition.F4));
+                _game.movePiece(BoardPosition.D2, BoardPosition.E1));
     }
 
     @Test
     public void shouldLetKingMoveOnePositionSouth() {
         assertTrue("White king should be allowed to move 1 field south",
-                _game.movePiece(BoardPosition.E5, BoardPosition.E4));
+                _game.movePiece(BoardPosition.D2, BoardPosition.D1));
     }
 
     @Test
     public void shouldLetKingMoveOnePositionSouthWest() {
         assertTrue("White king should be allowed to move 1 field south-west",
-                _game.movePiece(BoardPosition.E5, BoardPosition.D4));
+                _game.movePiece(BoardPosition.D2, BoardPosition.C1));
     }
 
     @Test
     public void shouldLetKingMoveOnePositionNorthWest() {
         assertTrue("White king should be allowed to move 1 field north-west",
-                _game.movePiece(BoardPosition.E5, BoardPosition.D6));
+                _game.movePiece(BoardPosition.D2, BoardPosition.C3));
     }
 
     @Test
@@ -315,7 +310,7 @@ public class TestMovementChess {
         _game.movePiece(BoardPosition.A2, BoardPosition.A3);
 
         // black is now in turn
-        assertTrue(_game.movePiece(BoardPosition.H8, BoardPosition.H7));
+        assertTrue(_game.movePiece(BoardPosition.H7, BoardPosition.H6));
     }
 
     /*

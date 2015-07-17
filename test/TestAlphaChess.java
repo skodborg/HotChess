@@ -1,12 +1,13 @@
 import Production.*;
+import Production.Strategies.BoardSetup.SimpleBoardSetupStrategy;
+import Production.Utility.BoardPosition;
+import Production.Utility.Color;
+import Production.Utility.GameConstants;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by marc on 07/12/13.
- */
 public class TestAlphaChess {
 
     private Game _game;

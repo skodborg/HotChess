@@ -46,9 +46,12 @@ public class GameImpl implements Game, Observable{
 
     @Override
     public Color getWinner() {
-        if (_turnsPlayed >= TURNS_PLAYED_IN_ROUND_5) {
-            return Color.WHITE;
-        }
+//        if (_turnsPlayed >= TURNS_PLAYED_IN_ROUND_5) {
+//            return Color.WHITE;
+//        }
+//        return Color.NONE;
+        if (_isWhiteCheckMated) return Color.BLACK;
+        if (_isBlackCheckMated) return Color.WHITE;
         return Color.NONE;
     }
 
@@ -65,7 +68,18 @@ public class GameImpl implements Game, Observable{
     // returns a shallow copy of the _pieceMap
     @Override
     public Map<BoardPosition, Piece> getPieceMap() {
-        return new HashMap<BoardPosition, Piece>(_pieceMap);
+        Map<BoardPosition, Piece> tempMap = new HashMap<BoardPosition, Piece>();
+        for (Map.Entry e : _pieceMap.entrySet()) {
+            BoardPosition bp = (BoardPosition) e.getKey();
+            Piece p = (Piece) e.getValue();
+            if (p instanceof StatePieceImpl) {
+                StatePieceImpl sp = (StatePieceImpl) p;
+                p = (Piece) sp.clone();
+            }
+            tempMap.put(bp, p);
+        }
+//        return tempMap;
+         return new HashMap<BoardPosition, Piece>(_pieceMap);
     }
 
     @Override

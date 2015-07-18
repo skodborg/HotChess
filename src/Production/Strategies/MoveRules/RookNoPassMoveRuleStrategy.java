@@ -15,7 +15,8 @@ public class RookNoPassMoveRuleStrategy implements PieceMoveRuleStrategy {
     @Override
     public Iterator<BoardPosition> iterator(BoardPosition from, Game game, Map<BoardPosition, Piece> pieceMap) {
         Set<BoardPosition> resultSet = new TreeSet<BoardPosition>();
-        Color movingPieceColor = game.getPieceAtPosition(from).getColor();
+
+        Color movingPieceColor = pieceMap.get(from).getColor();
 
         // valid positions in the north direction
         BoardPosition current = BoardPosition.north(from);

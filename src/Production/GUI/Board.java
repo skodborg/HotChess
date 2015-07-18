@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Board extends JPanel implements MouseListener, MouseMotionListener {
+public class Board extends JPanel implements MouseListener, MouseMotionListener, Observer {
 
     public static final int FIELD_SIZE = Skeleton.BOARD_SIZE / 8;
 
@@ -52,14 +52,53 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private BoardPosition selectedPosition;
     private List<BoardPosition> validMovePositions;
 
+    private AiBot _ai;
+    private AiBot _ai2;
+
     public Board(Game game) {
         _game = game;
         _viewUtil = new ViewUtility();
         boardState = _viewUtil.describeBoardState(game.getPieceMap());
         validMovePositions = new ArrayList<BoardPosition>();
 
-        addMouseListener(this);
-        addMouseMotionListener(this);
+        // addMouseListener(this);
+        // addMouseMotionListener(this);
+
+        _ai = new AiBot(game, Production.Utility.Color.WHITE);
+        _ai2 = new AiBot(game, Production.Utility.Color.BLACK);
+
+        _game.addObserver(this);
+
+        startBots();
+    }
+
+    public void startBots() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean running = true;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                while (running && _game.getWinner().equals(Production.Utility.Color.NONE)) {
+                    try {
+                        Thread.sleep(10);
+                        _ai.act();
+//                        Thread.sleep(100);
+                        _ai2.act();
+                    } catch (InterruptedException e) {
+                        running = false;
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        running = false;
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
     }
 
     @Override
@@ -320,5 +359,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
 
+    }
+
+    @Override
+    public void update() {
+        repaint();
     }
 }

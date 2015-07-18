@@ -73,11 +73,14 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                                     Game game,
                                     boolean isCastlingShort) {
 
-        // TODO: missing rules
-        //   - castling through an attacked field
 
         // castling piece is not a king; bail out
         if (!kingPiece.getType().equals(GameConstants.KING)) return false;
+
+        // castling king is not in initial position; bail out
+        BoardPosition initialKingPos;
+        initialKingPos = (kingPiece.getColor().equals(Color.WHITE) ? BoardPosition.E1 : BoardPosition.E8);
+        if (initialKingPos != kingCurrPos) return false;
 
         // if the king trying to castle is checked, castling is not allowed; bail out
         if (game.isCheck().equals(kingPiece.getColor())) return false;
@@ -141,6 +144,12 @@ public class KingMoveRuleStrategy implements PieceMoveRuleStrategy {
                 for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
                     Piece currPiece = entry.getValue();
                     BoardPosition currPos = entry.getKey();
+                    if (currPiece.getType().equals(GameConstants.KING)) {
+                        // A king cannot legally block a position passed by the other king
+                        // Besides, an infinite calling loop will occur if the king is not filtered
+                        // and they are both able to castle
+                        continue;
+                    }
                     boolean currPieceIsEnemys = !currPiece.getColor().equals(kingPiece.getColor());
                     if (currPieceIsEnemys) {
                         it = currPiece.possibleMovingPositions(currPos, game, pieceMap);

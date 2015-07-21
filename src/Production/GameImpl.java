@@ -15,13 +15,9 @@ import java.util.*;
 
 public class GameImpl implements Game, Observable{
 
-    // TODO:
-    //  - Remis when player cannot move and is not checked
-    //  - Remis when no pawn has been moved in 50 rounds?
-    //  - Remis when same move has been made 3 times in a row? NOT SURE
-    //  - Update and report Winner correctly
+    private static final int FIFTY_MOVE_RULES_LIMIT = 50 * 2; // fifty moves times two because a move is a move by each player
 
-    private static final int TURNS_PLAYED_IN_ROUND_5 = 10;
+    private static boolean _printMoves = false;
 
     private Color _playerInTurn;
     private int _turnsPlayed;
@@ -32,6 +28,7 @@ public class GameImpl implements Game, Observable{
     private boolean _isWhiteCheckMated;
     private boolean _isBlackChecked;
     private boolean _isBlackCheckMated;
+    private boolean _isGameRemis;
 
     public GameImpl(BoardSetupStrategy boardSetupStrategy) {
         _boardSetupStrategy = boardSetupStrategy;
@@ -41,6 +38,7 @@ public class GameImpl implements Game, Observable{
         _isWhiteCheckMated = false;
         _isBlackChecked = false;
         _isBlackCheckMated = false;
+        _isGameRemis = false;
         _observers = new HashSet<Observer>();
         setupPieces();
     }
@@ -52,17 +50,6 @@ public class GameImpl implements Game, Observable{
 
     @Override
     public Color getWinner() {
-//        if (_turnsPlayed >= TURNS_PLAYED_IN_ROUND_5) {
-//            return Color.WHITE;
-//        }
-//        return Color.NONE;
-        if (!_isWhiteChecked && _isWhiteCheckMated) {
-            System.out.println("REMIS WHITE?");
-        }
-//        if (!_isBlackChecked && _isBlackCheckMated && getPlayerInTurn().equals(Color.BLACK)) {
-        if (!_isBlackChecked && _isBlackCheckMated) {
-            System.out.println("REMIS BLACK?");
-        }
         if (_isWhiteCheckMated) return Color.BLACK;
         if (_isBlackCheckMated) return Color.WHITE;
         return Color.NONE;
@@ -81,16 +68,16 @@ public class GameImpl implements Game, Observable{
     // returns a shallow copy of the _pieceMap
     @Override
     public Map<BoardPosition, Piece> getPieceMap() {
-        Map<BoardPosition, Piece> tempMap = new HashMap<BoardPosition, Piece>();
-        for (Map.Entry e : _pieceMap.entrySet()) {
-            BoardPosition bp = (BoardPosition) e.getKey();
-            Piece p = (Piece) e.getValue();
-            if (p instanceof StatePieceImpl) {
-                StatePieceImpl sp = (StatePieceImpl) p;
-                p = (Piece) sp.clone();
-            }
-            tempMap.put(bp, p);
-        }
+//        Map<BoardPosition, Piece> tempMap = new HashMap<BoardPosition, Piece>();
+//        for (Map.Entry e : _pieceMap.entrySet()) {
+//            BoardPosition bp = (BoardPosition) e.getKey();
+//            Piece p = (Piece) e.getValue();
+//            if (p instanceof StatePieceImpl) {
+//                StatePieceImpl sp = (StatePieceImpl) p;
+//                p = (Piece) sp.clone();
+//            }
+//            tempMap.put(bp, p);
+//        }
 //        return tempMap;
          return new HashMap<BoardPosition, Piece>(_pieceMap);
     }
@@ -99,16 +86,37 @@ public class GameImpl implements Game, Observable{
     public boolean movePiece(BoardPosition from, BoardPosition to) {
         if (isMoveValid(from, to)) {
             // TODO: DELETE BELOW CONSOLE PRINTOUT
-            // System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");");
+            if (_printMoves) { System.out.println("_game.movePiece(BoardPosition."+from+", BoardPosition."+to+");"); }
 
+            // --- UPDATE STATE BEFORE PERFORMING MOVE
+            // ---------------------------------------
+
+            // if a piece was conquered or a pawn is moved, reset turnsPlayed for Remis 50-turns count
+            Piece movingPiece = _pieceMap.get(from);
+            Piece targetPiece = _pieceMap.get(to);
+            if ((movingPiece != null && movingPiece.getType().equals(GameConstants.PAWN)) ||
+                    (targetPiece != null && movingPiece != null && movingPiece.getColor() != targetPiece.getColor())) {
+                _turnsPlayed = 0;
+            }
+
+            // --- PERFORMING MOVE
+            // ---------------------------------------
             performPieceMove(from, to, _pieceMap);
             swapPlayerTurn();
             _turnsPlayed++;
 
+
+            // --- UPDATE STATE AFTER MOVE
+            // ---------------------------------------
             _isWhiteChecked = AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE);
             _isWhiteCheckMated = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.WHITE);
             _isBlackChecked = AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.BLACK);
             _isBlackCheckMated = AlgorithmUtility.isPlayerCheckMated(this, _pieceMap, Color.BLACK);
+
+            _isGameRemis = (!_isWhiteChecked && _isWhiteCheckMated) ||
+                           (!_isBlackChecked && _isBlackCheckMated) ||
+                           (_turnsPlayed >= FIFTY_MOVE_RULES_LIMIT) ||
+                           (_pieceMap.size() == 2);
 
             // notify observers of changes
             notifyObservers();
@@ -175,6 +183,10 @@ public class GameImpl implements Game, Observable{
         if (_isWhiteChecked) return Color.WHITE;
         if (_isBlackChecked) return Color.BLACK;
         return Color.NONE;
+    }
+
+    public boolean isRemis() {
+        return _isGameRemis;
     }
 
     @Override

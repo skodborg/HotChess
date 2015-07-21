@@ -61,8 +61,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
         boardState = _viewUtil.describeBoardState(game.getPieceMap());
         validMovePositions = new ArrayList<BoardPosition>();
 
-        // addMouseListener(this);
-        // addMouseMotionListener(this);
+//        addMouseListener(this);
+//        addMouseMotionListener(this);
 
         _ai = new AiBot(game, Production.Utility.Color.WHITE);
         _ai2 = new AiBot(game, Production.Utility.Color.BLACK);
@@ -111,15 +111,21 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
         paintBoardSquares(g2);
         paintPieces(g2);
         paintValidMoves(g2);
-        //paintWinningText(g2);
+        // paintWinningText(g2);
 
     }
 
     private void paintWinningText(Graphics2D g2) {
-        if (_game.getWinner() != Production.Utility.Color.NONE) {
+        Production.Utility.Color winner = _game.getWinner();
+        if (winner != Production.Utility.Color.NONE) {
             g2.setColor(Color.CYAN);
             g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.drawString("Spillet er slut", 200, 200);
+            g2.drawString("Game over, " + winner.toString().toLowerCase() + " won", 200, 200);
+        }
+        if (_game.isRemis()) {
+            g2.setColor(Color.CYAN);
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2.drawString("Game over, ended in Remis", 200, 200);
         }
     }
 

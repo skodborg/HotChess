@@ -13,7 +13,7 @@ public class InfoPanel extends JPanel implements Observer {
 
     private Game _game;
     private JLabel lblPlayerInTurn;
-    private JLabel lblWhiteCheckMateStatus;
+    private JLabel lblGameStatus;
 
     public InfoPanel(Game game) {
         _game = game;
@@ -31,8 +31,8 @@ public class InfoPanel extends JPanel implements Observer {
     private void initialize() {
         lblPlayerInTurn = new JLabel("In turn: " + _game.getPlayerInTurn());
         add(lblPlayerInTurn);
-        lblWhiteCheckMateStatus = new JLabel();
-        add(lblWhiteCheckMateStatus);
+        lblGameStatus = new JLabel();
+        add(lblGameStatus);
         update();
     }
 
@@ -43,12 +43,14 @@ public class InfoPanel extends JPanel implements Observer {
         if (checkedPlayer != Color.NONE) {
             Color checkMatedPlayer;
             if ((checkMatedPlayer = _game.isPlayerInCheckMate()) != Color.NONE) {
-                lblWhiteCheckMateStatus.setText(checkMatedPlayer.name() + " is Check Mated!");
+                lblGameStatus.setText(checkMatedPlayer.name() + " is Check Mated!");
             } else {
-                lblWhiteCheckMateStatus.setText(checkedPlayer + " is Checked");
+                lblGameStatus.setText(checkedPlayer + " is Checked");
             }
+        } else if (_game.isRemis()) {
+            lblGameStatus.setText("Remis!");
         } else {
-            lblWhiteCheckMateStatus.setText("");
+            lblGameStatus.setText("");
         }
         _game.getWinner();
     }

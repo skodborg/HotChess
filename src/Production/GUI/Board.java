@@ -93,7 +93,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
                         e.printStackTrace();
                     } catch (Exception e) {
                         running = false;
-                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
             }

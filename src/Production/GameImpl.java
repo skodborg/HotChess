@@ -3,6 +3,7 @@ package Production;
 
 import Production.Factories.BlackQueenPieceFactory;
 import Production.Factories.WhiteQueenPieceFactory;
+import Production.GUI.ViewUtility;
 import Production.Strategies.BoardSetup.BoardSetupStrategy;
 import Production.Utility.AlgorithmUtility;
 import Production.Utility.BoardPosition;
@@ -13,6 +14,12 @@ import java.util.*;
 
 
 public class GameImpl implements Game, Observable{
+
+    // TODO:
+    //  - Remis when player cannot move and is not checked
+    //  - Remis when no pawn has been moved in 50 rounds?
+    //  - Remis when same move has been made 3 times in a row? NOT SURE
+    //  - Update and report Winner correctly
 
     private static final int TURNS_PLAYED_IN_ROUND_5 = 10;
 
@@ -40,7 +47,6 @@ public class GameImpl implements Game, Observable{
 
     private void setupPieces() {
         _pieceMap = new HashMap<BoardPosition, Piece>();
-
         _boardSetupStrategy.setupPieces(_pieceMap);
     }
 
@@ -50,6 +56,13 @@ public class GameImpl implements Game, Observable{
 //            return Color.WHITE;
 //        }
 //        return Color.NONE;
+        if (!_isWhiteChecked && _isWhiteCheckMated) {
+            System.out.println("REMIS WHITE?");
+        }
+//        if (!_isBlackChecked && _isBlackCheckMated && getPlayerInTurn().equals(Color.BLACK)) {
+        if (!_isBlackChecked && _isBlackCheckMated) {
+            System.out.println("REMIS BLACK?");
+        }
         if (_isWhiteCheckMated) return Color.BLACK;
         if (_isBlackCheckMated) return Color.WHITE;
         return Color.NONE;
@@ -141,16 +154,13 @@ public class GameImpl implements Game, Observable{
             isCheckAfterMoving = AlgorithmUtility.isPlayerChecked(this, tempMap, movingPiece.getColor());
         }
 
-        // must not be checked after moving
-        boolean noPlayersViolatesCheckRules = !isCheckAfterMoving;
-
         // if the player in turn is moving his own piece and
         // the target position is not already occupied, and
         // the player moving is not checked after moving,
         // the move is legal
         return (movingPiece.getColor() == getPlayerInTurn()) &&
                 toPosIsValidMove &&
-                noPlayersViolatesCheckRules;
+                !isCheckAfterMoving;
     }
 
     public BoardPosition getPositionOfPiece(Piece piece) {

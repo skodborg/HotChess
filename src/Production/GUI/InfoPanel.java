@@ -33,6 +33,7 @@ public class InfoPanel extends JPanel implements Observer {
         add(lblPlayerInTurn);
         lblWhiteCheckMateStatus = new JLabel();
         add(lblWhiteCheckMateStatus);
+        update();
     }
 
     @Override
@@ -49,5 +50,6 @@ public class InfoPanel extends JPanel implements Observer {
         } else {
             lblWhiteCheckMateStatus.setText("");
         }
+        _game.getWinner();
     }
 }

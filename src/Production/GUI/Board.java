@@ -1,6 +1,7 @@
 package Production.GUI;
 
 import Production.*;
+import Production.AiBot.CleverAiBot;
 import Production.Utility.BoardPosition;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Board extends JPanel implements MouseListener, MouseMotionListener {
+public class Board extends JPanel implements MouseListener, MouseMotionListener, Observer {
 
     public static final int FIELD_SIZE = Skeleton.BOARD_SIZE / 8;
 
@@ -52,6 +53,9 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private BoardPosition selectedPosition;
     private List<BoardPosition> validMovePositions;
 
+    private CleverAiBot _ai;
+    private CleverAiBot _ai2;
+
     public Board(Game game) {
         _game = game;
         _viewUtil = new ViewUtility();
@@ -60,6 +64,42 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        _ai = new CleverAiBot(Production.Utility.Color.WHITE, true);
+        _ai2 = new CleverAiBot(Production.Utility.Color.BLACK, false);
+
+        _game.addObserver(this);
+
+        //startBots();
+    }
+
+    public void startBots() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean running = true;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                while (running && _game.getWinner().equals(Production.Utility.Color.NONE)) {
+                    try {
+                        Thread.sleep(100);
+                        _ai.act(_game);
+                        Thread.sleep(100);
+                        _ai2.act(_game);
+                    } catch (InterruptedException e) {
+                        running = false;
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        running = false;
+                        // e.printStackTrace();
+                    }
+                }
+            }
+        });
+        t.start();
     }
 
     @Override
@@ -72,15 +112,21 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         paintBoardSquares(g2);
         paintPieces(g2);
         paintValidMoves(g2);
-        //paintWinningText(g2);
+        // paintWinningText(g2);
 
     }
 
     private void paintWinningText(Graphics2D g2) {
-        if (_game.getWinner() != Production.Utility.Color.NONE) {
+        Production.Utility.Color winner = _game.getWinner();
+        if (winner != Production.Utility.Color.NONE) {
             g2.setColor(Color.CYAN);
             g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.drawString("Spillet er slut", 200, 200);
+            g2.drawString("Game over, " + winner.toString().toLowerCase() + " won", 200, 200);
+        }
+        if (_game.isRemis()) {
+            g2.setColor(Color.CYAN);
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2.drawString("Game over, ended in Remis", 200, 200);
         }
     }
 
@@ -265,6 +311,12 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         if (p == null) {
             if (selectedPosition != null) {
                 _game.movePiece(selectedPosition, clickedPosition);
+                // TODO: REMOVE BELOW TRY-CATCH
+                try {
+                    _ai2.act(_game);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 selectedPosition = null;
             }
         } else {
@@ -274,6 +326,12 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                 if (selectedPieceColor != p.getColor()) {
                     // different piece colors, try and attack!
                     if (_game.movePiece(selectedPosition, clickedPosition)) {
+                        // TODO: REMOVE BELOW TRY-CATCH
+                        try {
+                            _ai2.act(_game);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         // move successful, reset selectedPosition
                         selectedPosition = null;
                     }
@@ -320,5 +378,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
 
+    }
+
+    @Override
+    public void update() {
+        repaint();
     }
 }

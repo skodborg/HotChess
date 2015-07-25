@@ -53,6 +53,11 @@ public interface Game extends Observable {
     Color isCheck();
 
     /*
+    returns true if the game ended with a Remis
+     */
+    boolean isRemis();
+
+    /*
     returns the color of the player currently in check mate if one exists, otherwise returns Color.NONE
      */
     Color isPlayerInCheckMate();

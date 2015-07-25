@@ -7,36 +7,36 @@ import java.util.*;
 
 public class AiBot {
 
-    private Game _game;
     private Color _botColor;
-    private int randomMoveAttemptCount;
+    private int _randomMoveAttemptCount;
+    private int _moveAttemptLimit;
 
-    public AiBot(Game game, Color playerColor) {
-        _game = game;
+    public AiBot(Color playerColor) {
         _botColor = playerColor;
-        randomMoveAttemptCount = 0;
+        _randomMoveAttemptCount = 0;
+        _moveAttemptLimit = 200;
     }
 
-    public void act() throws Exception {
+    public void act(Game argGame) throws Exception {
         // called whenever the bot is to make a move in game
-        randomMove();
+        randomMove(argGame, 0);
+
     }
 
-    public void randomMove() throws Exception {
+    private void randomMove(Game argGame, int cntAttempt) throws Exception {
 
-        int i = 200;
-        if (randomMoveAttemptCount > i) {
-            throw new Exception("Attempted to move randomly "+ i +" times without success; terminating");
+        if (cntAttempt > _moveAttemptLimit) {
+            throw new Exception("Attempted to move randomly "+ _randomMoveAttemptCount +" times without success; terminating");
         }
 
         Map<BoardPosition, List<BoardPosition>> possibleMoves = new HashMap<BoardPosition, List<BoardPosition>>();
-        Map<BoardPosition, Piece> pieceMap = _game.getPieceMap();
+        Map<BoardPosition, Piece> pieceMap = argGame.getPieceMap();
 
         for (Map.Entry<BoardPosition, Piece> entry : pieceMap.entrySet()) {
             Piece currPiece = entry.getValue();
             BoardPosition currPiecePos = entry.getKey();
             if (currPiece.getColor().equals(_botColor)) {
-                Iterator<BoardPosition> currPiecePossibleMoves = currPiece.possibleMovingPositions(currPiecePos, _game, pieceMap);
+                Iterator<BoardPosition> currPiecePossibleMoves = currPiece.possibleMovingPositions(currPiecePos, argGame, pieceMap);
                 if (currPiecePossibleMoves.hasNext()) {
                     List<BoardPosition> tmpList = new ArrayList<BoardPosition>();
                     while (currPiecePossibleMoves.hasNext()) {
@@ -46,8 +46,6 @@ public class AiBot {
                 }
             }
         }
-
-        // System.out.println("possible candidates for random moves: " + possibleMoves);
 
         // select random possible move for random piece
         Random rnd = new Random();
@@ -59,11 +57,10 @@ public class AiBot {
         int rnd_idxx = rnd.nextInt(possibleToPositionsList.size());
         BoardPosition randomToPosition = possibleToPositionsList.get(rnd_idxx);
 
-        if (_game.movePiece(randomFromPosition, randomToPosition)) {
-            randomMoveAttemptCount = 0;
-        } else {
-            randomMoveAttemptCount++;
-            randomMove();
+        if (!argGame.movePiece(randomFromPosition, randomToPosition)) {
+            cntAttempt = cntAttempt+1;
+            randomMove(argGame, cntAttempt);
         }
     }
+
 }

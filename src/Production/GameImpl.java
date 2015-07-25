@@ -105,7 +105,6 @@ public class GameImpl implements Game, Observable{
             swapPlayerTurn();
             _turnsPlayed++;
 
-
             // --- UPDATE STATE AFTER MOVE
             // ---------------------------------------
             _isWhiteChecked = AlgorithmUtility.isPlayerChecked(this, _pieceMap, Color.WHITE);

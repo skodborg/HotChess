@@ -52,8 +52,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
     private BoardPosition selectedPosition;
     private List<BoardPosition> validMovePositions;
 
-    private AiBot _ai;
-    private AiBot _ai2;
+    private CleverAiBot _ai;
+    private CleverAiBot _ai2;
 
     public Board(Game game) {
         _game = game;
@@ -61,15 +61,15 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
         boardState = _viewUtil.describeBoardState(game.getPieceMap());
         validMovePositions = new ArrayList<BoardPosition>();
 
-//        addMouseListener(this);
-//        addMouseMotionListener(this);
+        addMouseListener(this);
+        addMouseMotionListener(this);
 
-        _ai = new AiBot(game, Production.Utility.Color.WHITE);
-        _ai2 = new AiBot(game, Production.Utility.Color.BLACK);
+        _ai = new CleverAiBot(Production.Utility.Color.WHITE, true);
+        _ai2 = new CleverAiBot(Production.Utility.Color.BLACK, false);
 
         _game.addObserver(this);
 
-        startBots();
+        //startBots();
     }
 
     public void startBots() {
@@ -84,10 +84,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
                 }
                 while (running && _game.getWinner().equals(Production.Utility.Color.NONE)) {
                     try {
-                        Thread.sleep(10);
-                        _ai.act();
-//                        Thread.sleep(100);
-                        _ai2.act();
+                        Thread.sleep(100);
+                        _ai.act(_game);
+                        Thread.sleep(100);
+                        _ai2.act(_game);
                     } catch (InterruptedException e) {
                         running = false;
                         e.printStackTrace();
@@ -310,6 +310,12 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
         if (p == null) {
             if (selectedPosition != null) {
                 _game.movePiece(selectedPosition, clickedPosition);
+                // TODO: REMOVE BELOW TRY-CATCH
+                try {
+                    _ai2.act(_game);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 selectedPosition = null;
             }
         } else {
@@ -319,6 +325,12 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener,
                 if (selectedPieceColor != p.getColor()) {
                     // different piece colors, try and attack!
                     if (_game.movePiece(selectedPosition, clickedPosition)) {
+                        // TODO: REMOVE BELOW TRY-CATCH
+                        try {
+                            _ai2.act(_game);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         // move successful, reset selectedPosition
                         selectedPosition = null;
                     }

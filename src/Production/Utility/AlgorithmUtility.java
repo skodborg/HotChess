@@ -8,6 +8,24 @@ import java.util.*;
 
 public class AlgorithmUtility {
 
+    public static List<BoardPosition> coveredPositions(Map<BoardPosition, Piece> argMap, Game argGame, Color playerColor) {
+        List<BoardPosition> resultList = new ArrayList<BoardPosition>();
+
+        for (Map.Entry<BoardPosition, Piece> entry : argMap.entrySet()) {
+            Piece p = entry.getValue();
+            BoardPosition bp = entry.getKey();
+            if (p.getColor().equals(playerColor)) {
+                Iterator<BoardPosition> it = p.possibleMovingPositions(bp, argGame, argMap);
+                while (it.hasNext()) {
+                    BoardPosition currBp = it.next();
+                    resultList.add(currBp);
+                }
+            }
+        }
+
+        return resultList;
+    }
+
     public static boolean isPlayerChecked(Game game,
                                           Map<BoardPosition, Piece> pieceMap,
                                           Color playerToCheckIfChecked) {

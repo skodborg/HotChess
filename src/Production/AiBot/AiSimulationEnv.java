@@ -1,6 +1,9 @@
-package Production;
+package Production.AiBot;
 
 import Production.GUI.ViewUtility;
+import Production.Game;
+import Production.GameImpl;
+import Production.Piece;
 import Production.Strategies.BoardSetup.FullBoardSetupStrategy;
 import Production.Utility.BoardPosition;
 import Production.Utility.Color;

@@ -1,5 +1,7 @@
-package Production;
+package Production.AiBot;
 
+import Production.Game;
+import Production.Piece;
 import Production.Utility.AlgorithmUtility;
 import Production.Utility.BoardPosition;
 import Production.Utility.Color;

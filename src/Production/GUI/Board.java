@@ -1,6 +1,7 @@
 package Production.GUI;
 
 import Production.*;
+import Production.AiBot.CleverAiBot;
 import Production.Utility.BoardPosition;
 
 import javax.swing.*;
